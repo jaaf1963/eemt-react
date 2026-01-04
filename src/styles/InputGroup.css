@@ -1,0 +1,310 @@
+.input-group-container {
+  /*display: flex; /* O 'block', 'grid' */
+  flex-direction: row; /* O 'column' */
+  align-items: center;
+  margin-bottom: 1rem;
+  width: 75rem;
+}
+
+.input-group-container label {
+  margin-right: 0.5rem;
+}
+
+.div-select {
+  margin-left: 10px;
+}
+.input-grid-btns {
+  /* Otros estilos para el grupo */
+  width: 40rem;
+  height: 48rem;
+  display: block;
+  gap: 10px;
+  background-color: rgb(248, 248, 244);
+}
+
+.div-grid-btns {
+  /* Otros estilos para el grupo */
+  width: 40rem;
+  display: flex;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 10px;
+  /*background-color: rgb(215, 215, 109);*/
+}
+
+.input-label {
+  width: 10rem;
+  height: 20px;
+  margin-left: 10px;
+  color: #1410f3;
+  font-family: Sans-serif, Georgia, "Times New Roman";
+}
+
+.input-field {
+  width: 150px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 26px;
+}
+
+.input-field-text {
+  width: 150px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 26px;
+}
+
+.input-field-num {
+  width: 45px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 26px;
+}
+
+.input-label-proj {
+  width: 4rem;
+  height: 20px;
+  margin-left: 10px;
+  color: #1410f3;
+  font-family: Sans-serif, Georgia, "Times New Roman";
+}
+
+.input-text-proj {
+  width: 250px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 26px;
+}
+
+.span-text-input {
+  color: #d810ba;
+  font-style: italic;
+  font-size: small;
+}
+
+.input-label-upload {
+  width: 10rem;
+  height: 20px;
+  margin-left: 10px;
+  font-style: italic;
+  color: brown;
+  /*font-family: Sans-serif, Georgia, "Times New Roman";*/
+}
+
+.input-field-upload {
+  width: 350px;
+  height: 22px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input-label-exist {
+  width: 6rem;
+  height: 20px;
+  margin-left: 10px;
+  color: rgb(70, 122, 234);
+  font-family: Sans-serif, Georgia, "Times New Roman";
+  font-style: italic;
+}
+
+.input-text-exist {
+  width: 250px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-left: 15px;
+  height: 26px;
+}
+
+.label-date-proj {
+  margin-left: 10px;
+  color: brown;
+  margin-right: 15px;
+  font-style: italic;
+}
+
+.picker-date-proj {
+  width: 140px;
+  margin-left: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.input-textarea-upload {
+  width: 350px;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button-upload-docs {
+  width: 250px;
+  height: 30px;
+  color: rgb(51, 51, 240);
+  /*align-items: center;*/
+  margin-top: 5px;
+  margin-left: 7px;
+  border-radius: 4px;
+  border: 0px;
+  background-color: rgb(237, 235, 204);
+}
+.button-upload-docs:hover {
+  background-color: rgb(216, 231, 11);
+  /* Transición para efectos de hover y clic */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button-send-update {
+  width: 95px;
+  height: 35px;
+  color: rgb(51, 51, 240);
+  /*align-items: center;*/
+  margin-top: 5px;
+  margin-left: 7px;
+  border-radius: 4px;
+  border: 0px;
+  background-color: rgb(237, 235, 204);
+}
+.button-send-update:hover {
+  background-color: rgb(216, 231, 11);
+  /* Transición para efectos de hover y clic */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.check-send-delete {
+  width: 15px;
+  height: 15px;
+  color: rgb(65, 65, 233);
+  /*align-items: center;*/
+  background-color: rgb(237, 204, 204);
+}
+
+.button-send-delete {
+  width: 95px;
+  height: 65px;
+  color: rgb(65, 65, 233);
+  /*align-items: center;*/
+  margin-top: 5px;
+  margin-left: 7px;
+  border-radius: 4px;
+  border: 0px;
+  background-color: rgb(237, 204, 204);
+}
+.button-send-delete:hover {
+  background-color: rgb(230, 134, 156);
+  /* Transición para efectos de hover y clic */
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button-upd-edit {
+  background-color: rgb(147, 238, 238);
+  width: 80px;
+  height: 24px;
+  margin-right: 5px;
+  border-width: 0px;
+  border-radius: 4px;
+}
+
+.button-upd-edit:hover {
+  background-color: rgb(117, 195, 231);
+  transform: scale(1.05);
+}
+
+.button-upd-elim {
+  background-color: rgb(228, 199, 144);
+  width: 80px;
+  height: 24px;
+  margin-right: 5px;
+  border-width: 0px;
+  border-radius: 4px;
+}
+
+.button-upd-elim:hover {
+  background-color: rgb(226, 167, 142);
+  transform: scale(1.05);
+}
+
+.button-history {
+  background-color: rgb(239, 246, 197);
+  width: 1266px;
+  height: 24px;
+  margin-left: 4px;
+  border-width: 0px;
+  border-radius: 4px;
+  text-align: left;
+  color: blue;
+}
+
+.button-history:hover {
+  background-color: rgb(231, 243, 169);
+  transform: scale(1.001);
+}
+
+.user-text {
+  color: rgb(12, 23, 222);
+  font-weight: bold;
+}
+
+.user-text-name {
+  color: rgb(8, 46, 239);
+  margin-left: 5px;
+}
+
+.user-text-email {
+  color: rgb(209, 37, 209);
+  margin-left: 5px;
+}
+
+.list-buttons {
+  margin-left: 10px;
+  margin-top: 30px;
+  color: #d810ba;
+  font-style: italic;
+}
+
+.span-texts {
+  color: rgb(139, 0, 0);
+}
+
+.colorTextCboBox {
+  color: rgb(20, 97, 220);
+  background-color: lch(92.58% 22.04 106.44);
+  cursor: pointer;
+}
+
+.colorTextCboBox:hover {
+  color: rgb(20, 97, 220);
+  background-color: lch(90.99% 90.49 99.63);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-delete-doc {
+  width: "70px";
+  height: "25px";
+  border: "4px";
+  color: "tomato";
+}
+
+.btn-delete-doc:hover {
+  background-color: rgb(241, 228, 222);
+  transform: scale(1.05);
+}
+
+/* Estilos para filas pares */
+.row-head {
+  background-color: #d3f0b1; /* Gris claro */
+}
+/* Estilos para filas pares */
+.row-even {
+  background-color: #f1f5d6; /* Gris claro */
+}
+/* Estilos para filas impares */
+.row-odd {
+  background-color: #edf5f1; /* Blanco */
+}

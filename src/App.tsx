@@ -1,26 +1,246 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route, Link } from "react-router-dom";
+//
+import Eem from "./components/EEM";
+import Home from "./components/Home";
+import PrjView from "./components/PrjView";
+import PrjEdit from "./components/PrjEdit";
+import PrjFlow from "./components/PrjFlow";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import SetClearStore from "./services/auth.clear.store";
+import * as AuthService from "./services/auth.local.service";
+//
+import BoardClient from "./components/BoardClient";
+import BoardProject from "./components/BoardProject";
+import BoardModerator from "./components/BoardModerator";
+import BoardPanels from "./components/BoardPanels";
+//import BoardUser from "./components/BoardUser";
+import BoardProfile from "./components/BoardProfile";
+import BoardAdmin from "./components/BoardAdmin";
+import EventBus from "./common/EventBus";
+//import * as AuthService from "./services/auth.service";
+//import IUser from "./types/user.type";
 
-function App() {
+const App: React.FC = () => {
+  //const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
+  const [showAdminBoard, setShowAdminBoard] = useState<boolean>(false);
+  //const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
+  //const [textUserStore, setTextUserStore] = useState<string | null>("");
+  const [existUserStore, setExistUserStore] = useState<boolean | undefined>(
+    undefined
+  );
+  const [changeUserRole, setChangeUserRole] = useState<boolean>(false);
+  const [adminUserRole, setAdminUserRole] = useState<boolean>(false);
+  const [moderUserRole, setModerUserRole] = useState<boolean>(false);
+  const [viewUserRole, setViewUserRole] = useState<boolean>(false);
+  //
+  const [textRoleStore, setTextRoleStore] = useState(() => {
+    const roleStore = localStorage.getItem("role");
+    if (roleStore) {
+      return roleStore;
+    }
+    return "";
+  });
+  //
+  const [textUserStore, setTextUserStore] = useState(() => {
+    const userStore = localStorage.getItem("username");
+    if (userStore) {
+      return userStore;
+    }
+    return "";
+  });
+  //
+  const [entyUserStore, setEntyUserStore] = useState(() => {
+    const entyStore = localStorage.getItem("entity");
+    if (entyStore) {
+      return entyStore;
+    }
+    return "";
+  });
+  //
+  const [authUserStore, setAuthUserStore] = useState(() => {
+    const authStore = localStorage.getItem("token");
+    if (authStore) {
+      return authStore;
+    }
+    return "";
+  });
+  //
+
+  //
+  useEffect(() => {
+    //
+    // Lee usuario desde backend, o registrar
+    //
+    //const userStore = localStorage.getItem("username");
+    //const roleStore = localStorage.getItem("role");
+    console.log("textRoleStore:", textRoleStore);
+    if (textRoleStore) {
+      //setTextUserStore(userStore);
+      const adm: boolean = textRoleStore === "admin";
+      const viw: boolean = textRoleStore === "view";
+      const mod: boolean = textRoleStore === "edit";
+      console.log(textRoleStore, "-->", textRoleStore);
+      setAdminUserRole(adm);
+      setModerUserRole(mod);
+      setViewUserRole(viw);
+      console.log("adminRole:", adminUserRole);
+      console.log("moderRole:", moderUserRole);
+      console.log("viewsRole:", viewUserRole);
+      setShowAdminBoard(adminUserRole);
+      //setAdminUserRole(true);
+      //setExistUserStore(viw);
+    }
+    //
+    if (textUserStore) {
+      const usr: boolean = textUserStore !== "";
+      setExistUserStore(usr);
+      //
+      console.log("userStore:", textUserStore);
+      console.log("showAdm:", showAdminBoard);
+    }
+    //
+    EventBus.on("logout", logOut);
+    return () => {
+      EventBus.remove("logout", logOut);
+      console.log("EventBus remove Logout");
+    };
+  }, [changeUserRole]);
+
+  const logOut = () => {
+    AuthService.logout();
+    //
+    SetClearStore();
+    //
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <nav className="navbar navbar-expand navbar-dark bg-dark">
+        <Link to={"/"} className="navbar-brand">
+          EEM
+        </Link>
+        <div className="navbar-nav mr-auto">
+          <li className="nav-item">
+            <NavLink to={"/home"} className="nav-link">
+              Home
+            </NavLink>
+          </li>
+          {(viewUserRole || moderUserRole || adminUserRole) && (
+            <li className="nav-item">
+              <NavLink to={"/prjview"} className="nav-link">
+                Projects View
+              </NavLink>
+            </li>
+          )}
+          {(adminUserRole || moderUserRole) && (
+            <li className="nav-item">
+              <NavLink to={"/prjedit"} className="nav-link">
+                Project Edit
+              </NavLink>
+            </li>
+          )}
+          {(adminUserRole || moderUserRole) && (
+            <li className="nav-item">
+              <Link to={"/moder"} className="nav-link">
+                Moderator Board
+              </Link>
+            </li>
+          )}
+          {(adminUserRole || moderUserRole) && (
+            <li className="nav-item">
+              <NavLink to={"/panels"} className="nav-link">
+                Panels Board
+              </NavLink>
+            </li>
+          )}
+          {(adminUserRole || moderUserRole) && (
+            <li className="nav-item">
+              <Link to={"/client"} className="nav-link">
+                Client Board
+              </Link>
+            </li>
+          )}
+          {(adminUserRole || moderUserRole) && (
+            <li className="nav-item">
+              <NavLink to={"/project"} className="nav-link">
+                Project Board
+              </NavLink>
+            </li>
+          )}
+          {(adminUserRole || moderUserRole) && (
+            <li className="nav-item">
+              <NavLink to={"/prjflow"} className="nav-link">
+                Projects Flow
+              </NavLink>
+            </li>
+          )}
+        </div>
+
+        {existUserStore ? (
+          <div className="navbar-nav ml-auto">
+            {adminUserRole && (
+              <li className="nav-item">
+                <NavLink to={"/admin"} className="nav-link">
+                  Admin
+                </NavLink>
+              </li>
+            )}
+            <li className="nav-item">
+              <NavLink to={"/profile"} className="nav-link">
+                {textUserStore}
+              </NavLink>
+            </li>
+            <li className="nav-item">
+              <a href="/login" className="nav-link" onClick={logOut}>
+                LogOut
+              </a>
+            </li>
+          </div>
+        ) : (
+          <div className="navbar-nav ml-auto">
+            <li className="nav-item">
+              <NavLink to={"/login"} className="nav-link">
+                Login
+              </NavLink>
+            </li>
+
+            <li className="nav-item">
+              <NavLink to={"/register"} className="nav-link">
+                Sign Up
+              </NavLink>
+            </li>
+          </div>
+        )}
+      </nav>
+
+      <div className="container mt-3">
+        <Routes>
+          <Route path="/" element={<Eem />} />
+          <Route path="/home" element={<Home />} />
+          <Route path="/prjview" element={<PrjView />} />
+          <Route path="/prjedit" element={<PrjEdit />} />
+          <Route path="/prjflow" element={<PrjFlow />} />
+          <Route path="/moder" element={<BoardModerator />} />
+          <Route path="/panels" element={<BoardPanels />} />
+          <Route path="/client" element={<BoardClient />} />
+          <Route path="/project" element={<BoardProject />} />
+          <Route path="/admin" element={<BoardAdmin />} />
+          <Route
+            path="/login"
+            element={<Login onRoleChange={setChangeUserRole} />}
+          />
+          <Route path="/register" element={<Register />} />
+          <Route path="/profile" element={<BoardProfile />} />
+        </Routes>
+      </div>
     </div>
   );
-}
+};
 
 export default App;

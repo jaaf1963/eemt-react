@@ -1,0 +1,8 @@
+
+cd C:\Trabajos\project_react\prj_eem_001\pyth-api\src
+
+env\scripts\activate
+
+
+uvicorn main:app --port 5055 --reload
+
