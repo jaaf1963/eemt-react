@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import BtnsDymCall from "./BtnsDynCall";
+import BtnsDynCall from "./BtnsDynCall";
 import FetchDataView from "./DynFetchView";
 //import UploadFilesEdit from "./UploadFilesEdit";
 //import RadioButtonGroup from "./RadioButtons";
-import HistoryDisplay from "./HistoryDisplay";
 
 const panels = [
   {
@@ -13,21 +10,21 @@ const panels = [
     siz: "265px",
     hgh: "600px",
     shd: "hsla(184, 73%, 53%, 1.00)",
-    tit: "CEM Y OTROS",
+    tit: "AREA COMERCIAL",
   },
   {
     pnl: "2",
-    siz: "740px",
+    siz: "550px",
     hgh: "600px",
     shd: "hsla(184, 73%, 53%, 1.00)",
-    tit: "REQUISITOS PES",
+    tit: "AREA ESTUDIOS",
   },
   {
     pnl: "3",
     siz: "265px",
     hgh: "600px",
     shd: "hsla(184, 73%, 53%, 1.00)",
-    tit: "REQUISITOS EO",
+    tit: "AREA ENSAYOS",
   },
 ];
 
@@ -42,10 +39,11 @@ interface projProps {
   client?: string | undefined;
 }
 
-interface docsEx {
-  id: number;
-  num: number;
-  name: string;
+interface titleProps {
+  id: number | undefined;
+  name?: string | undefined;
+  code?: string | undefined;
+  client?: string | undefined;
 }
 
 let contenidoADibujar1: React.ReactNode;
@@ -53,26 +51,20 @@ interface ComponenteProps {
   //projectSel: string;
 }
 
-const ClientButtView: React.FC<ComponenteProps> = () => {
-  const [selecDateIni, setSelecDateIni] = useState<Date | null>(null);
-  const [selecDateEnd, setSelecDateEnd] = useState<Date | null>(null);
+const ClientButtEdit: React.FC<ComponenteProps> = () => {
   const [mensajeDesdeCall, setMensajeDesdeCall] = useState<string>("");
-  const [existDocums, setExistDocums] = useState<docsEx[]>([]);
-  const [renderButton, setRenderButton] = useState<boolean>(true);
+  const [renderButton, setRenderButton] = useState(true);
+  //const [mensajeDesdePadre, setMensajeDesdePadre] = useState<string>("");
+  const [titlesGet, setTitlesGet] = useState<titleProps[]>([]);
   const [projectsGet, setProjectsGet] = useState<projProps[]>([]);
   const [activarFetch, setActivarFetch] = useState<boolean>(false);
-  const [activarHist, setActivarHist] = useState<boolean>(false);
   const [datoBtnFetch, setDatoBtnFetch] = useState<string>("");
   const [codiPrjFetch, setCodiPrjFetch] = useState<string>("");
   const [selecProject, setSelecProject] = useState<string>("");
   const [selecPrjCode, setSelecPrjCode] = useState<string>("");
   const [selecPrjClie, setSelecPrjClie] = useState<string>("");
-  const [selecDocument, setSelecDocument] = useState<string>("");
-  //
-  const [advancDoc, setAdvancDoc] = useState<string>("");
-  const [authorDoc, setAuthorDoc] = useState<string>("");
-  const [observDoc, setObservDoc] = useState<string>("");
-  const [taskssDoc, setTaskssDoc] = useState<string>("");
+  const [selecOptRadi, setSelecOptRadi] = useState("");
+  const [error, setError] = useState<string | null>(null);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -106,23 +98,12 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
     return "";
   });
   //
-  // Funcion para activar funcion FetchData
-  //
-  const activarFunctionFetch = (value: boolean) => {
-    if (activarFetch) {
-      setActivarFetch(false);
-    } else {
-      setActivarFetch(value);
-    }
-  };
-  //
-  // Almacena seleccion en estados
-  //
   const setProjectData = (
     selPrjCode: string,
     selProject: string,
     selPrjClie: string
   ) => {
+    console.log("*", selPrjCode, selProject, selPrjClie);
     if (selPrjCode !== "") {
       setSelecPrjCode(selPrjCode);
     }
@@ -132,53 +113,33 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
     if (selPrjClie !== "") {
       setSelecPrjClie(selPrjClie);
     }
+    console.log("**", selecPrjCode, selecProject, selecPrjClie);
   };
   //
-  // Funcion Activacion del Fetch en 'DynFetchEdit' y pasar datos
-  //
+  // Funcion Activacion del Fetch y pasar datos
   const activacionCompFetch = (btnSel: string, prjSel: string) => {
-    if (btnSel !== "") {
-      setDatoBtnFetch(btnSel);
-    }
+    setDatoBtnFetch(btnSel);
     //
     if (btnSel !== "" && prjSel !== "") {
-      if (selPrjCode !== "") {
-        setSelecProject(selPrjCode);
-      }
-      activarFunctionFetch(true);
+      setActivarFetch(true);
+      //setCodiPrjHijo(projectSel);
     }
   };
   //
-  // Funcion para manejar el cambio de las 'tareas'
-  const handleChangeTasks = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTaskssDoc(e.target.value);
-  };
-  //
-  // Funcion para manejar el cambio de la 'Observacion'
-  const handleChangeObserv = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value) {
-      setObservDoc(e.target.value);
-    }
-  };
-  //
-  // Funcion para manejar el cambio del 'Author'
-  const handleChangeAuthor = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAuthorDoc(e.target.value);
-  };
-  //
-  // Funcion para manejar el pje de 'Avance'
-  const handleChangeAdvance = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAdvancDoc(e.target.value);
-  };
-  //
-  // Maneja los cambios del select box 'projects'
+  // Maneja los cambios del select box projects
   const handleSelectProject = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log("Opción seleccionada:", event.target.value);
     const projSel = event.target.value;
+    console.log(projSel);
     //
     if (projSel !== "") {
       setCodiPrjFetch(projSel);
     }
-    //
+    /*
+    split_str.forEach((str, index) => {
+      console.log(`prj: ${index + 1}: ${str}`);
+    });
+    */
     const split_str = projSel.split("|");
     selPrjCode = split_str[0].trim();
     selProject = split_str[1].trim();
@@ -191,23 +152,70 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
       activacionCompFetch(datoBtnFetch, selPrjCode);
     }
     //
+    console.log("codePrj selecc:", selPrjCode);
+    console.log("project selecc:", selProject);
+    console.log("cliePrj selecc:", selPrjClie);
+    //
   };
   //
   // Maneja los cambios del input project
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeProject = (e: React.ChangeEvent<HTMLInputElement>) => {
     let eee = e.target.value;
   };
   //
-  //---- Lee buttons segun grupoSel
+  //---- Lee panels titles
   //
-  // Funcion de callback para recibir los documentos leídos
-  const handleDocumentExist = (updaDocExist: docsEx[]) => {
-    // Actualiza el estado del padre con la nueva lista
-    if (updaDocExist) {
-      setExistDocums(updaDocExist);
+  const getTitlesPanel = async () => {
+    if (
+      textUserStore !== null &&
+      entyUserStore !== null &&
+      authUserStore !== null
+      // && projSel !== ""
+    ) {
+      if (
+        textRoleStore === "admin" ||
+        textRoleStore === "edit" ||
+        textRoleStore === "view"
+      ) {
+        const dataPanel = {
+          instance: "titles_panel",
+          entity: entyUserStore,
+          userna: textUserStore,
+          authen: authUserStore,
+        };
+        const API_URL_BACKEND =
+          "http://localhost:5055/search_titlespanel_react";
+        //
+        try {
+          const response = await fetch(API_URL_BACKEND, {
+            method: "POST",
+            body: JSON.stringify(dataPanel),
+            headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
+          });
+          const titlesResp = await response.json();
+          //
+          if (titlesResp.success === "err") {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          // Data ProjectsGet for map() select
+          const titlesGets = titlesResp.msg;
+          setTitlesGet(titlesGets);
+          console.log("titlesGet:", titlesGet);
+          //
+        } catch (err: any) {
+          //setError(err.message);
+          alert("Error al leer Titulos de panel...");
+          //
+        } finally {
+          //setLoading(false);
+        }
+      } else {
+        alert("Sin privilegios para leer datos.");
+      }
     }
   };
   //
+  //---- Lee buttons segun grupoSel
   //
   const getProjects = async (projSel: string) => {
     if (
@@ -216,6 +224,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
       authUserStore !== null
       // && projSel !== ""
     ) {
+      console.log(projSel);
       if (
         textRoleStore === "admin" ||
         textRoleStore === "edit" ||
@@ -244,6 +253,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
           // Data ProjectsGet for map() select
           const projGets = projResp.msg;
           setProjectsGet(projGets);
+          console.log(projectsGet);
           //
         } catch (err: any) {
           //setError(err.message);
@@ -253,24 +263,29 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
           //setLoading(false);
         }
       } else {
-        alert("Código de Proyecto es nulo...revisar");
+        alert("Sin privilegios para modificar datos.");
       }
     }
   };
   //
-  //---- Lee Hisory proyect
   //
   useEffect(() => {
     //
-    // Esta funcion se pasara al hijo 'BtnsDynCall' como props
+    getTitlesPanel();
+    //
+    // Esta función se pasará al hijo 'BtnsDynCall' como props
     const manejarDatoDesdeCall = (btnSel: string) => {
+      console.log("manejaDatoDesdeCall", btnSel);
       // Llamada a funcion pata activar los 'useState()'
       activacionCompFetch(btnSel, selPrjCode);
       // Recibe mensaje de BtnsDymCall
       setMensajeDesdeCall(btnSel);
+      //
+      // Filtra con datos del Hijo
+      //console.log("Button Hijo:", btnSel, dataTable[0].buttName);
     };
     //
-    // Despliega 'Buttons' al inicio
+    // Despliega 'Bouttons' al inicio
     //
     if (renderButton) {
       //
@@ -284,7 +299,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
                 padding: "3px",
               }}
             >
-              <BtnsDymCall
+              <BtnsDynCall
                 pnl={panel.pnl}
                 siz={panel.siz}
                 hgh={panel.hgh}
@@ -296,9 +311,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
           ))}
         </div>
       );
-      //
       setRenderButton(false);
-      setActivarHist(true);
     }
     //
     <span>{mensajeDesdeCall}</span>;
@@ -308,13 +321,11 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
     //
   }, [mensajeDesdeCall]);
   //
+  //      <SearchBarProject enviarProyectoAlPadre={recibirProyectoHijo} />
   //
   return (
     <>
-      <span style={{ fontStyle: "-moz-initial", fontSize: "20px" }}>
-        {" "}
-        Edit{" "}
-      </span>
+      <span style={{ fontStyle: "-moz-initial", fontSize: "20px" }}>View </span>
       <div>
         <label className="input-label-proj" htmlFor="project">
           Project{" "}
@@ -324,7 +335,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
           id="project"
           name="project"
           value={selecProject}
-          onChange={handleChange}
+          onChange={handleChangeProject}
           required
           className="input-text-proj"
         />
@@ -350,108 +361,8 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
       Proyecto: <strong>{codiPrjFetch}</strong>
       {" / "}
       Botón: <strong>{datoBtnFetch}</strong>
-      <div>
-        <label className="input-label-upload" htmlFor="observ">
-          Descripción de la tarea {""}
-        </label>
-        <input
-          type="text"
-          id="tasktext"
-          name="tasktext"
-          value={taskssDoc}
-          onChange={handleChangeTasks}
-          className="input-field-upload"
-        />
-        <span style={{ fontSize: "small", color: "gray" }}> 100 cars.</span>
-      </div>
-      <div>
-        <label className="input-label-upload" htmlFor="observ">
-          Observación / Estado de la tarea{" "}
-        </label>
-        <textarea
-          id="observtext"
-          name="observtext"
-          value={observDoc}
-          onChange={handleChangeObserv}
-          className="input-textarea-upload"
-        ></textarea>
-        <span style={{ fontSize: "small", color: "gray" }}> 500 cars.</span>
-      </div>
-      <div>
-        <label className="input-label-upload" htmlFor="author">
-          Autor del documento{""}
-        </label>
-        <input
-          type="text"
-          id="authortext"
-          name="authortext"
-          value={authorDoc}
-          onChange={handleChangeAuthor}
-          //required
-          className="input-field-upload"
-        />
-        <span style={{ fontSize: "small", color: "gray" }}> 30 cars.</span>
-      </div>
-      <div>
-        <label className="input-label-upload" htmlFor="advan">
-          Avance del proyecto{""}
-        </label>
-        <input
-          type="number"
-          id="advantext"
-          min="0"
-          max="100"
-          name="advantext"
-          value={advancDoc}
-          onChange={handleChangeAdvance}
-          //required
-          className="input-field-upload"
-        />
-        <span style={{ fontSize: "small", color: "gray" }}> 0%-100%</span>
-      </div>
-      <label className="label-date-proj">
-        Inicio proyecto
-        <DatePicker
-          className="picker-date-proj"
-          selected={selecDateIni}
-          // Actualiza el estado con la nueva fecha
-          onChange={(date) => setSelecDateIni(date)}
-          dateFormat="dd/MM/yyyy" // Formato de visualización
-          isClearable // Opción para limpiar la fecha
-          placeholderText="Fecha inicio"
-        />
-      </label>{" "}
-      <label className="label-date-proj">
-        Término proyecto
-        <DatePicker
-          className="picker-date-proj"
-          selected={selecDateEnd}
-          // Actualiza el estado con la nueva fecha
-          onChange={(date) => setSelecDateEnd(date)}
-          dateFormat="dd/MM/yyyy" // Formato de visualización
-          isClearable // Opción para limpiar la fecha
-          placeholderText="Fecha limite"
-        />
-      </label>
       <p>...</p>
-      <strong>Selección de documentos:</strong>
-      <div>
-        <label className="input-label-exist" htmlFor="document">
-          Existente{" "}
-        </label>
-        <input
-          type="text"
-          id="document"
-          name="document"
-          value={selecDocument}
-          onChange={handleChange}
-          required
-          className="input-text-exist"
-        />{" "}
-        <span></span>
-      </div>
-      <p>...</p>
-      <strong>Información almacenada:</strong>
+      <strong>Información almacenada.</strong>
       {activarFetch && (
         <FetchDataView
           activarFetch={activarFetch}
@@ -459,19 +370,10 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
           codiPrjFetch={selecPrjCode}
           cliePrjFetch={selecPrjClie}
           onActivar={setActivarFetch}
-          onDocusEx={handleDocumentExist}
-        />
-      )}
-      {activarHist && (
-        <HistoryDisplay
-          activarFetch={activarFetch}
-          datoBtnFetch={datoBtnFetch}
-          codiPrjFetch={selecPrjCode}
-          cliePrjFetch={selecPrjClie}
         />
       )}
     </>
   );
 };
 
-export default ClientButtView;
+export default ClientButtEdit;

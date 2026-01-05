@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-//import DisplayCheckBox from "../components/DisplayCheckBox";
 import FileDisplayDownload from "./FileDisplayDownload";
 import ProgressWithLabel from "./InfiniteProgress";
-//import { flattenDiagnosticMessageText } from "typescript";
 //
 // Solo lista documentos segun Button/Project
 //
@@ -109,7 +107,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
   // Delete documents
   //
   const manejarFileDelete = async (fileSelect: string) => {
-    console.log("Dato recibido para Delete:", fileSelect);
     if (fileSelect !== "") {
       //
       setProgress(0);
@@ -290,9 +287,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
           } else {
             //
             const docums = documsResp.msg;
-            //
-            console.log("DOCUMS:");
-            console.log(docums);
             if (docums) {
               //
               //setDocumentsButt(docums);
@@ -380,7 +374,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
       let bs64docum = files.docusx;
       let numedocu = files.numdoc;
       //
-      console.log("docnames:", docnames);
       if (docnames) {
         for (let i: number = 0; i < docnames.length; i++) {
           //
@@ -416,9 +409,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
           setIsExisdoc(true);
         }
       }
-      //
-      console.log("$$$$$$ dataDocus[]:", dataDocus);
-      console.log("$$$$$$ existDocs[]:", existDocs);
       //
       // Tasks
       //
@@ -474,7 +464,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
 
     if (renderFiles) {
       setRenderfiles(false);
-      console.log("RENDER OK...");
     }
   };
   //
