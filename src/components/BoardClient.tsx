@@ -14,16 +14,14 @@ import {
 
 //
 const BoardClient: React.FC = () => {
-  //const [inputValue, setInputValue] = useState<string>(initialValue);
-  //const [adminUserRole, setAdminUserRole] = useState<boolean>(false);
-  //const [moderUserRole, setModerUserRole] = useState<boolean>(false);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
     if (roleStore) {
       return roleStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextRoleStore("");
+    return "";
   });
   //
   const [textUserStore, setTextUserStore] = useState(() => {
@@ -31,7 +29,8 @@ const BoardClient: React.FC = () => {
     if (userStore) {
       return userStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextUserStore("");
+    return "";
   });
   //
   const [entyUserStore, setEntyUserStore] = useState(() => {
@@ -39,7 +38,8 @@ const BoardClient: React.FC = () => {
     if (entyStore) {
       return entyStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setEntyUserStore("");
+    return "";
   });
   //
   const [authUserStore, setAuthUserStore] = useState(() => {
@@ -47,7 +47,8 @@ const BoardClient: React.FC = () => {
     if (authStore) {
       return authStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setAuthUserStore("");
+    return "";
   });
   //
   const [successful, setSuccessful] = useState<boolean>(false);
@@ -194,7 +195,7 @@ const BoardClient: React.FC = () => {
           }
 
           const data = await response.json();
-          console.log("Registro exitoso:", data);
+          //console.log("Registro exitoso:", data);
           // Aquí puedes manejar la respuesta del servidor (por ejemplo, guardar un token)
           //
           if (data) {

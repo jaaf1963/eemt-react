@@ -13,7 +13,7 @@ const Home: React.FC = () => {
       const _content = "";
       setContent(_content);
     }
-  }, []);
+  }, [content]);
   //
   return (
     <div className="container">

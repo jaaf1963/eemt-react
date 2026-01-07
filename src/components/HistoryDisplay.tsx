@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import GridHistoryDisplay from "./HistoryGridDisplay";
-//import FileDisplayDownload from "./FileDisplayDownload";
 import ProgressWithLabel from "./InfiniteProgress";
 //
 // Solo lista documentos segun Button/Project
@@ -25,7 +24,7 @@ interface fetchDocsProps {
   //onActivar: (valor: boolean) => void;
 }
 //
-let descriPrj = "";
+//let descriPrj = "";
 
 const HistoryDisplay: React.FC<fetchDocsProps> = ({
   activarFetch,
@@ -34,12 +33,10 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
   cliePrjFetch,
 }) => {
   const [showHistory, setShowHistory] = useState(false);
-  const [docsHistory, setDocsHistory] = useState<itera[]>([]);
+  //const [docsHistory, setDocsHistory] = useState<itera[]>([]);
   const [dataHistory, setDataHistory] = useState<itera[]>([]);
-  const [themeProj, setThemeProj] = useState<string>("");
-  const [descrProj, setDescrProj] = useState<string>("");
-  const [responsab, setResponsab] = useState<string>("");
-  const [numiterac, setNumiterac] = useState<string>("");
+  //const [responsab, setResponsab] = useState<string>("");
+  //const [numiterac, setNumiterac] = useState<string>("");
   const [progress, setProgress] = useState(0); // Valor inicial 0%
   const [renderFiles, setRenderfiles] = useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -51,7 +48,8 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
     if (roleStore) {
       return roleStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextRoleStore("");
+    return "";
   });
   //
   const [textUserStore, setTextUserStore] = useState(() => {
@@ -59,6 +57,7 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
     if (userStore) {
       return userStore;
     }
+    setTextUserStore("");
     return "";
   });
   //
@@ -67,6 +66,7 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
     if (entyStore) {
       return entyStore;
     }
+    setEntyUserStore("");
     return "";
   });
   //
@@ -75,6 +75,7 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
     if (authStore) {
       return authStore;
     }
+    setAuthUserStore("");
     return "";
   });
   //
@@ -96,8 +97,8 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
         authUserStore !== null
       ) {
         //
-        setResponsab("");
-        setNumiterac("");
+        //setResponsab("");
+        //setNumiterac("");
         setDataHistory([]);
         //
         if (textRoleStore === "admin" || textRoleStore === "edit") {
@@ -134,7 +135,7 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
               //
               if (docums) {
                 //
-                setDocsHistory(docums);
+                //setDocsHistory(docums);
                 //
                 handleFetchDocuments(docums);
                 //
@@ -164,12 +165,12 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
     };
     //
     //let files = [[]]
-    console.log("datoBtnFetch:", datoBtnFetch);
-    console.log(files);
+    //console.log("datoBtnFetch:", datoBtnFetch);
+    //console.log(files);
     //
     if (files) {
       setDataHistory([]);
-      setResponsab(files.author[0]);
+      //setResponsab(files.author[0]);
       //
       // Iterations
       //
@@ -181,11 +182,11 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
       let authiter = files.author;
       let dateiter = files.upddat;
       let numbetsk = files.numtsk;
-      let obseritr = files.obserx;
-      let numbedoc = files.numdoc;
-      console.log("dociters:", docsiter);
-      console.log("datiters:", dateiter);
-      console.log("advniter:", advniter);
+      //let obseritr = files.obserx;
+      //let numbedoc = files.numdoc;
+      //console.log("dociters:", docsiter);
+      //console.log("datiters:", dateiter);
+      //console.log("advniter:", advniter);
       //
       if (docsiter) {
         for (let i: number = 0; i < docsiter.length; i++) {
@@ -204,8 +205,8 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
         }
         setShowHistory(true);
       }
-      console.log("dataHistory:");
-      console.log(dataHistory);
+      //console.log("dataHistory:");
+      //console.log(dataHistory);
       //
       // Despliega 'Files' al hacer Click en 'Buttons'
       //
@@ -233,6 +234,7 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
   if (!activarFetch) {
     return <p>Presione un botón para ver info.</p>;
   }
+  console.log(progress);
   //
   return (
     <>

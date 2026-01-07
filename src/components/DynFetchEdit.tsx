@@ -75,7 +75,8 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
     if (roleStore) {
       return roleStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextRoleStore("");
+    return "";
   });
   //
   const [textUserStore, setTextUserStore] = useState(() => {
@@ -83,6 +84,7 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
     if (userStore) {
       return userStore;
     }
+    setTextUserStore("");
     return "";
   });
   //
@@ -91,6 +93,7 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
     if (entyStore) {
       return entyStore;
     }
+    setEntyUserStore("");
     return "";
   });
   //
@@ -99,6 +102,7 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
     if (authStore) {
       return authStore;
     }
+    setAuthUserStore("");
     return "";
   });
   //
@@ -327,18 +331,10 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
       // Crea un nuevo array que incluye todos los datos existentes
       setDataDocus((prevDataDocus) => [...prevDataDocus, newDocu]);
     };
-    const deleteDataDocusV = (itmToDelete: string) => {
-      const newItems = dataDocus.filter((item) => item.docu !== itmToDelete);
-      setDataDocus(newItems);
-    };
     //
     const addDataTasks = (newTask: tarea) => {
       // Crea un nuevo array que incluye todos los datos existentes
       setDataTasks((prevDataTasks) => [...prevDataTasks, newTask]);
-    };
-    const deleteDataTasksV = (itmToDelete: string) => {
-      const newItems = dataTasks.filter((item) => item.task !== itmToDelete);
-      setDataTasks(newItems);
     };
     //
     const addDataIters = (newIter: itera) => {

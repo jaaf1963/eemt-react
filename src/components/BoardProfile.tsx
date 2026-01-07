@@ -23,17 +23,17 @@ const BoardProfile: React.FC = () => {
 
   useEffect(() => {
     const idStore = localStorage.getItem("id");
-    console.log(idStore);
+    //console.log(idStore);
     if (idStore) {
       setDataId(idStore);
     }
     const entityStore = localStorage.getItem("entity");
-    console.log(entityStore);
+    //console.log(entityStore);
     if (entityStore) {
       setDataEntity(entityStore);
     }
     const userStore = localStorage.getItem("username");
-    console.log(userStore);
+    //console.log(userStore);
     if (userStore) {
       setDataUser(userStore);
     }
@@ -88,14 +88,3 @@ const BoardProfile: React.FC = () => {
 };
 
 export default BoardProfile;
-
-/*
-      <strong>Authorities:</strong>
-      <ul>
-        {currentUser?.roles &&
-          currentUser?.roles.map((role: string, index: number) => (
-            <li key={index}>{role}</li>
-          ))}
-      </ul>
-
-*/

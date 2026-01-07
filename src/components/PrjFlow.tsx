@@ -1,8 +1,6 @@
 import React, { useState, FormEvent } from "react";
-//import Select from "react-select";
 import ButtonsTableImage from "../services/buttonTableImage";
 import ButtonsPanelImage from "../services/buttonPanelImage";
-//import ComboBoxInputs from "./ComboBoxInputs";
 import "../styles/InputGroup.css";
 
 const panels = [
@@ -26,14 +24,6 @@ const groups = [
   { label: "Group6", value: "6_group6" },
   { label: "Group7", value: "7_group7" },
   { label: "Group8", value: "8_group8" },
-];
-
-const buttons = [
-  { label: "--- Select button ---", value: "" },
-  { label: "Button0", value: "0_button0" },
-  { label: "Button1", value: "1_button1" },
-  { label: "Button2", value: "2_button2" },
-  { label: "Button3", value: "3_button3" },
 ];
 
 const type_button = [
@@ -107,12 +97,12 @@ interface FormData {
 
 const PrjFlow = () => {
   // Estado para los datos del formulario
-  const [adminUserRole, setAdminUserRole] = useState<boolean>(false);
-  const [moderUserRole, setModerUserRole] = useState<boolean>(false);
+  //const [adminUserRole, setAdminUserRole] = useState<boolean>(false);
+  //const [moderUserRole, setModerUserRole] = useState<boolean>(false);
   const [panelss, setPanelss] = useState<string[]>([]);
   const [groupss, setGroupss] = useState<groupProps[]>([]);
-  const [buttonn, setButtonn] = useState<string[]>([]);
-  const [selectedOption, setSelectedOption] = useState(null);
+  //const [buttonn, setButtonn] = useState<string[]>([]);
+  //const [selectedOption, setSelectedOption] = useState(null);
   //
   const [selecTexPanel, setSelecTexPanel] = useState("");
   const [selecNumPanel, setSelecNumPanel] = useState(0);
@@ -128,7 +118,7 @@ const PrjFlow = () => {
   //
   const [activesino, setActivesino] = useState(false);
   const [visiblesino, setVisiblesino] = useState(false);
-  const [classnam, setClassnam] = useState<string>("inactive");
+  //const [classnam, setClassnam] = useState<string>("inactive");
   const [statusss, setStatusss] = useState<string>("inactive");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -136,7 +126,8 @@ const PrjFlow = () => {
     if (roleStore) {
       return roleStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextRoleStore("");
+    return "";
   });
   //
   const [textUserStore, setTextUserStore] = useState(() => {
@@ -144,7 +135,8 @@ const PrjFlow = () => {
     if (userStore) {
       return userStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextUserStore("");
+    return "";
   });
   //
   const [entyUserStore, setEntyUserStore] = useState(() => {
@@ -152,7 +144,8 @@ const PrjFlow = () => {
     if (entyStore) {
       return entyStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setEntyUserStore("");
+    return "";
   });
   //
   const [authUserStore, setAuthUserStore] = useState(() => {
@@ -160,7 +153,8 @@ const PrjFlow = () => {
     if (authStore) {
       return authStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setAuthUserStore("");
+    return "";
   });
   //
   const [inputsData, setInputsData] = useState<FormData>({
@@ -230,9 +224,6 @@ const PrjFlow = () => {
       authUserStore !== null &&
       groupSel !== ""
     ) {
-      console.log(groupSel);
-      console.log(selecNumPanel);
-      console.log(selecNumLevel);
       if (textRoleStore === "admin" || textRoleStore === "edit") {
         const dataGroup = {
           grotext: "group_buttons",
@@ -262,7 +253,7 @@ const PrjFlow = () => {
           //
           setGroupss(grpbutts);
           //setButtonn(grpbutts);
-          console.log(grpbutts);
+          //console.log(grpbutts);
           //
         } catch (err: any) {
           //setError(err.message);
@@ -273,53 +264,6 @@ const PrjFlow = () => {
         }
       } else {
         alert("No se pudo acreditar Login...revisar");
-      }
-    }
-  };
-
-  //---- Lee Buttons segun << panelSel y groupSel >>
-
-  const getButton = async (buttSel: string) => {
-    if (
-      textUserStore !== null &&
-      entyUserStore !== null &&
-      authUserStore !== null &&
-      buttSel !== ""
-    ) {
-      if (textRoleStore === "admin" || textRoleStore === "edit") {
-        const dataButton = {
-          buttext: "button",
-          entity: entyUserStore,
-          userna: textUserStore,
-          authen: authUserStore,
-          butsel: buttSel,
-        };
-        const API_URL_BACKEND = "http://localhost:5055/select_button_react";
-        //
-        try {
-          const response = await fetch(API_URL_BACKEND, {
-            method: "POST",
-            body: JSON.stringify(dataButton),
-            headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
-          });
-          const panelResp = await response.json();
-          //
-          if (panelResp.success === "err") {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          //
-          const butts = panelResp.msg;
-          setButtonn(butts);
-          //
-        } catch (err: any) {
-          //setError(err.message);
-          alert("Error al leer buttons panel...");
-          //
-        } finally {
-          //setLoading(false);
-        }
-      } else {
-        alert("Código de Panel es nulo...revisar");
       }
     }
   };
@@ -343,49 +287,19 @@ const PrjFlow = () => {
     }
   }
   //
-  const handlePanelSele = (panelSel: string) => {
-    const num = Number(panelSel.slice(0, 1));
-    const txt = panelSel.slice(2, panelSel.length);
-    setSelecNumPanel(num);
-    setSelecTexPanel(txt);
-    //
-    if (num > 0) {
-      setInputsData({
-        ...inputsData, // Copia el estado actual
-        // Actualiza la propiedad correspondiente
-        [inputsData.panel]: num.toString(),
-      });
-    }
-
-    // Hacer FETCH para traer Buttons de Panel y sus caracteristicas.
-  };
-  //
-  const handleGroupSearch = (groupSel: string) => {
-    const num = Number(groupSel.slice(0, 1));
-    const txt = groupSel.slice(2, groupSel.length);
-    setSelecNumLevel(num);
-    setSelecTexLevel(txt);
-    //
-    // Get Buttons by Panel an Group in Backend
-    //
-    getGroups(num.toString());
-    //
-    //
-  };
-  //
   const handlePanelSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("Opción seleccionada:", event.target.value);
+    //console.log("Opción seleccionada:", event.target.value);
     let panelSel = event.target.value;
     //
     const num = Number(panelSel.slice(0, 1));
     const txt = panelSel.slice(2, panelSel.length);
     setSelecNumPanel(num);
     setSelecTexPanel(txt);
-    console.log("Button seleccionado:", panelSel);
+    //console.log("Button seleccionado:", panelSel);
   };
   //
   const handleTypeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("Opción seleccionada:", event.target.value);
+    //console.log("Opción seleccionada:", event.target.value);
     let typeSel = event.target.value;
     //
     const num = Number(typeSel.slice(0, 1));
@@ -396,14 +310,14 @@ const PrjFlow = () => {
   };
   //
   const handleGroupSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("Opción seleccionada:", event.target.value);
+    //console.log("Opción seleccionada:", event.target.value);
     let groupSel = event.target.value;
     //
     const num = Number(groupSel.slice(0, 1));
     const txt = groupSel.slice(2, groupSel.length);
     setSelecNumSpot(num);
     setSelecTexSpot(txt);
-    console.log("Type seleccionado:", groupSel);
+    //console.log("Type seleccionado:", groupSel);
     //
     // Get Buttons by Panel an Group in Backend
     //
@@ -413,14 +327,14 @@ const PrjFlow = () => {
   };
   //
   const handleButtonGroup = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("Opción seleccionada:", event.target.value);
+    //console.log("Opción seleccionada:", event.target.value);
     let buttonSel = event.target.value;
     //
     const num = Number(buttonSel.slice(0, 1));
     const txt = buttonSel.slice(2, buttonSel.length);
     setSelecNumButton(num);
     setSelecTexButton(txt);
-    console.log("Button seleccionado:", buttonSel);
+    //console.log("Button seleccionado:", buttonSel);
   };
   //
   const handleButtonItem = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -432,33 +346,12 @@ const PrjFlow = () => {
     setSelecNumButton(num);
     //setSelecTexButton(txt);
     setSelecTexButton(itemSel);
-    console.log("Item seleccionado:", itemSel);
-  };
-  //
-  const handleChange = (option: any) => {
-    setSelectedOption(option);
-  };
-
-  //
-  const handleButtonSelect = (buttonSel: string) => {
-    const num = Number(buttonSel.slice(0, 1));
-    const txt = buttonSel.slice(2, buttonSel.length);
-    setSelecNumButton(num);
-    setSelecTexButton(txt);
-    console.log("Button seleccionado:", buttonSel);
-  };
-  //
-  const handleSpotSelect = (spotSel: string) => {
-    const num = Number(spotSel.slice(0, 1));
-    const txt = spotSel.slice(2, spotSel.length);
-    setSelecNumSpot(num);
-    setSelecTexSpot(txt);
-    console.log("Group seleccionado:", spotSel);
+    //console.log("Item seleccionado:", itemSel);
   };
   //
   // Maneja los cambios en los inputs
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setClassnam("inactivo");
+    //setClassnam("inactivo");
     setStatusss("inactivo");
     const { name, value } = e.target;
     //
@@ -579,32 +472,32 @@ const PrjFlow = () => {
   // Maneja el envío del formulario
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Previene la recarga de la página
-    const userStore = localStorage.getItem("username");
-    const roleStore = localStorage.getItem("role");
-    const entyStore = localStorage.getItem("entity");
-    const authStore = localStorage.getItem("token");
-    console.log(roleStore, entyStore, userStore, authStore);
+    //const userStore = localStorage.getItem("username");
+    //const roleStore = localStorage.getItem("role");
+    //const entyStore = localStorage.getItem("entity");
+    //const authStore = localStorage.getItem("token");
+    //console.log(roleStore, entyStore, userStore, authStore);
     //
     if (
-      roleStore &&
-      entyStore !== null &&
-      userStore !== null &&
-      authStore !== null
+      textRoleStore &&
+      entyUserStore !== null &&
+      textUserStore !== null &&
+      authUserStore !== null
     ) {
-      const adm: boolean = roleStore === "admin";
-      const mod: boolean = roleStore === "moder";
-      setAdminUserRole(adm);
-      setModerUserRole(mod);
-      setTextUserStore(userStore);
-      setEntyUserStore(entyStore);
-      setAuthUserStore(authStore);
+      //const adm: boolean = roleStore === "admin";
+      //const mod: boolean = roleStore === "moder";
+      //setAdminUserRole(adm);
+      //setModerUserRole(mod);
+      //setTextUserStore(userStore);
+      //setEntyUserStore(entyStore);
+      //setAuthUserStore(authStore);
       //setShowAdminBoard(adminUserRole);
       //
-      if (roleStore === "admin" || roleStore === "edit") {
+      if (textRoleStore === "admin" || textRoleStore === "edit") {
         // Creamos un FormData para enviar los archivos
         //const formData = new FormData();
         //
-        console.log("formValues:", inputsData);
+        //console.log("formValues:", inputsData);
         const data = {
           buttext: "buttons_send",
           entity: entyUserStore,
@@ -631,8 +524,8 @@ const PrjFlow = () => {
           });
           //
           if (response.ok) {
-            const result = await response.json();
-            console.log("Datos enviados con éxito:", result);
+            //const result = await response.json();
+            //console.log("Datos enviados con éxito:", result);
             //
             // Opcional: limpiar el formulario o redirigir
             setInputsData({
@@ -645,7 +538,7 @@ const PrjFlow = () => {
               classnam: "",
               status: "",
             });
-            setClassnam("inactivo");
+            //setClassnam("inactivo");
             setStatusss("inactivo");
             //
           } else {
@@ -977,14 +870,3 @@ const PrjFlow = () => {
 };
 
 export default PrjFlow;
-
-/*
-              <Select
-                style={{marginInlineStart: "8px", width: "190px"}}
-                placeholder="Selecciona un valor..." // El placeholder
-                value={selectedOption} // El valor seleccionado, debe ser null al inicio
-                onChange={handleChange}
-                options={type_button}
-              />
-
-*/

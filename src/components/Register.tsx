@@ -3,7 +3,6 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-//import IRegist from "../types/user.type";
 import {
   entityOptions,
   entypeOptions,
@@ -146,11 +145,11 @@ const Register: React.FC = () => {
       //passconf: passconf,
       entini: entini,
       entend: entend,
-      roless: "view",
+      roless: module?.split("-")[0],
     };
 
     //-------------
-    console.log(entend);
+    //console.log(entend);
     const API_URL_REGISTER = "http://localhost:5055/register_user_react";
     //
     try {
@@ -168,7 +167,7 @@ const Register: React.FC = () => {
       }
 
       const data = await response.json();
-      console.log("Registro exitoso:", data);
+      //console.log("Registro exitoso:", data);
       // Aquí puedes manejar la respuesta del servidor (por ejemplo, guardar un token)
       //
       if (data) {

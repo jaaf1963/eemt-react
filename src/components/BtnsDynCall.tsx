@@ -1,7 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import DynamicButton from "./BtnsDynamic";
-//import dataTable from "../services/fetchTableBtns";
 
 const shad = [
   // desplazX, desplazY, blur, color
@@ -51,12 +50,7 @@ interface buttonsProps {
   buttstat: string;
   flowbutt: string;
 }
-//-----------------------------------------------------------------------
-// Define los tipos para las propiedades de tu componente (si es necesario)
-//interface itemsProp {
-//  item: buttonsProps[];
-//}
-//-----------------------------------------------------------------------
+//
 // Define la interfaz para las props del componente hijo
 let contenidoADibujar1: React.ReactNode;
 let btnSelect = "";
@@ -78,7 +72,8 @@ function BtnsDynCall(pnl: pnlProp) {
     if (roleStore) {
       return roleStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextRoleStore("");
+    return "";
   });
   //
   const [textUserStore, setTextUserStore] = useState(() => {
@@ -86,6 +81,7 @@ function BtnsDynCall(pnl: pnlProp) {
     if (userStore) {
       return userStore;
     }
+    setTextUserStore("");
     return "";
   });
   //
@@ -94,6 +90,7 @@ function BtnsDynCall(pnl: pnlProp) {
     if (entyStore) {
       return entyStore;
     }
+    setEntyUserStore("");
     return "";
   });
   //
@@ -102,8 +99,17 @@ function BtnsDynCall(pnl: pnlProp) {
     if (authStore) {
       return authStore;
     }
+    setAuthUserStore("");
     return "";
   });
+  //
+  if (!filters) {
+    setFilters({
+      panel: pnl.pnl,
+      level: null,
+      type: "",
+    });
+  }
   //
   //--------------------------------------------------------------------------
   //
@@ -169,6 +175,8 @@ function BtnsDynCall(pnl: pnlProp) {
     //
   }, []);
   //
+  console.log(loading);
+  //
   //--------------------------------------------------------------------------
   //
   // Filtra tabla de 'Botones' sgun 'Panel' con 'state' = "filters.panel"
@@ -226,7 +234,6 @@ function BtnsDynCall(pnl: pnlProp) {
         clasname: item.buttstat,
       }))
     );
-    //console.log(items.length);
   };
 
   // Funcion para cambiar el estado de un boton
@@ -246,8 +253,6 @@ function BtnsDynCall(pnl: pnlProp) {
           : item
       )
     );
-    // item.buttonStatus === "inactive" ? "active" :  "inactive",
-    //console.log("el boton es:", itemId);
     //
     // Envio al Padre 'BtnsDynCliEdit'
     //

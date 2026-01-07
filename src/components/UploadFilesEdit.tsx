@@ -45,7 +45,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
 }) => {
   //
   // Estado del Boton de Envio
-  const [buttonSelEdit, setButtonSelEdit] = useState<string>("");
+  //const [buttonSelEdit, setButtonSelEdit] = useState<string>("");
   // Estado para almacenar la lista de archivos y su estado de selección
   const [files, setFiles] = useState<FileInfo[]>([]);
   //
@@ -54,6 +54,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
     if (roleStore) {
       return roleStore;
     }
+    setTextRoleStore("");
     return "";
   });
   //
@@ -62,6 +63,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
     if (userStore) {
       return userStore;
     }
+    setTextUserStore("");
     return "";
   });
   //
@@ -70,6 +72,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
     if (entyStore) {
       return entyStore;
     }
+    setEntyUserStore("");
     return "";
   });
   //
@@ -78,6 +81,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
     if (authStore) {
       return authStore;
     }
+    setAuthUserStore("");
     return "";
   });
   //
@@ -88,7 +92,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
     // Creamos un nuevo array a partir de los archivos seleccionados
     const newFiles: FileInfo[] = Array.from(event.target.files || []).map(
       (file) => ({
-        name: file.name.replaceAll(" ", "_"),
+        name: file.name.replaceAll(" ", "-"),
         selected: false,
         file: file,
       })
@@ -111,6 +115,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
     document.getElementById("fileInput")?.click();
   };
   //
+  /*
   // Genera Base64 desde File
   const getBlobFromFile = (file: File): Promise<Blob> => {
     return new Promise((resolve, reject) => {
@@ -126,6 +131,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
       reader.readAsArrayBuffer(file);
     });
   };
+  */
   //
   // Función para enviar los archivos seleccionados al BACKEND
   //
@@ -133,7 +139,10 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
     //
     // Se crea la instancia de un documento nuevo vacio
     // cuando se trabaja con documentos existentes. (solo estudio)
-    if (existsdocs !== null) {
+    if (existsdocs.length < 3) {
+      existsdocs = "empty.txt";
+    }
+    if (existsdocs !== null && existsdocs.length > 3 && files.length < 1) {
       //alert("Archivo existente -> " + existsdocs);
       files.push({ file: emptyFile, selected: true, name: existsdocs });
     }
@@ -143,7 +152,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
       entyUserStore !== null &&
       textUserStore !== null &&
       authUserStore !== null &&
-      buttonSelEdit !== null &&
+      //buttonSelEdit !== null &&
       files.length > 0
     ) {
       if (textRoleStore === "admin" || textRoleStore === "edit") {
@@ -173,6 +182,22 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
             if (advancdocs.length === 0) {
               advancdocs = "0";
             }
+            console.log("entity: ", entyUserStore);
+            console.log("codprj: ", codSelEdit);
+            console.log("projct: ", prjSelEdit);
+            console.log("cliSel: ", cliSelEdit);
+            console.log("btnSel: ", btnSelEdit);
+            console.log("typdoc:", typedocums);
+            console.log("files: ", selectedFiles);
+            console.log("exidoc:", existsdocs);
+            //
+            if (typedocums === "reemplazo") {
+              authordocs = "aut";
+              observdocs = "obs";
+              taskssdocs = "tsk";
+              advancdocs = "adv";
+            }
+            //
             formData.append("entity", entyUserStore);
             formData.append("codprj", codSelEdit);
             formData.append("projct", prjSelEdit);
@@ -200,14 +225,20 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
               );
               //
               if (response.ok) {
-                const result = await response.json();
-                console.log("Archivos enviados correctamente:", result);
-                // Aquí puedes manejar la respuesta del backend
+                //
+                alert("Documentos almacenados exitosamente.");
+                //const result = await response.json();
+                //console.log("Archivos enviados correctamente:", result);
+                // Aqui puedes manejar la respuesta del backend
               } else {
                 console.error("Error al enviar los archivos.");
+                alert(
+                  "Server envió un error al procesar la petición . . . revisar."
+                );
               }
             } catch (error) {
               console.error("Error en la conexión:", error);
+              alert("Se detectó un Error en la conexión . . . revisar.");
             }
           } else {
             alert("Debe seleccionar archivos de la lista cargada.");

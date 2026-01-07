@@ -4,10 +4,6 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { entityOptions } from "../types/user.type";
 
-//import { login } from "../services/auth.local.service";
-//import { LoginFetch } from "../services/auth.back.service";
-//import { LoginFetch } from "../services/auth.login.service";
-
 //type Props = {};
 interface Props {
   onRoleChange: (value: boolean) => void;
@@ -85,12 +81,9 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
       }
 
       const data = await response.json();
-      //console.log("data resp:", data);
-      //console.log("data success:", data.success);
       // Aquí puedes manejar la respuesta del servidor (por ejemplo, guardar un token)
       //
       if (data.success !== "err") {
-        console.log(data);
         storageDataUser("id", data.data.tkn_id);
         storageDataUser("entity", data.data.tkn_entity);
         storageDataUser("username", data.data.tkn_user);

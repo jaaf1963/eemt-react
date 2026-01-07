@@ -44,7 +44,8 @@ const BoardProject: React.FC = () => {
     if (roleStore) {
       return roleStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextRoleStore("");
+    return "";
   });
   //
   const [textUserStore, setTextUserStore] = useState(() => {
@@ -52,7 +53,8 @@ const BoardProject: React.FC = () => {
     if (userStore) {
       return userStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextUserStore("");
+    return "";
   });
   //
   const [entyUserStore, setEntyUserStore] = useState(() => {
@@ -60,7 +62,8 @@ const BoardProject: React.FC = () => {
     if (entyStore) {
       return entyStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setEntyUserStore("");
+    return "";
   });
   //
   const [authUserStore, setAuthUserStore] = useState(() => {
@@ -68,7 +71,8 @@ const BoardProject: React.FC = () => {
     if (authStore) {
       return authStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setAuthUserStore("");
+    return "";
   });
 
   const searchCompanys = async (companySel: boolean) => {
@@ -214,7 +218,7 @@ const BoardProject: React.FC = () => {
   // se asigna PostData a formValue para igualar las variables
   // al desEstructurar los valores ingresados por el usuario
   const handleRegisterProject = async (formValue: PostData) => {
-    console.log("Register...");
+    //console.log("Register...");
     if (
       textRoleStore !== null &&
       entyUserStore !== null &&
@@ -269,7 +273,7 @@ const BoardProject: React.FC = () => {
           }
 
           const data = await response.json();
-          console.log("Registro exitoso:", data);
+          //console.log("Registro exitoso:", data);
           // Aquí puedes manejar la respuesta del servidor (por ejemplo, guardar un token)
           //
           if (data) {

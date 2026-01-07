@@ -50,7 +50,7 @@ const FileDisplayDownload: React.FC<FileDisplayProps> = ({
       >
         Eliminar
       </button>
-      <a href="#" onClick={handleDownload}>
+      <a href="/#" onClick={handleDownload}>
         Descargar: {fileName}
       </a>
     </div>

@@ -6,9 +6,6 @@ import FetchDataEdit from "./DynFetchEdit";
 import UploadFilesEdit from "./UploadFilesEdit";
 import RadioButtonGroup from "./RadioButtons";
 import HistoryDisplay from "./HistoryDisplay";
-import RadioButton from "./RedioButt";
-//import { ChildComponent } from './ChildComponent';
-//import SearchBarProject from "../services/searchBarProject";
 
 const panels = [
   {
@@ -35,7 +32,7 @@ const panels = [
 ];
 
 const options = [
-  { label: "Estudio", value: "estudio" },
+  //{ label: "Estudio", value: "estudio" },
   { label: "Iteración", value: "iteracion" },
   { label: "Tarea", value: "tarea" },
   { label: "Reemplazo", value: "reemplazo" },
@@ -94,6 +91,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     if (roleStore) {
       return roleStore;
     }
+    setTextRoleStore("");
     return "";
   });
   //
@@ -102,6 +100,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     if (userStore) {
       return userStore;
     }
+    setTextUserStore("");
     return "";
   });
   //
@@ -110,6 +109,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     if (entyStore) {
       return entyStore;
     }
+    setEntyUserStore("");
     return "";
   });
   //
@@ -118,13 +118,14 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     if (authStore) {
       return authStore;
     }
+    setAuthUserStore("");
     return "";
   });
   //
   // Funcion para activar funcion FetchData
   //
   const activarFunctionFetch = (value: boolean) => {
-    console.log("Opcion seleccionada:", value);
+    //console.log("Opcion seleccionada:", value);
     if (activarFetch) {
       setActivarFetch(false);
     } else {
@@ -139,7 +140,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     selProject: string,
     selPrjClie: string
   ) => {
-    console.log("*", selPrjCode, selProject, selPrjClie);
+    //console.log("*", selPrjCode, selProject, selPrjClie);
     if (selPrjCode !== "") {
       setSelecPrjCode(selPrjCode);
     }
@@ -149,7 +150,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     if (selPrjClie !== "") {
       setSelecPrjClie(selPrjClie);
     }
-    console.log("**", selecPrjCode, selecProject, selecPrjClie);
+    //console.log("**", selecPrjCode, selecProject, selecPrjClie);
   };
   //
   // Funcion Activacion del Fetch en 'DynFetchEdit' y pasar datos
@@ -171,7 +172,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   //
   // Funcion para manejar el 'typeDoc'
   const handleOptRadioChange = (value: string) => {
-    console.log("Option radiobutton:", value);
+    //console.log("Option radiobutton:", value);
     setSelecOptRadi(value);
   };
   //
@@ -199,9 +200,9 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   //
   // Maneja los cambios del select box 'projects'
   const handleSelectProject = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("Opción seleccionada:", event.target.value);
+    //console.log("Opción seleccionada:", event.target.value);
     const projSel = event.target.value;
-    console.log(projSel);
+    //console.log(projSel);
     //
     if (projSel !== "") {
       setCodiPrjFetch(projSel);
@@ -223,9 +224,9 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
       activacionCompFetch(datoBtnFetch, selPrjCode);
     }
     //
-    console.log("codePrj selecc:", selPrjCode);
-    console.log("project selecc:", selProject);
-    console.log("cliePrj selecc:", selPrjClie);
+    //console.log("codePrj selecc:", selPrjCode);
+    //console.log("project selecc:", selProject);
+    //console.log("cliePrj selecc:", selPrjClie);
     //
   };
   //
@@ -241,9 +242,9 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   const handleSelectDocument = (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
-    console.log("Opción seleccionada:", event.target.value);
+    //console.log("Opción seleccionada:", event.target.value);
     const documSel = event.target.value;
-    console.log(documSel);
+    //console.log(documSel);
     //
     if (documSel !== "" && documSel.slice(0, 3) !== "---") {
       setSelecDocument(documSel);
@@ -251,7 +252,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
       handleOptRadioChange("reemplazo");
       //
       //setSelecOptRadi("reemplazo");
-      console.log("Option radiobutton:", selecOptRadi);
+      //console.log("Option radiobutton:", selecOptRadi);
     } else {
       //
       if (documSel.slice(0, 5) === "--- N") {
@@ -266,7 +267,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     if (updaDocExist) {
       setExistDocums(updaDocExist);
     }
-    console.log(updaDocExist);
+    //console.log(updaDocExist);
   };
   //
   //
@@ -277,7 +278,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
       authUserStore !== null
       // && projSel !== ""
     ) {
-      console.log(projSel);
+      //console.log(projSel);
       if (
         textRoleStore === "admin" ||
         textRoleStore === "edit" ||
@@ -306,7 +307,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
           // Data ProjectsGet for map() select
           const projGets = projResp.msg;
           setProjectsGet(projGets);
-          console.log(projectsGet);
+          //console.log(projectsGet);
           //
         } catch (err: any) {
           //setError(err.message);
@@ -327,7 +328,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     //
     // Esta función se pasará al hijo 'BtnsDynCall' como props
     const manejarDatoDesdeCall = (btnSel: string) => {
-      console.log("manejaDatoDesdeCall", btnSel);
+      //console.log("manejaDatoDesdeCall", btnSel);
       // Llamada a funcion pata activar los 'useState()'
       activacionCompFetch(btnSel, selPrjCode);
       // Recibe mensaje de BtnsDymCall
@@ -589,5 +590,3 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
 };
 
 export default ClientButtEdit;
-
-//           onFileSelect={handleFileFromChild}

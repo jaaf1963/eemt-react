@@ -1,14 +1,3 @@
-//
-/*
-interface IUser {
-  id?: any | null;
-  username: string;
-  email: string;
-  password: string;
-  roles?: Array<string>;
-}
-*/
-
 //   roles: ["ROLE_USER", "ROLE_MODERATOR", "ROLE_ADMIN", "ROLE_MODIFY"],
 
 const data1 = {

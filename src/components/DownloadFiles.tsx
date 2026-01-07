@@ -26,14 +26,10 @@ const DownloadFiles: React.FC<DownloadFilesProps> = ({ fileName }) => {
   };
   //
   return (
-    <a href="#" onClick={handleDownload}>
+    <a href="/#" onClick={handleDownload}>
       {fileName || "Descargar archivo"}
     </a>
   );
 };
 
 export default DownloadFiles;
-
-/*
-  return <button onClick={handleDownload}>Descargar {fileName}</button>;
-*/

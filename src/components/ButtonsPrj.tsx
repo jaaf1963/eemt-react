@@ -17,16 +17,15 @@ interface FormData {
 
 const PrjFlow = () => {
   // Estado para los datos del formulario
-  const [adminUserRole, setAdminUserRole] = useState<boolean>(false);
-  const [moderUserRole, setModerUserRole] = useState<boolean>(false);
+  //const [adminUserRole, setAdminUserRole] = useState<boolean>(false);
+  //const [moderUserRole, setModerUserRole] = useState<boolean>(false);
   const [panelButtons, setPanelButtons] = useState<string[]>([]);
   //
-  const [value, setValue] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   //
   const [activesino, setActivesino] = useState(false);
   const [visiblesino, setVisiblesino] = useState(false);
-  const [classnam, setClassnam] = useState<string>("inactive");
+  //const [classnam, setClassnam] = useState<string>("inactive");
   const [statusss, setStatusss] = useState<string>("inactive");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -34,7 +33,8 @@ const PrjFlow = () => {
     if (roleStore) {
       return roleStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextRoleStore("");
+    return "";
   });
   //
   const [textUserStore, setTextUserStore] = useState(() => {
@@ -42,7 +42,8 @@ const PrjFlow = () => {
     if (userStore) {
       return userStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextUserStore("");
+    return "";
   });
   //
   const [entyUserStore, setEntyUserStore] = useState(() => {
@@ -50,7 +51,8 @@ const PrjFlow = () => {
     if (entyStore) {
       return entyStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setEntyUserStore("");
+    return "";
   });
   //
   const [authUserStore, setAuthUserStore] = useState(() => {
@@ -58,7 +60,8 @@ const PrjFlow = () => {
     if (authStore) {
       return authStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setAuthUserStore("");
+    return "";
   });
   //
   const [inputsData, setInputsData] = useState<FormData>({
@@ -142,7 +145,7 @@ const PrjFlow = () => {
 
   // Maneja los cambios en los inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setClassnam("inactivo");
+    //setClassnam("inactivo");
     setStatusss("inactivo");
     const { name, value } = e.target;
     //
@@ -251,7 +254,7 @@ const PrjFlow = () => {
     const roleStore = localStorage.getItem("role");
     const entyStore = localStorage.getItem("entity");
     const authStore = localStorage.getItem("token");
-    console.log(roleStore, entyStore, userStore, authStore);
+    //console.log(roleStore, entyStore, userStore, authStore);
     //
     if (
       roleStore &&
@@ -260,25 +263,25 @@ const PrjFlow = () => {
       authStore !== null
     ) {
       //setTextUserStore(userStore);
-      const adm: boolean = roleStore === "admin";
-      const mod: boolean = roleStore === "moder";
-      setAdminUserRole(adm);
-      setModerUserRole(mod);
+      //const adm: boolean = roleStore === "admin";
+      //const mod: boolean = roleStore === "moder";
+      //setAdminUserRole(adm);
+      //setModerUserRole(mod);
       setTextUserStore(userStore);
       setEntyUserStore(entyStore);
       setAuthUserStore(authStore);
       //dataUser(entyStore, userStore);
       //console.log("adminRole:", adminUserRole);
       //console.log("moderRole:", moderUserRole);
-      console.log(textUserStore);
-      console.log(entyUserStore);
+      //console.log(textUserStore);
+      //console.log(entyUserStore);
       //setShowAdminBoard(adminUserRole);
       //
-      if (roleStore === "admin" || roleStore === "moder") {
+      if (textRoleStore === "admin" || textRoleStore === "edit") {
         // Creamos un FormData para enviar los archivos
         //const formData = new FormData();
         //
-        console.log("formValues:", inputsData);
+        //console.log("formValues:", inputsData);
         const data = {
           buttext: "buttons_send",
           entity: entyUserStore,
@@ -318,7 +321,7 @@ const PrjFlow = () => {
               classnam: "",
               status: "",
             });
-            setClassnam("inactivo");
+            //setClassnam("inactivo");
             setStatusss("inactivo");
             //
           } else {

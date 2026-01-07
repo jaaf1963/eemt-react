@@ -38,7 +38,8 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
     if (roleStore) {
       return roleStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextRoleStore("");
+    return "";
   });
   //
   const [textUserStore, setTextUserStore] = useState(() => {
@@ -46,6 +47,7 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
     if (userStore) {
       return userStore;
     }
+    setTextUserStore("");
     return "";
   });
   //
@@ -54,6 +56,7 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
     if (entyStore) {
       return entyStore;
     }
+    setEntyUserStore("");
     return "";
   });
   //
@@ -62,6 +65,7 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
     if (authStore) {
       return authStore;
     }
+    setAuthUserStore("");
     return "";
   });
   //
@@ -78,7 +82,7 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
   // Delete documents
   //
   const manejarFileDelete = async (fileSelect: string) => {
-    console.log("Dato recibido para Delete:", fileSelect);
+    //console.log("Dato recibido para Delete:", fileSelect);
     if (fileSelect !== "") {
       //
       setProgress(0);
@@ -131,6 +135,7 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
             //
           } finally {
             setIsLoading(false);
+            console.log(isLoading);
           }
         } else {
           alert("NO tiene credenciales para eliminar documentos.");
@@ -140,7 +145,8 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
       }
     }
   };
-
+  console.log(progress);
+  //
   return (
     <div style={estiloGrilla}>
       {/* Renderizado condicional: solo mapea si está visible para optimizar */}

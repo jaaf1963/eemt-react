@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-//import { FieldProps } from "formik";
 import * as Yup from "yup";
-//import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-//import PanelsImage from "../services/panelsImage";
-//import { panelOptions } from "../types/user.type";
 
 interface buttNameProps {
   id: number | undefined;
@@ -25,7 +21,8 @@ const BoardButtNames: React.FC = () => {
     if (roleStore) {
       return roleStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextRoleStore("");
+    return "";
   });
   //
   const [textUserStore, setTextUserStore] = useState(() => {
@@ -33,7 +30,8 @@ const BoardButtNames: React.FC = () => {
     if (userStore) {
       return userStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextUserStore("");
+    return "";
   });
   //
   const [entyUserStore, setEntyUserStore] = useState(() => {
@@ -41,7 +39,8 @@ const BoardButtNames: React.FC = () => {
     if (entyStore) {
       return entyStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setEntyUserStore("");
+    return "";
   });
   //
   const [authUserStore, setAuthUserStore] = useState(() => {
@@ -49,12 +48,12 @@ const BoardButtNames: React.FC = () => {
     if (authStore) {
       return authStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setAuthUserStore("");
+    return "";
   });
   //
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  //const [selectedValue, setSelectedValue] = useState("");
 
   const searchButtonsName = async (panelSel: boolean) => {
     //
@@ -192,7 +191,7 @@ const BoardButtNames: React.FC = () => {
             }
 
             const data = await response.json();
-            console.log("Registro exitoso:", data);
+            //console.log("Registro exitoso:", data);
             // Aquí puedes manejar la respuesta del servidor (por ejemplo, guardar un token)
             //
             if (data) {
@@ -263,16 +262,13 @@ const BoardButtNames: React.FC = () => {
                           const panelDeLaOp = foundOption.name;
                           const tituloDeLaOp = foundOption.title;
                           // Puedes usar las variables panelDeLaOpcion y tituloDeLaOpcion
-                          console.log(panelDeLaOp); // 'B'
+                          //console.log(panelDeLaOp); // 'B'
                           if (tituloDeLaOp) {
                             setPanelTitle(tituloDeLaOp);
                           }
                           setFieldValue("panel", panelDeLaOp);
                           //
-                          console.log(
-                            "Nombre seleccionado:",
-                            event.target.value
-                          );
+                          //console.log("Nombre seleccionado:",event.target.value);
                         }
                       }}
                     >

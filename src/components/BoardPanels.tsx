@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-//import { FieldProps } from "formik";
 import * as Yup from "yup";
-//import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import PanelsImage from "../services/panelsImage";
-//import { panelOptions } from "../types/user.type";
 
 interface panelProps {
   id: number | undefined;
@@ -21,15 +18,16 @@ const BoardPanels: React.FC = () => {
   const [panelTitle, setPanelTitle] = useState<string>("");
   const [panelWidth, setPanelWidth] = useState<string>("");
   const [panelHeight, setPanelHeight] = useState<string>("");
-  const [panelBgColor, setPanelBgColor] = useState<string>("");
-  const [panelFntColor, setPanelFntColor] = useState<string>("");
+  //const [panelBgColor, setPanelBgColor] = useState<string>("");
+  //const [panelFntColor, setPanelFntColor] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
     if (roleStore) {
       return roleStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextRoleStore("");
+    return "";
   });
   //
   const [textUserStore, setTextUserStore] = useState(() => {
@@ -37,7 +35,8 @@ const BoardPanels: React.FC = () => {
     if (userStore) {
       return userStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextUserStore("");
+    return "";
   });
   //
   const [entyUserStore, setEntyUserStore] = useState(() => {
@@ -45,7 +44,8 @@ const BoardPanels: React.FC = () => {
     if (entyStore) {
       return entyStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setEntyUserStore("");
+    return "";
   });
   //
   const [authUserStore, setAuthUserStore] = useState(() => {
@@ -53,12 +53,12 @@ const BoardPanels: React.FC = () => {
     if (authStore) {
       return authStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setAuthUserStore("");
+    return "";
   });
   //
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  //const [selectedValue, setSelectedValue] = useState("");
 
   const searchPanels = async (panelSel: boolean) => {
     //
@@ -95,7 +95,7 @@ const BoardPanels: React.FC = () => {
           } else {
             //
             const panels = panelsResp.msg;
-            console.log(panels);
+            //console.log(panels);
             setPanelSearch(panels);
             //
             setSearchPanel(false);
@@ -222,7 +222,7 @@ const BoardPanels: React.FC = () => {
             }
 
             const data = await response.json();
-            console.log("Registro exitoso:", data);
+            //console.log("Registro exitoso:", data);
             // Aquí puedes manejar la respuesta del servidor (por ejemplo, guardar un token)
             //
             if (data) {
@@ -296,7 +296,7 @@ const BoardPanels: React.FC = () => {
                           const wpanelDeLaOp = foundOption.wpanel;
                           const hpanelDeLaOp = foundOption.hpanel;
                           // Puedes usar las variables panelDeLaOpcion y tituloDeLaOpcion
-                          console.log(panelDeLaOp); // 'B'
+                          //console.log(panelDeLaOp); // 'B'
                           if (tituloDeLaOp) {
                             setPanelTitle(tituloDeLaOp);
                           }
@@ -308,10 +308,7 @@ const BoardPanels: React.FC = () => {
                           if (hpanelDeLaOp) {
                             setPanelHeight(hpanelDeLaOp);
                           }
-                          console.log(
-                            "Panel seleccionado:",
-                            event.target.value
-                          );
+                          //console.log(  "Panel seleccionado:", event.target.value);
                         }
                       }}
                     >
@@ -440,7 +437,7 @@ const BoardPanels: React.FC = () => {
                         marginTop: "5px",
                       }}
                     >
-                      {panelBgColor}
+                      {/*panelBgColor*/}
                     </label>
                     <ErrorMessage
                       name="bgpanel"
@@ -467,7 +464,7 @@ const BoardPanels: React.FC = () => {
                         marginTop: "5px",
                       }}
                     >
-                      {panelFntColor}
+                      {/*panelFntColor*/}
                     </label>
                     <ErrorMessage
                       name="fntpanel"
@@ -496,7 +493,7 @@ const BoardPanels: React.FC = () => {
                         marginTop: "5px",
                       }}
                     >
-                      {panelFntColor}
+                      {/*panelFntColor*/}
                     </label>
                     <ErrorMessage
                       name="fntcolor"
@@ -534,17 +531,3 @@ const BoardPanels: React.FC = () => {
 };
 
 export default BoardPanels;
-
-/*
-              <input
-                type="number"
-                id="type"
-                name="type"
-                min="0"
-                max="7"
-                value={selecNumSpot}
-                onChange={handleChangeInput}
-                required
-                className="input-field-num"
-              />{" "}
-*/

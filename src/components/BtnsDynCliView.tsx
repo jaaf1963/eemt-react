@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import BtnsDymCall from "./BtnsDynCall";
 import FetchDataView from "./DynFetchView";
-//import UploadFilesEdit from "./UploadFilesEdit";
-//import RadioButtonGroup from "./RadioButtons";
 import HistoryDisplay from "./HistoryDisplay";
 
 const panels = [
@@ -54,8 +51,6 @@ interface ComponenteProps {
 }
 
 const ClientButtView: React.FC<ComponenteProps> = () => {
-  const [selecDateIni, setSelecDateIni] = useState<Date | null>(null);
-  const [selecDateEnd, setSelecDateEnd] = useState<Date | null>(null);
   const [mensajeDesdeCall, setMensajeDesdeCall] = useState<string>("");
   const [existDocums, setExistDocums] = useState<docsEx[]>([]);
   const [renderButton, setRenderButton] = useState<boolean>(true);
@@ -67,18 +62,13 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
   const [selecProject, setSelecProject] = useState<string>("");
   const [selecPrjCode, setSelecPrjCode] = useState<string>("");
   const [selecPrjClie, setSelecPrjClie] = useState<string>("");
-  const [selecDocument, setSelecDocument] = useState<string>("");
-  //
-  const [advancDoc, setAdvancDoc] = useState<string>("");
-  const [authorDoc, setAuthorDoc] = useState<string>("");
-  const [observDoc, setObservDoc] = useState<string>("");
-  const [taskssDoc, setTaskssDoc] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
     if (roleStore) {
       return roleStore;
     }
+    setTextRoleStore("");
     return "";
   });
   //
@@ -87,6 +77,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
     if (userStore) {
       return userStore;
     }
+    setTextUserStore("");
     return "";
   });
   //
@@ -95,6 +86,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
     if (entyStore) {
       return entyStore;
     }
+    setEntyUserStore("");
     return "";
   });
   //
@@ -103,6 +95,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
     if (authStore) {
       return authStore;
     }
+    setAuthUserStore("");
     return "";
   });
   //
@@ -149,6 +142,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
     }
   };
   //
+  /*
   // Funcion para manejar el cambio de las 'tareas'
   const handleChangeTasks = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTaskssDoc(e.target.value);
@@ -170,6 +164,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
   const handleChangeAdvance = (e: React.ChangeEvent<HTMLInputElement>) => {
     setAdvancDoc(e.target.value);
   };
+  */
   //
   // Maneja los cambios del select box 'projects'
   const handleSelectProject = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -308,6 +303,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
     //
   }, [mensajeDesdeCall]);
   //
+  console.log(existDocums);
   //
   return (
     <>
@@ -350,106 +346,6 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
       Proyecto: <strong>{codiPrjFetch}</strong>
       {" / "}
       Botón: <strong>{datoBtnFetch}</strong>
-      <div>
-        <label className="input-label-upload" htmlFor="observ">
-          Descripción de la tarea {""}
-        </label>
-        <input
-          type="text"
-          id="tasktext"
-          name="tasktext"
-          value={taskssDoc}
-          onChange={handleChangeTasks}
-          className="input-field-upload"
-        />
-        <span style={{ fontSize: "small", color: "gray" }}> 100 cars.</span>
-      </div>
-      <div>
-        <label className="input-label-upload" htmlFor="observ">
-          Observación / Estado de la tarea{" "}
-        </label>
-        <textarea
-          id="observtext"
-          name="observtext"
-          value={observDoc}
-          onChange={handleChangeObserv}
-          className="input-textarea-upload"
-        ></textarea>
-        <span style={{ fontSize: "small", color: "gray" }}> 500 cars.</span>
-      </div>
-      <div>
-        <label className="input-label-upload" htmlFor="author">
-          Autor del documento{""}
-        </label>
-        <input
-          type="text"
-          id="authortext"
-          name="authortext"
-          value={authorDoc}
-          onChange={handleChangeAuthor}
-          //required
-          className="input-field-upload"
-        />
-        <span style={{ fontSize: "small", color: "gray" }}> 30 cars.</span>
-      </div>
-      <div>
-        <label className="input-label-upload" htmlFor="advan">
-          Avance del proyecto{""}
-        </label>
-        <input
-          type="number"
-          id="advantext"
-          min="0"
-          max="100"
-          name="advantext"
-          value={advancDoc}
-          onChange={handleChangeAdvance}
-          //required
-          className="input-field-upload"
-        />
-        <span style={{ fontSize: "small", color: "gray" }}> 0%-100%</span>
-      </div>
-      <label className="label-date-proj">
-        Inicio proyecto
-        <DatePicker
-          className="picker-date-proj"
-          selected={selecDateIni}
-          // Actualiza el estado con la nueva fecha
-          onChange={(date) => setSelecDateIni(date)}
-          dateFormat="dd/MM/yyyy" // Formato de visualización
-          isClearable // Opción para limpiar la fecha
-          placeholderText="Fecha inicio"
-        />
-      </label>{" "}
-      <label className="label-date-proj">
-        Término proyecto
-        <DatePicker
-          className="picker-date-proj"
-          selected={selecDateEnd}
-          // Actualiza el estado con la nueva fecha
-          onChange={(date) => setSelecDateEnd(date)}
-          dateFormat="dd/MM/yyyy" // Formato de visualización
-          isClearable // Opción para limpiar la fecha
-          placeholderText="Fecha limite"
-        />
-      </label>
-      <p>...</p>
-      <strong>Selección de documentos:</strong>
-      <div>
-        <label className="input-label-exist" htmlFor="document">
-          Existente{" "}
-        </label>
-        <input
-          type="text"
-          id="document"
-          name="document"
-          value={selecDocument}
-          onChange={handleChange}
-          required
-          className="input-text-exist"
-        />{" "}
-        <span></span>
-      </div>
       <p>...</p>
       <strong>Información almacenada:</strong>
       {activarFetch && (

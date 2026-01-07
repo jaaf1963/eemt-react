@@ -1,5 +1,5 @@
 // DisplayCompanys.tsx
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 
 interface cmpnyProps {
   id: number | undefined;
@@ -44,10 +44,6 @@ function SearchCompanys({
           authen: authUserStore,
         };
         //
-        //console.log("adm:", adminUserRole);
-        console.log("usr:", textUserStore);
-        console.log("ent:", entyUserStore);
-        console.log("aut:", authUserStore);
         const API_URL_BACKEND = "http://localhost:5055/search_companys_react";
         //try {
         // Reemplaza con la URL de tu API de FastAPI
@@ -71,15 +67,6 @@ function SearchCompanys({
         //  console.error("Error al buscar el código:", err);
         //  setError("No se pudo buscar el código. Por favor, inténtalo de nuevo.");
       }
-
-      /*
-      const respuesta = await fetch(
-        "https://jsonplaceholder.typicode.com/todos/1"
-      );
-      const data = await respuesta.json();
-      const datosParaEnviar = JSON.stringify(data); // Convertimos el objeto a string
-      onCompanysRecibidas(datosParaEnviar); // Llamamos a la función del padre
-      */
     } catch (error) {
       console.error("Error al hacer fetch:", error);
     }

@@ -1,4 +1,3 @@
-// Frontend (React + TypeScript)
 import React, { useState, useEffect } from "react";
 import "../styles/InputGroup.css";
 
@@ -17,13 +16,13 @@ const BoardUser: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   //
-  //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
     if (roleStore) {
       return roleStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextRoleStore("");
+    return "";
   });
   //
   const [textUserStore, setTextUserStore] = useState(() => {
@@ -31,7 +30,8 @@ const BoardUser: React.FC = () => {
     if (userStore) {
       return userStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setTextUserStore("");
+    return "";
   });
   //
   const [entyUserStore, setEntyUserStore] = useState(() => {
@@ -39,7 +39,8 @@ const BoardUser: React.FC = () => {
     if (entyStore) {
       return entyStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setEntyUserStore("");
+    return "";
   });
   //
   const [authUserStore, setAuthUserStore] = useState(() => {
@@ -47,42 +48,44 @@ const BoardUser: React.FC = () => {
     if (authStore) {
       return authStore;
     }
-    return ""; // O un valor por defecto, como { nombre: '', email: '' }
+    setAuthUserStore("");
+    return "";
   });
-  //
   //
   const API_URL_BACKEND = "http://localhost:5055/update_users_react";
   //
   // 1. Leer usuarios
   const fetchUsers = async () => {
-    try {
-      const dataUsers = {
-        usrtext: "user_update",
-        entity: entyUserStore,
-        userna: textUserStore,
-        authen: authUserStore,
-        userup: users,
-        action: "READ",
-      };
-      //
-      // Asegúrate que esta URL coincida con tu backend
-      const response = await fetch(API_URL_BACKEND, {
-        method: "POST",
-        body: JSON.stringify(dataUsers),
-        headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
-      });
-      //
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+    if (textRoleStore === "admin" || textRoleStore === "edit") {
+      try {
+        const dataUsers = {
+          usrtext: "user_update",
+          entity: entyUserStore,
+          userna: textUserStore,
+          authen: authUserStore,
+          userup: users,
+          action: "READ",
+        };
+        //
+        // Asegúrate que esta URL coincida con tu backend
+        const response = await fetch(API_URL_BACKEND, {
+          method: "POST",
+          body: JSON.stringify(dataUsers),
+          headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
+        });
+        //
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        //console.log("data:", data.msg);
+        setUsers(data.msg);
+        //
+      } catch (error) {
+        console.error("Error al obtener usuarios:", error);
+      } finally {
+        setLoading(false);
       }
-      const data = await response.json();
-      console.log("data:", data.msg);
-      setUsers(data.msg);
-      //
-    } catch (error) {
-      console.error("Error al obtener usuarios:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -127,7 +130,7 @@ const BoardUser: React.FC = () => {
     const newFname = prompt(`Nuevo nombre para ${user.fname}:`, user.fname);
     const newLname = prompt(`Nuevo apellido para ${user.lname}:`, user.lname);
     const newEmail = prompt(`Nuevo email para ${user.email}:`, user.email);
-    console.log(users);
+    //console.log(users);
     if (newLname === null || newFname === null || newEmail === null) return;
 
     try {
@@ -198,26 +201,3 @@ const BoardUser: React.FC = () => {
 };
 
 export default BoardUser;
-
-/*
-              style={{
-                backgroundColor: "cyan",
-                width: "80px",
-                height: "24px",
-                marginRight: "5px",
-                borderWidth: "0px",
-                borderRadius: "4px",
-                transform: "scale(1.05)",
-              }}
-
-
-              style={{
-                backgroundColor: "orange",
-                width: "80px",
-                height: "24px",
-                marginRight: "5px",
-                borderWidth: "0px",
-                borderRadius: "4px",
-              }}
-
-*/

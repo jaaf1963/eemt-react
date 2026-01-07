@@ -1,9 +1,3 @@
-//
-//interface Props {
-//  onRoleChange: (value: boolean) => void;
-//}
-// { onRoleChange }:Props
-
 const SetClearStore = () => {
   //
   const storageDataUser = (item: string, newDat: string) => {

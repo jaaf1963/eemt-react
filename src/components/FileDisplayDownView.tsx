@@ -36,7 +36,7 @@ const FileDisplayDownView: React.FC<FileDisplayProps> = ({
   //
   return (
     <div>
-      <a href="#" onClick={handleDownload}>
+      <a href="/#" onClick={handleDownload}>
         Descargar: {fileName}
       </a>
     </div>
