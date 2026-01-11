@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import GridHistoryDisplay from "./HistoryGridDisplay";
 import ProgressWithLabel from "./InfiniteProgress";
+//import { srv_host } from "../types/user.type";
+
+//const posic = Number(srv_host[0]);
+//const ubihost = srv_host[posic];
+let apiUrlSrv;
+apiUrlSrv = process.env.REACT_LOC_API_URL;
+if (Number(apiUrlSrv) === 1) {
+  apiUrlSrv = process.env.REACT_APP_API_URL;
+}
+const ubihost = apiUrlSrv;
 //
 // Solo lista documentos segun Button/Project
 //
@@ -114,15 +124,14 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
           };
           //console.log("dataButton:", dataButton);
           //
+          const API_URL_BACKEND = ubihost + "/get_documents_history_react";
+          //
           try {
-            const response = await fetch(
-              "http://localhost:5055/get_documents_history_react",
-              {
-                method: "POST",
-                body: JSON.stringify(dataButton),
-                headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
-              }
-            );
+            const response = await fetch(API_URL_BACKEND, {
+              method: "POST",
+              body: JSON.stringify(dataButton),
+              headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
+            });
             const documsResp = await response.json();
             //
             if (documsResp.success === "err") {

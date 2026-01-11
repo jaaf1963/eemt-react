@@ -2,6 +2,16 @@ import React, { useState, FormEvent } from "react";
 import ButtonsTableImage from "../services/buttonTableImage";
 import ButtonsPanelImage from "../services/buttonPanelImage";
 import "../styles/InputGroup.css";
+//import { srv_host } from "../types/user.type";
+
+//const posic = Number(srv_host[0]);
+//const ubihost = srv_host[posic];
+let apiUrlSrv;
+apiUrlSrv = process.env.REACT_LOC_API_URL;
+if (Number(apiUrlSrv) === 1) {
+  apiUrlSrv = process.env.REACT_APP_API_URL;
+}
+const ubihost = apiUrlSrv;
 
 const panels = [
   { label: "CEM Y OTROS", value: "1_CEM Y OTROS" },
@@ -185,7 +195,7 @@ const PrjFlow = () => {
           authen: authUserStore,
           pansel: panelSel,
         };
-        const API_URL_BACKEND = "http://localhost:5055/select_panels_react";
+        const API_URL_BACKEND = ubihost + "/select_panels_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -233,8 +243,7 @@ const PrjFlow = () => {
           pansel: selecNumPanel,
           grpsel: groupSel,
         };
-        const API_URL_BACKEND =
-          "http://localhost:5055/select_buttons_group_react";
+        const API_URL_BACKEND = ubihost + "/select_buttons_group_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -306,7 +315,7 @@ const PrjFlow = () => {
     const txt = typeSel.slice(2, typeSel.length);
     setSelecNumLevel(num);
     setSelecTexLevel(txt);
-    console.log("Type seleccionado:", typeSel);
+    //console.log("Type seleccionado:", typeSel);
   };
   //
   const handleGroupSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -514,7 +523,7 @@ const PrjFlow = () => {
           eliminar: isChecked,
         };
         //
-        const API_URL_BACKEND = "http://localhost:5055/insert_button_react";
+        const API_URL_BACKEND = ubihost + "/insert_button_react";
         // Send data to Backend
         try {
           const response = await fetch(API_URL_BACKEND, {

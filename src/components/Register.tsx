@@ -4,16 +4,32 @@ import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
+  //srv_host,
   entityOptions,
   entypeOptions,
   moduleOptions,
 } from "../types/user.type";
-//
+
+//const posic = Number(srv_host[0]);
+//const ubihost = srv_host[posic];
+let apiNumSrv;
+let apiUrlSrv;
+apiNumSrv = process.env.REACT_APP_NUM;
+apiUrlSrv = process.env.REACT_APP_LOC;
+if (Number(apiNumSrv) === 1) {
+  apiUrlSrv = process.env.REACT_APP_WEB;
+}
+const ubihost = apiUrlSrv;
+console.log("ubihost", ubihost);
+console.log("NUM:", apiNumSrv);
+console.log("URL:", apiUrlSrv);
+
 interface PickProp {
   field: any;
   form: any;
   // Puedes añadir más propiedades aquí
 }
+
 // Componente de campo de fecha personalizado
 const DatePickerField = ({ field, form, ...props }: PickProp) => {
   const { setFieldValue } = form;
@@ -150,7 +166,7 @@ const Register: React.FC = () => {
 
     //-------------
     //console.log(entend);
-    const API_URL_REGISTER = "http://localhost:5055/register_user_react";
+    const API_URL_REGISTER = ubihost + "/register_user_react";
     //
     try {
       const response = await fetch(API_URL_REGISTER, {

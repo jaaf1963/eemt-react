@@ -2,6 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "react-datepicker/dist/react-datepicker.css";
+//import { srv_host } from "../types/user.type";
+
+//const posic = Number(srv_host[0]);
+//const ubihost = srv_host[posic];
+let apiUrlSrv;
+apiUrlSrv = process.env.REACT_LOC_API_URL;
+if (Number(apiUrlSrv) === 1) {
+  apiUrlSrv = process.env.REACT_APP_API_URL;
+}
+const ubihost = apiUrlSrv;
 
 interface buttNameProps {
   id: number | undefined;
@@ -72,7 +82,7 @@ const BoardButtNames: React.FC = () => {
           userna: textUserStore,
           authen: authUserStore,
         };
-        const API_URL_BACKEND = "http://localhost:5055/search_buttonames_react";
+        const API_URL_BACKEND = ubihost + "/search_buttonames_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -175,8 +185,7 @@ const BoardButtNames: React.FC = () => {
             action: "UPDATE",
           };
           //-------------
-          const API_URL_REGISTER =
-            "http://localhost:5055/update_buttonames_react";
+          const API_URL_REGISTER = ubihost + "/update_buttonames_react";
           //
           try {
             const response = await fetch(API_URL_REGISTER, {

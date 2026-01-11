@@ -2,6 +2,16 @@ import React, { useState, FormEvent } from "react";
 import ButtonsTableImage from "../services/buttonTableImage";
 import ButtonsPanelImage from "../services/buttonPanelImage";
 import "../styles/InputGroup.css";
+//import { srv_host } from "../types/user.type";
+
+//const posic = Number(srv_host[0]);
+//const ubihost = srv_host[posic];
+let apiUrlSrv;
+apiUrlSrv = process.env.REACT_LOC_API_URL;
+if (Number(apiUrlSrv) === 1) {
+  apiUrlSrv = process.env.REACT_APP_API_URL;
+}
+const ubihost = apiUrlSrv;
 
 // Define el tipo para los datos del formulario
 interface FormData {
@@ -92,8 +102,7 @@ const PrjFlow = () => {
           authen: authUserStore,
           buttpane: panelSel,
         };
-        const API_URL_BACKEND =
-          "http://localhost:5055/select_panel_butts_react";
+        const API_URL_BACKEND = ubihost + "/select_panel_butts_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -297,7 +306,7 @@ const PrjFlow = () => {
           buttstat: inputsData.status,
         };
         //
-        const API_URL_BACKEND = "http://localhost:5055/insert_button_react";
+        const API_URL_BACKEND = ubihost + "/insert_button_react";
         // Send data to Backend
         try {
           const response = await fetch(API_URL_BACKEND, {

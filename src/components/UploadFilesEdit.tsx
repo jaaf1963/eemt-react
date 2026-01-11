@@ -1,5 +1,15 @@
 import React, { useState, ChangeEvent } from "react";
 import dayjs from "dayjs"; // Importa dayjs
+//import { srv_host } from "../types/user.type";
+
+//const posic = Number(srv_host[0]);
+//const ubihost = srv_host[posic];
+let apiUrlSrv;
+apiUrlSrv = process.env.REACT_LOC_API_URL;
+if (Number(apiUrlSrv) === 1) {
+  apiUrlSrv = process.env.REACT_APP_API_URL;
+}
+const ubihost = apiUrlSrv;
 
 // Tipo para el objeto de cada archivo
 interface FileInfo {
@@ -9,7 +19,7 @@ interface FileInfo {
 }
 
 //const auth =
-//  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdWFuYWxiaXMiLCJleHAiOjE3NTg2NjI1MTV9.vP5ja3C28T0X_uyJ1u7yxHprB8zfAnvz8wj-yv_EHts";
+//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdWFuYWxiaXMiLCJleHAiOjE3NTg2NjI1MTV9.vP5ja3C28T0X_uyJ1u7yxHprB8zfAnvz8wj-yv_EHts";
 
 interface btnSelProps {
   btnSelEdit: string;
@@ -213,16 +223,14 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
             formData.append("userna", textUserStore);
             formData.append("docums", existsdocs);
             //
+            const API_URL_BACKEND = ubihost + "/insert_documents_react";
             // Send data to Backend
             try {
-              const response = await fetch(
-                "http://localhost:5055/insert_documents_react",
-                {
-                  method: "POST",
-                  body: formData,
-                  headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
-                }
-              );
+              const response = await fetch(API_URL_BACKEND, {
+                method: "POST",
+                body: formData,
+                headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
+              });
               //
               if (response.ok) {
                 //

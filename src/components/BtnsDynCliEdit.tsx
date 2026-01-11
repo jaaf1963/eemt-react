@@ -6,6 +6,16 @@ import FetchDataEdit from "./DynFetchEdit";
 import UploadFilesEdit from "./UploadFilesEdit";
 import RadioButtonGroup from "./RadioButtons";
 import HistoryDisplay from "./HistoryDisplay";
+//import { srv_host } from "../types/user.type";
+
+//const posic = Number(srv_host[0]);
+//const ubihost = srv_host[posic];
+let apiUrlSrv;
+apiUrlSrv = process.env.REACT_LOC_API_URL;
+if (Number(apiUrlSrv) === 1) {
+  apiUrlSrv = process.env.REACT_APP_API_URL;
+}
+const ubihost = apiUrlSrv;
 
 const panels = [
   {
@@ -291,7 +301,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
           authen: authUserStore,
           projct: projSel,
         };
-        const API_URL_BACKEND = "http://localhost:5055/search_projects_react";
+        const API_URL_BACKEND = ubihost + "/search_projects_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {

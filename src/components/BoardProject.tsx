@@ -4,6 +4,16 @@ import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ProjectImage from "../services/projectImage";
+//import { srv_host } from "../types/user.type";
+
+//const posic = Number(srv_host[0]);
+//const ubihost = srv_host[posic];
+let apiUrlSrv;
+apiUrlSrv = process.env.REACT_LOC_API_URL;
+if (Number(apiUrlSrv) === 1) {
+  apiUrlSrv = process.env.REACT_APP_API_URL;
+}
+const ubihost = apiUrlSrv;
 
 interface PickProp {
   field: any;
@@ -92,7 +102,7 @@ const BoardProject: React.FC = () => {
           userna: textUserStore,
           authen: authUserStore,
         };
-        const API_URL_BACKEND = "http://localhost:5055/search_companys_react";
+        const API_URL_BACKEND = ubihost + "/search_companys_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -258,7 +268,7 @@ const BoardProject: React.FC = () => {
         };
 
         //-------------
-        const API_URL_BACKEND = "http://localhost:5055/insert_project_react";
+        const API_URL_BACKEND = ubihost + "/insert_project_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {

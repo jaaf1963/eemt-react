@@ -3,6 +3,16 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { entityOptions } from "../types/user.type";
+//import { srv_host } from "../types/user.type";
+
+//const posic = Number(srv_host[0]);
+//const ubihost = srv_host[posic];
+let apiUrlSrv;
+apiUrlSrv = process.env.REACT_LOC_API_URL;
+if (Number(apiUrlSrv) === 1) {
+  apiUrlSrv = process.env.REACT_APP_API_URL;
+}
+const ubihost = apiUrlSrv;
 
 //type Props = {};
 interface Props {
@@ -62,12 +72,12 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
       password: password,
       //token: tokenusr,
     };
-
+    //
+    const API_URL_BACKEND = ubihost + "/login_user_react";
     //-------------
-    const API_URL_LOGIN = "http://localhost:5055/login_user_react";
     //
     try {
-      const response = await fetch(API_URL_LOGIN, {
+      const response = await fetch(API_URL_BACKEND, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

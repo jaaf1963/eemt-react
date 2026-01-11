@@ -1,6 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import DynamicButton from "./BtnsDynamic";
+//import { srv_host } from "../types/user.type";
+
+//const posic = Number(srv_host[0]);
+//const ubihost = srv_host[posic];
+let apiUrlSrv;
+apiUrlSrv = process.env.REACT_LOC_API_URL;
+if (Number(apiUrlSrv) === 1) {
+  apiUrlSrv = process.env.REACT_APP_API_URL;
+}
+const ubihost = apiUrlSrv;
 
 const shad = [
   // desplazX, desplazY, blur, color
@@ -113,7 +123,7 @@ function BtnsDynCall(pnl: pnlProp) {
   //
   //--------------------------------------------------------------------------
   //
-  const API_URL_BACKEND = "http://localhost:5055/search_buttons_react";
+  const API_URL_BACKEND = ubihost + "/search_buttons_react";
   //
   // 1. Leer botones
   const fetchButtonsPanel = async () => {

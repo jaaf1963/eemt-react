@@ -1,4 +1,11 @@
-//
+// OJO aqui se maneja el servicio HOST
+// 1: para despliegue web y 2: para local
+export const srv_host: string[] = [
+  "1",
+  "/home/eemtcle3/eemtpy.eemt.cl",
+  "http://localhost:5055",
+];
+
 export default interface IUser {
   id?: any | null;
   username: string;

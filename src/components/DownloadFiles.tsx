@@ -1,5 +1,4 @@
 import React from "react";
-
 interface DownloadFilesProps {
   fileName: string; // El nombre que tendrá el archivo al descargarse.
 }

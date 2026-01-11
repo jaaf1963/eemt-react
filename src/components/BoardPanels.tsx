@@ -3,6 +3,16 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "react-datepicker/dist/react-datepicker.css";
 import PanelsImage from "../services/panelsImage";
+//import { srv_host } from "../types/user.type";
+
+//const posic = Number(srv_host[0]);
+//const ubihost = srv_host[posic];
+let apiUrlSrv;
+apiUrlSrv = process.env.REACT_LOC_API_URL;
+if (Number(apiUrlSrv) === 1) {
+  apiUrlSrv = process.env.REACT_APP_API_URL;
+}
+const ubihost = apiUrlSrv;
 
 interface panelProps {
   id: number | undefined;
@@ -77,8 +87,7 @@ const BoardPanels: React.FC = () => {
           userna: textUserStore,
           authen: authUserStore,
         };
-        const API_URL_BACKEND =
-          "http://localhost:5055/search_titlespanel_react";
+        const API_URL_BACKEND = ubihost + "/search_titlespanel_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -207,7 +216,7 @@ const BoardPanels: React.FC = () => {
             action: "UPDATE",
           };
           //-------------
-          const API_URL_REGISTER = "http://localhost:5055/update_panel_react";
+          const API_URL_REGISTER = ubihost + "/update_panel_react";
           //
           try {
             const response = await fetch(API_URL_REGISTER, {

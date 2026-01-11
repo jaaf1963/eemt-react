@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "../styles/InputGroup.css";
+//import { srv_host } from "../types/user.type";
+
+//const posic = Number(srv_host[0]);
+//const ubihost = srv_host[posic];
+let apiUrlSrv;
+apiUrlSrv = process.env.REACT_LOC_API_URL;
+if (Number(apiUrlSrv) === 1) {
+  apiUrlSrv = process.env.REACT_APP_API_URL;
+}
+const ubihost = apiUrlSrv;
 
 // Definir una interfaz para la estructura de un usuario
 interface User {
@@ -52,7 +62,7 @@ const BoardUser: React.FC = () => {
     return "";
   });
   //
-  const API_URL_BACKEND = "http://localhost:5055/update_users_react";
+  const API_URL_BACKEND = ubihost + "/update_users_react";
   //
   // 1. Leer usuarios
   const fetchUsers = async () => {

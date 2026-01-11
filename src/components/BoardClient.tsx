@@ -4,13 +4,20 @@ import * as Yup from "yup";
 //import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import CompanyImage from "../services/companyImage";
-
-//import IRegist from "../types/user.type";
 import {
-  //entityOptions,
+  //srv_host,
   entypeOptions,
   //moduleOptions,
 } from "../types/user.type";
+
+//const posic = Number(srv_host[0]);
+//const ubihost = srv_host[posic];
+let apiUrlSrv;
+apiUrlSrv = process.env.REACT_LOC_API_URL;
+if (Number(apiUrlSrv) === 1) {
+  apiUrlSrv = process.env.REACT_APP_API_URL;
+}
+const ubihost = apiUrlSrv;
 
 //
 const BoardClient: React.FC = () => {
@@ -180,7 +187,7 @@ const BoardClient: React.FC = () => {
           //dataend: dataend,
         };
         //-------------
-        const API_URL_REGISTER = "http://localhost:5055/insert_company_react";
+        const API_URL_REGISTER = ubihost + "/insert_company_react";
         //
         try {
           const response = await fetch(API_URL_REGISTER, {
