@@ -10,10 +10,15 @@ import HistoryDisplay from "./HistoryDisplay";
 
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
+let numApp;
 let apiUrlSrv;
-apiUrlSrv = process.env.REACT_LOC_API_URL;
-if (Number(apiUrlSrv) === 1) {
-  apiUrlSrv = process.env.REACT_APP_API_URL;
+numApp = process.env.REACT_APP_NUM;
+if (Number(numApp) === 1) {
+  // api web
+  apiUrlSrv = process.env.REACT_APP_API;
+} else {
+  // local
+  apiUrlSrv = process.env.REACT_APP_LOC;
 }
 const ubihost = apiUrlSrv;
 

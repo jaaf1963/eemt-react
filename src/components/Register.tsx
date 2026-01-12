@@ -12,18 +12,17 @@ import {
 
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let apiNumSrv;
+let numApp;
 let apiUrlSrv;
-apiNumSrv = process.env.REACT_APP_NUM;
-apiUrlSrv = process.env.REACT_APP_LOC;
-if (Number(apiNumSrv) === 1) {
-  apiUrlSrv = process.env.REACT_APP_WEB;
+numApp = process.env.REACT_APP_NUM;
+if (Number(numApp) === 1) {
+  // api web
+  apiUrlSrv = process.env.REACT_APP_API;
+} else {
+  // local
+  apiUrlSrv = process.env.REACT_APP_LOC;
 }
 const ubihost = apiUrlSrv;
-console.log("ubihost", ubihost);
-console.log("NUM:", apiNumSrv);
-console.log("URL:", apiUrlSrv);
-
 interface PickProp {
   field: any;
   form: any;
