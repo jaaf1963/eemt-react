@@ -8,9 +8,9 @@ import { entityOptions } from "../types/user.type";
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
 let apiUrlSrv;
-apiUrlSrv = process.env.REACT_LOC_API_URL;
+apiUrlSrv = process.env.REACT_APP_LOC;
 if (Number(apiUrlSrv) === 1) {
-  apiUrlSrv = process.env.REACT_APP_API_URL;
+  apiUrlSrv = process.env.REACT_APP_API;
 }
 const ubihost = apiUrlSrv;
 
