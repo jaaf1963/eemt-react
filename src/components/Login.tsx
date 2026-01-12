@@ -79,6 +79,7 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
     };
     //
     const API_URL_BACKEND = ubihost + "/login_user_react";
+    alert(API_URL_BACKEND);
     //-------------
     //
     try {
