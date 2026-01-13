@@ -24,18 +24,26 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
   let numApp = process.env.REACT_APP_NUM;
   console.log(numApp);
   const ubi_host = (numApp?: string) => {
-    let ubiho;
+    //let ubiho;
     if (Number(numApp) === 1) {
       // api web
-      ubiho = process.env.REACT_APP_API;
+      const ubiho = process.env.REACT_APP_API;
+      if (ubiho) {
+        setHubihost(ubiho);
+        console.log(ubiho);
+      }
     } else {
       // local
-      ubiho = process.env.REACT_APP_LOC;
+      const ubiho = process.env.REACT_APP_LOC;
+      if (ubiho) {
+        setHubihost(ubiho);
+        console.log(ubiho);
+      }
     }
-    console.log(ubiho);
-    if (ubiho) {
-      setHubihost(ubiho);
-    }
+    //console.log(ubiho);
+    //if (ubiho) {
+    //  setHubihost(ubiho);
+    //}
   };
 
   useEffect(() => {
