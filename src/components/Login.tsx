@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -10,9 +10,6 @@ import { entityOptions } from "../types/user.type";
 //let numApp;
 //let apiUrlSrv;
 
-const API_URL_BACKEND = process.env.REACT_APP_API;
-console.log(API_URL_BACKEND);
-
 //type Props = {};
 interface Props {
   onRoleChange: (value: boolean) => void;
@@ -21,9 +18,41 @@ interface Props {
 const Login: React.FC<Props> = ({ onRoleChange }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  //const [ubihost, setHubihost] = useState<string>("");
+  const [ubihost, setHubihost] = useState<string>("");
   let navigate: NavigateFunction = useNavigate();
-  //const ubihost = process.env.REACT_APP_API;
+
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    console.log(numApp);
+
+    if (Number(numApp) === 1) {
+      // api web
+      let ubiho = process.env.REACT_APP_API;
+      console.log(ubiho);
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+      //if (ubiho) {
+      //  setHubihost(ubiho);
+      //  console.log(ubiho);
+      //}
+    } else {
+      // local
+      let ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+      //if (ubiho) {
+      //  setHubihost(ubiho);
+      //  console.log(ubiho);
+      //}
+    }
+    console.log(ubihost);
+    //
+  }, []);
 
   const initialValues: {
     username: string;
@@ -73,11 +102,14 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
       password: password,
       //token: tokenusr,
     };
+
     //
+    const API_URL_BACKEND = ubihost + "/login_user_react";
+    alert(API_URL_BACKEND);
     //-------------
     //
     try {
-      const response = await fetch(API_URL_BACKEND + "/login_user_react", {
+      const response = await fetch(API_URL_BACKEND, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
