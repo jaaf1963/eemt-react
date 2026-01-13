@@ -18,41 +18,9 @@ interface Props {
 const Login: React.FC<Props> = ({ onRoleChange }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const [ubihost, setHubihost] = useState<string>("");
+  //const [ubihost, setHubihost] = useState<string>("");
   let navigate: NavigateFunction = useNavigate();
-
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    console.log(numApp);
-
-    if (Number(numApp) === 1) {
-      // api web
-      let ubiho = process.env.REACT_APP_API;
-      console.log(ubiho);
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-      //if (ubiho) {
-      //  setHubihost(ubiho);
-      //  console.log(ubiho);
-      //}
-    } else {
-      // local
-      let ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-      //if (ubiho) {
-      //  setHubihost(ubiho);
-      //  console.log(ubiho);
-      //}
-    }
-    console.log(ubihost);
-    //
-  }, []);
+  const ubihost = process.env.REACT_APP_API;
 
   const initialValues: {
     username: string;
