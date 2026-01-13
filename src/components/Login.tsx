@@ -20,8 +20,7 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
   const [message, setMessage] = useState<string>("");
   //const [ubihost, setHubihost] = useState<string>("");
   let navigate: NavigateFunction = useNavigate();
-  const ubihost = process.env.REACT_APP_API;
-  console.log(ubihost);
+  //const ubihost = process.env.REACT_APP_API;
 
   const initialValues: {
     username: string;
@@ -72,12 +71,12 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
       //token: tokenusr,
     };
     //
-    const API_URL_BACKEND = process.env.REACT_APP_API + "/login_user_react";
-    alert(API_URL_BACKEND);
+    const API_URL_BACKEND = process.env.REACT_APP_API;
+    console.log(API_URL_BACKEND);
     //-------------
     //
     try {
-      const response = await fetch(API_URL_BACKEND, {
+      const response = await fetch(API_URL_BACKEND + "/login_user_react", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
