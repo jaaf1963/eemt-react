@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
@@ -12,17 +12,6 @@ import {
 
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let numApp;
-let apiUrlSrv;
-numApp = process.env.REACT_APP_NUM;
-if (Number(numApp) === 1) {
-  // api web
-  apiUrlSrv = process.env.REACT_APP_API;
-} else {
-  // local
-  apiUrlSrv = process.env.REACT_APP_LOC;
-}
-const ubihost = apiUrlSrv;
 interface PickProp {
   field: any;
   form: any;
@@ -47,6 +36,7 @@ const DatePickerField = ({ field, form, ...props }: PickProp) => {
 //
 const Register: React.FC = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
+  const [ubihost, setHubihost] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
   const initialValues = {
@@ -82,6 +72,27 @@ const Register: React.FC = () => {
     entend?: string;
     roless?: string;
   }
+
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    }
+    //
+  }, []);
 
   const validationSchema = Yup.object().shape({
     firstname: Yup.string()

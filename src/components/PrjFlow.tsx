@@ -1,4 +1,4 @@
-import React, { useState, FormEvent } from "react";
+import React, { useState, useEffect, FormEvent } from "react";
 import ButtonsTableImage from "../services/buttonTableImage";
 import ButtonsPanelImage from "../services/buttonPanelImage";
 import "../styles/InputGroup.css";
@@ -6,17 +6,6 @@ import "../styles/InputGroup.css";
 
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let numApp;
-let apiUrlSrv;
-numApp = process.env.REACT_APP_NUM;
-if (Number(numApp) === 1) {
-  // api web
-  apiUrlSrv = process.env.REACT_APP_API;
-} else {
-  // local
-  apiUrlSrv = process.env.REACT_APP_LOC;
-}
-const ubihost = apiUrlSrv;
 
 const panels = [
   { label: "CEM Y OTROS", value: "1_CEM Y OTROS" },
@@ -112,12 +101,9 @@ interface FormData {
 
 const PrjFlow = () => {
   // Estado para los datos del formulario
-  //const [adminUserRole, setAdminUserRole] = useState<boolean>(false);
-  //const [moderUserRole, setModerUserRole] = useState<boolean>(false);
   const [panelss, setPanelss] = useState<string[]>([]);
   const [groupss, setGroupss] = useState<groupProps[]>([]);
-  //const [buttonn, setButtonn] = useState<string[]>([]);
-  //const [selectedOption, setSelectedOption] = useState(null);
+  const [ubihost, setHubihost] = useState<string>("");
   //
   const [selecTexPanel, setSelecTexPanel] = useState("");
   const [selecNumPanel, setSelecNumPanel] = useState(0);
@@ -128,7 +114,6 @@ const PrjFlow = () => {
   const [selecTexSpot, setSelecTexSpot] = useState("");
   const [selecNumSpot, setSelecNumSpot] = useState(0);
   const [isChecked, setIsChecked] = useState(false);
-  //const [value, setValue] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   //
   const [activesino, setActivesino] = useState(false);
@@ -182,6 +167,27 @@ const PrjFlow = () => {
     classnam: "inactive",
     status: "inactive",
   });
+
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    }
+    //
+  }, []);
 
   //---- Lee paneles al entrar
 

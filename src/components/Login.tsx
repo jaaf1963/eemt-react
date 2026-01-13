@@ -24,20 +24,13 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
-    console.log(numApp);
-
     if (Number(numApp) === 1) {
       // api web
       const ubiho = process.env.REACT_APP_API_URL;
-      console.log(ubiho);
       //
       if (ubiho) {
         setHubihost(ubiho);
       }
-      //if (ubiho) {
-      //  setHubihost(ubiho);
-      //  console.log(ubiho);
-      //}
     } else {
       // local
       const ubiho = process.env.REACT_APP_LOC;
@@ -45,12 +38,7 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
       if (ubiho) {
         setHubihost(ubiho);
       }
-      //if (ubiho) {
-      //  setHubihost(ubiho);
-      //  console.log(ubiho);
-      //}
     }
-    console.log(ubihost);
     //
   }, []);
 
@@ -103,9 +91,7 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
       //token: tokenusr,
     };
 
-    //
     const API_URL_BACKEND = ubihost + "/login_user_react";
-    alert(API_URL_BACKEND);
     //-------------
     //
     try {

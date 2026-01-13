@@ -1,20 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FileDisplayDownload from "./FileDisplayDownload";
 //import { srv_host } from "../types/user.type";
 
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let numApp;
-let apiUrlSrv;
-numApp = process.env.REACT_APP_NUM;
-if (Number(numApp) === 1) {
-  // api web
-  apiUrlSrv = process.env.REACT_APP_API;
-} else {
-  // local
-  apiUrlSrv = process.env.REACT_APP_LOC;
-}
-const ubihost = apiUrlSrv;
 
 interface ItemHist {
   id: number;
@@ -47,6 +36,7 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
 }) => {
   const [progress, setProgress] = useState(0); // Valor inicial 0%
   const [isLoading, setIsLoading] = React.useState(true);
+  const [ubihost, setHubihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -83,6 +73,28 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
     setAuthUserStore("");
     return "";
   });
+
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    }
+    //
+  }, []);
+
   //
   //-----------------------------------------------------------------
   // Estilo para el efecto tenue (puedes usar CSS o Tailwind)

@@ -5,17 +5,6 @@ import ProgressWithLabel from "./InfiniteProgress";
 
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let numApp;
-let apiUrlSrv;
-numApp = process.env.REACT_APP_NUM;
-if (Number(numApp) === 1) {
-  // api web
-  apiUrlSrv = process.env.REACT_APP_API;
-} else {
-  // local
-  apiUrlSrv = process.env.REACT_APP_LOC;
-}
-const ubihost = apiUrlSrv;
 //
 // Solo lista documentos segun Button/Project
 //
@@ -83,6 +72,7 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
   const [renderFiles, setRenderfiles] = useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isExisdoc, setIsExisdoc] = React.useState(false);
+  const [ubihost, setHubihost] = useState<string>("");
   //const [documentsButt, setDocumentsButt] = useState<string[]>([]);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -475,7 +465,28 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
     }
   };
   //
-  //
+
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    }
+    //
+  }, []);
+
   useEffect(() => {
     // Aquí podrías hacer llamadas a API, actualizar estado, etc.
     // Aquí podrías hacer llamadas a API, actualizar estado, etc.

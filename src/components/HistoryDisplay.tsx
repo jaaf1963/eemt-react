@@ -1,21 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import GridHistoryDisplay from "./HistoryGridDisplay";
 import ProgressWithLabel from "./InfiniteProgress";
 //import { srv_host } from "../types/user.type";
 
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let numApp;
-let apiUrlSrv;
-numApp = process.env.REACT_APP_NUM;
-if (Number(numApp) === 1) {
-  // api web
-  apiUrlSrv = process.env.REACT_APP_API;
-} else {
-  // local
-  apiUrlSrv = process.env.REACT_APP_LOC;
-}
-const ubihost = apiUrlSrv;
 //
 // Solo lista documentos segun Button/Project
 //
@@ -48,15 +37,11 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
   cliePrjFetch,
 }) => {
   const [showHistory, setShowHistory] = useState(false);
-  //const [docsHistory, setDocsHistory] = useState<itera[]>([]);
   const [dataHistory, setDataHistory] = useState<itera[]>([]);
-  //const [responsab, setResponsab] = useState<string>("");
-  //const [numiterac, setNumiterac] = useState<string>("");
   const [progress, setProgress] = useState(0); // Valor inicial 0%
   const [renderFiles, setRenderfiles] = useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  //const [listFiles, setListfiles] = useState<string[]>([]);
-  //const [fileSelected, setFileSelected] = useState<string[]>([]);
+  const [ubihost, setHubihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -95,6 +80,28 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
   });
   //
   //-----------------------------------------------------------------
+
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    }
+    //
+  }, []);
+
   //
   // Get documents History
   //
