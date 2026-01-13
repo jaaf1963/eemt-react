@@ -21,34 +21,35 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
   const [ubihost, setHubihost] = useState<string>("");
   let navigate: NavigateFunction = useNavigate();
 
-  let numApp = process.env.REACT_APP_NUM;
-  console.log(numApp);
-  const ubi_host = (numApp?: string) => {
-    //let ubiho;
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    console.log(numApp);
+
     if (Number(numApp) === 1) {
       // api web
       const ubiho = process.env.REACT_APP_API;
+      //
       if (ubiho) {
         setHubihost(ubiho);
-        console.log(ubiho);
       }
+      //if (ubiho) {
+      //  setHubihost(ubiho);
+      //  console.log(ubiho);
+      //}
     } else {
       // local
       const ubiho = process.env.REACT_APP_LOC;
+      //
       if (ubiho) {
         setHubihost(ubiho);
-        console.log(ubiho);
       }
+      //if (ubiho) {
+      //  setHubihost(ubiho);
+      //  console.log(ubiho);
+      //}
     }
-    //console.log(ubiho);
-    //if (ubiho) {
-    //  setHubihost(ubiho);
-    //}
-  };
-
-  useEffect(() => {
-    //
-    ubi_host(numApp);
+    console.log(ubihost);
     //
   }, []);
 
