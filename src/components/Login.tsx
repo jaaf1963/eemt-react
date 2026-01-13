@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -7,17 +7,8 @@ import { entityOptions } from "../types/user.type";
 
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let numApp;
-let apiUrlSrv;
-numApp = process.env.REACT_APP_NUM;
-if (Number(numApp) === 1) {
-  // api web
-  apiUrlSrv = process.env.REACT_APP_API;
-} else {
-  // local
-  apiUrlSrv = process.env.REACT_APP_LOC;
-}
-const ubihost = apiUrlSrv;
+//let numApp;
+//let apiUrlSrv;
 
 //type Props = {};
 interface Props {
@@ -27,7 +18,32 @@ interface Props {
 const Login: React.FC<Props> = ({ onRoleChange }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const [ubihost, setHubihost] = useState<string>("");
   let navigate: NavigateFunction = useNavigate();
+
+  //
+  let numApp = process.env.REACT_APP_NUM;
+
+  const ubi_host = (numApp?: string) => {
+    let ubihost;
+    if (Number(numApp) === 1) {
+      // api web
+      ubihost = process.env.REACT_APP_API;
+    } else {
+      // local
+      ubihost = process.env.REACT_APP_LOC;
+    }
+    console.log(ubihost);
+    if (ubihost) {
+      setHubihost(ubihost);
+    }
+  };
+
+  useEffect(() => {
+    //
+    ubi_host(numApp);
+    //
+  }, []);
 
   const initialValues: {
     username: string;
@@ -77,6 +93,7 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
       password: password,
       //token: tokenusr,
     };
+
     //
     const API_URL_BACKEND = ubihost + "/login_user_react";
     alert(API_URL_BACKEND);
