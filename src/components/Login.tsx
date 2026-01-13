@@ -21,6 +21,7 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
   //const [ubihost, setHubihost] = useState<string>("");
   let navigate: NavigateFunction = useNavigate();
   const ubihost = process.env.REACT_APP_API;
+  console.log(ubihost);
 
   const initialValues: {
     username: string;
@@ -70,7 +71,6 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
       password: password,
       //token: tokenusr,
     };
-
     //
     const API_URL_BACKEND = ubihost + "/login_user_react";
     alert(API_URL_BACKEND);
