@@ -29,6 +29,7 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
     if (Number(numApp) === 1) {
       // api web
       const ubiho = process.env.REACT_APP_API;
+      console.log(ubiho);
       //
       if (ubiho) {
         setHubihost(ubiho);
