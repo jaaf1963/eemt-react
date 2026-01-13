@@ -10,6 +10,9 @@ import { entityOptions } from "../types/user.type";
 //let numApp;
 //let apiUrlSrv;
 
+const API_URL_BACKEND = process.env.REACT_APP_API;
+console.log(API_URL_BACKEND);
+
 //type Props = {};
 interface Props {
   onRoleChange: (value: boolean) => void;
@@ -71,8 +74,6 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
       //token: tokenusr,
     };
     //
-    const API_URL_BACKEND = process.env.REACT_APP_API;
-    console.log(API_URL_BACKEND);
     //-------------
     //
     try {
