@@ -284,6 +284,7 @@ const BoardClient: React.FC = () => {
     }
   };
   //
+  //
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
