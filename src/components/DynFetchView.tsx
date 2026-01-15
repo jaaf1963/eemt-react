@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import FileDisplayDownload from "./FileDisplayDownload";
 import ProgressWithLabel from "./InfiniteProgress";
 //import { srv_host } from "../types/user.type";
-
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
 //

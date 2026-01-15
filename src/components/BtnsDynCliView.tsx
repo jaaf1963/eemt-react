@@ -4,20 +4,8 @@ import BtnsDymCall from "./BtnsDynCall";
 import FetchDataView from "./DynFetchView";
 import HistoryDisplay from "./HistoryDisplay";
 //import { srv_host } from "../types/user.type";
-
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let numApp;
-let apiUrlSrv;
-numApp = process.env.REACT_APP_NUM;
-if (Number(numApp) === 1) {
-  // api web
-  apiUrlSrv = process.env.REACT_APP_API;
-} else {
-  // local
-  apiUrlSrv = process.env.REACT_APP_LOC;
-}
-const ubihost = apiUrlSrv;
 
 const panels = [
   {
@@ -77,6 +65,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
   const [selecProject, setSelecProject] = useState<string>("");
   const [selecPrjCode, setSelecPrjCode] = useState<string>("");
   const [selecPrjClie, setSelecPrjClie] = useState<string>("");
+  const [ubihost, setHubihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -156,30 +145,6 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
       activarFunctionFetch(true);
     }
   };
-  //
-  /*
-  // Funcion para manejar el cambio de las 'tareas'
-  const handleChangeTasks = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTaskssDoc(e.target.value);
-  };
-  //
-  // Funcion para manejar el cambio de la 'Observacion'
-  const handleChangeObserv = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value) {
-      setObservDoc(e.target.value);
-    }
-  };
-  //
-  // Funcion para manejar el cambio del 'Author'
-  const handleChangeAuthor = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAuthorDoc(e.target.value);
-  };
-  //
-  // Funcion para manejar el pje de 'Avance'
-  const handleChangeAdvance = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setAdvancDoc(e.target.value);
-  };
-  */
   //
   // Maneja los cambios del select box 'projects'
   const handleSelectProject = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -267,6 +232,29 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
       }
     }
   };
+  //
+
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    }
+    //
+  }, []);
+
   //
   //---- Lee Hisory proyect
   //

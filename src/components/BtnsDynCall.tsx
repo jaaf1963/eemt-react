@@ -5,17 +5,6 @@ import DynamicButton from "./BtnsDynamic";
 
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let numApp;
-let apiUrlSrv;
-numApp = process.env.REACT_APP_NUM;
-if (Number(numApp) === 1) {
-  // api web
-  apiUrlSrv = process.env.REACT_APP_API;
-} else {
-  // local
-  apiUrlSrv = process.env.REACT_APP_LOC;
-}
-const ubihost = apiUrlSrv;
 
 const shad = [
   // desplazX, desplazY, blur, color
@@ -72,6 +61,7 @@ let btnSelect = "";
 
 function BtnsDynCall(pnl: pnlProp) {
   const [buttonSel, setButtonSel] = useState("");
+  const [ubihost, setHubihost] = useState<string>("");
   //console.log(panels);
   const [filters, setFilters] = useState<FilterState>({
     panel: pnl.pnl,
@@ -169,7 +159,7 @@ function BtnsDynCall(pnl: pnlProp) {
           setButtonsPanel(data.msg);
           //
         } catch (error) {
-          console.error("Error al obtener usuarios:", error);
+          console.error("Error al obtener paneles:", error);
         } finally {
           setLoading(false);
         }
@@ -179,8 +169,28 @@ function BtnsDynCall(pnl: pnlProp) {
     }
   };
   //
-  // Inicia leyendo botones
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    }
+    //
+  }, []);
   //
+  // Inicia leyendo botones
   // Este 'hayClick' debe estar aqui... no mover
   let hayClick = false;
   //

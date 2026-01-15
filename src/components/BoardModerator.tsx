@@ -7,12 +7,6 @@ const BoardModerator: React.FC = () => {
       <div className="container">
         <BoardButtNames />
       </div>
-      <div className="container">
-        <BoardButtNames />
-      </div>
-      <div className="container">
-        <BoardButtNames />
-      </div>
     </div>
   );
 };

@@ -12,6 +12,9 @@ export const getUserBoard = () => {
 export const getModeratorBoard = () => {
   return `${"moder"}`;
 };
+export const getComerBoard = () => {
+  return `${"comer"}`;
+};
 
 export const getAdminBoard = () => {
   return `${"admin"}`;

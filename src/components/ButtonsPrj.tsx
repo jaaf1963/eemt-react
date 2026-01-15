@@ -3,7 +3,6 @@ import ButtonsTableImage from "../services/buttonTableImage";
 import ButtonsPanelImage from "../services/buttonPanelImage";
 import "../styles/InputGroup.css";
 //import { srv_host } from "../types/user.type";
-
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
 

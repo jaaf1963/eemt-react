@@ -68,5 +68,6 @@ export const moduleOptions: Option[] = [
   { value: "view-eemt", label: "View-EEMT" },
   { value: "edit-eemt", label: "Edit-EEMT" },
   { value: "admin-eemt", label: "Admin-EEMT" },
+  { value: "comer-eemt", label: "Comer-EEMT" },
   { value: "other-eemt", label: "Other-EEMT" },
 ];

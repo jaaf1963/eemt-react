@@ -4,20 +4,8 @@ import * as Yup from "yup";
 import "react-datepicker/dist/react-datepicker.css";
 import PanelsImage from "../services/panelsImage";
 //import { srv_host } from "../types/user.type";
-
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let numApp;
-let apiUrlSrv;
-numApp = process.env.REACT_APP_NUM;
-if (Number(numApp) === 1) {
-  // api web
-  apiUrlSrv = process.env.REACT_APP_API;
-} else {
-  // local
-  apiUrlSrv = process.env.REACT_APP_LOC;
-}
-const ubihost = apiUrlSrv;
 
 interface panelProps {
   id: number | undefined;
@@ -33,6 +21,7 @@ const BoardPanels: React.FC = () => {
   const [panelTitle, setPanelTitle] = useState<string>("");
   const [panelWidth, setPanelWidth] = useState<string>("");
   const [panelHeight, setPanelHeight] = useState<string>("");
+  const [ubihost, setHubihost] = useState<string>("");
   //const [panelBgColor, setPanelBgColor] = useState<string>("");
   //const [panelFntColor, setPanelFntColor] = useState<string>("");
   //
@@ -117,7 +106,7 @@ const BoardPanels: React.FC = () => {
           }
         } catch (err: any) {
           //setError(err.message);
-          alert("Error al leer panels in DB...");
+          alert("Error al leer panels en DB...");
           //
         } finally {
           //setLoading(false);
@@ -127,7 +116,28 @@ const BoardPanels: React.FC = () => {
       }
     }
   };
-
+  //
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    }
+    //
+  }, []);
+  //
   //
   useEffect(() => {
     //

@@ -23,14 +23,9 @@ import BoardPanels from "./components/BoardPanels";
 import BoardProfile from "./components/BoardProfile";
 import BoardAdmin from "./components/BoardAdmin";
 import EventBus from "./common/EventBus";
-//import * as AuthService from "./services/auth.service";
-//import IUser from "./types/user.type";
 
 const App: React.FC = () => {
-  //const [showModeratorBoard, setShowModeratorBoard] = useState<boolean>(false);
   const [showAdminBoard, setShowAdminBoard] = useState<boolean>(false);
-  //const [currentUser, setCurrentUser] = useState<IUser | undefined>(undefined);
-  //const [textUserStore, setTextUserStore] = useState<string | null>("");
   const [existUserStore, setExistUserStore] = useState<boolean | undefined>(
     undefined
   );
@@ -38,12 +33,14 @@ const App: React.FC = () => {
   const [adminUserRole, setAdminUserRole] = useState<boolean>(false);
   const [moderUserRole, setModerUserRole] = useState<boolean>(false);
   const [viewUserRole, setViewUserRole] = useState<boolean>(false);
+  const [comeUserRole, setComeUserRole] = useState<boolean>(false);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
     if (roleStore) {
       return roleStore;
     }
+    setTextRoleStore("");
     return "";
   });
   //
@@ -52,24 +49,10 @@ const App: React.FC = () => {
     if (userStore) {
       return userStore;
     }
+    setTextUserStore("");
     return "";
   });
   //
-  const [entyUserStore, setEntyUserStore] = useState(() => {
-    const entyStore = localStorage.getItem("entity");
-    if (entyStore) {
-      return entyStore;
-    }
-    return "";
-  });
-  //
-  const [authUserStore, setAuthUserStore] = useState(() => {
-    const authStore = localStorage.getItem("token");
-    if (authStore) {
-      return authStore;
-    }
-    return "";
-  });
   //
 
   //
@@ -77,21 +60,22 @@ const App: React.FC = () => {
     //
     // Lee usuario desde backend, o registrar
     //
-    //const userStore = localStorage.getItem("username");
-    //const roleStore = localStorage.getItem("role");
     console.log("textRoleStore:", textRoleStore);
     if (textRoleStore) {
-      //setTextUserStore(userStore);
       const adm: boolean = textRoleStore === "admin";
       const viw: boolean = textRoleStore === "view";
       const mod: boolean = textRoleStore === "edit";
+      const com: boolean = textRoleStore === "come";
+      //
       console.log(textRoleStore, "-->", textRoleStore);
       setAdminUserRole(adm);
       setModerUserRole(mod);
       setViewUserRole(viw);
+      setComeUserRole(com);
       console.log("adminRole:", adminUserRole);
       console.log("moderRole:", moderUserRole);
       console.log("viewsRole:", viewUserRole);
+      console.log("comesRole:", comeUserRole);
       setShowAdminBoard(adminUserRole);
       //setAdminUserRole(true);
       //setExistUserStore(viw);
@@ -100,9 +84,6 @@ const App: React.FC = () => {
     if (textUserStore) {
       const usr: boolean = textUserStore !== "";
       setExistUserStore(usr);
-      //
-      console.log("userStore:", textUserStore);
-      console.log("showAdm:", showAdminBoard);
     }
     //
     EventBus.on("logout", logOut);

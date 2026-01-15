@@ -5,20 +5,8 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ProjectImage from "../services/projectImage";
 //import { srv_host } from "../types/user.type";
-
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let numApp;
-let apiUrlSrv;
-numApp = process.env.REACT_APP_NUM;
-if (Number(numApp) === 1) {
-  // api web
-  apiUrlSrv = process.env.REACT_APP_API;
-} else {
-  // local
-  apiUrlSrv = process.env.REACT_APP_LOC;
-}
-const ubihost = apiUrlSrv;
 
 interface PickProp {
   field: any;
@@ -53,6 +41,7 @@ const BoardProject: React.FC = () => {
   const [searchCompany, setSearchCompany] = useState<boolean>(true);
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
+  const [ubihost, setHubihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -139,6 +128,27 @@ const BoardProject: React.FC = () => {
       }
     }
   };
+  //
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    }
+    //
+  }, []);
   //
   // Inici leyendo Proyectos
   //

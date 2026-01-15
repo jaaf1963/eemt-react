@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 //import DatePicker from "react-datepicker";
@@ -12,20 +12,18 @@ import {
 
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let numApp;
-let apiUrlSrv;
-numApp = process.env.REACT_APP_NUM;
-if (Number(numApp) === 1) {
-  // api web
-  apiUrlSrv = process.env.REACT_APP_API;
-} else {
-  // local
-  apiUrlSrv = process.env.REACT_APP_LOC;
-}
-const ubihost = apiUrlSrv;
 
-//
+interface clieProps {
+  id: number | undefined;
+  name?: string | undefined;
+  descrip?: string | undefined;
+}
+
 const BoardClient: React.FC = () => {
+  const [clientsGet, setClientsGet] = useState<clieProps[]>([]);
+  const [successful, setSuccessful] = useState<boolean>(false);
+  const [ubihost, setHubihost] = useState<string>("");
+  const [message, setMessage] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -62,9 +60,6 @@ const BoardClient: React.FC = () => {
     setAuthUserStore("");
     return "";
   });
-  //
-  const [successful, setSuccessful] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
 
   const initialValues = {
     entity: "",
@@ -237,6 +232,87 @@ const BoardClient: React.FC = () => {
     //
   };
   //
+  //
+  const getClients = async (clientSel: string) => {
+    if (
+      textUserStore !== null &&
+      entyUserStore !== null &&
+      authUserStore !== null
+      // && clientSel !== ""
+    ) {
+      //console.log(clientSel);
+      if (
+        textRoleStore === "admin" ||
+        textRoleStore === "edit" ||
+        textRoleStore === "view"
+      ) {
+        const dataClient = {
+          srhtext: "clients",
+          entity: entyUserStore,
+          userna: textUserStore,
+          authen: authUserStore,
+          client: clientSel,
+        };
+        const API_URL_BACKEND = ubihost + "/search_clients_react";
+        //
+        try {
+          const response = await fetch(API_URL_BACKEND, {
+            method: "POST",
+            body: JSON.stringify(dataClient),
+            headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
+          });
+          const clientsResp = await response.json();
+          //
+          if (clientsResp.success === "err") {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          // Data ClientsGet for map() select
+          const clientsGets = clientsResp.msg;
+          setClientsGet(clientsGets);
+          //console.log(clientsGet);
+          //
+        } catch (err: any) {
+          //setError(err.message);
+          alert("Error al leer clientes...");
+          //
+        } finally {
+          //setLoading(false);
+        }
+      } else {
+        alert("Código de cliente es nulo...revisar");
+      }
+    }
+  };
+  //
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    }
+    //
+  }, []);
+  //
+  //
+  useEffect(() => {
+    //
+    getClients("clientes");
+    //
+  }, []);
+  //
+  //
   return (
     <div className="col-md-12">
       <h4>Client register</h4>
@@ -259,9 +335,10 @@ const BoardClient: React.FC = () => {
                       - - - - - - Select Activity - - - - - -
                     </option>{" "}
                     {/* Opción por defecto */}
-                    {entypeOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
+                    {/* entypeOptions.map((option) */}
+                    {clientsGet.map((option) => (
+                      <option key={option.name} value={option.name}>
+                        {option.descrip}
                       </option>
                     ))}
                   </Field>

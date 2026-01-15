@@ -1,7 +1,6 @@
 // DisplayCompanys.tsx
 import { useState, useEffect } from "react";
 //import { srv_host } from "../types/user.type";
-
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
 

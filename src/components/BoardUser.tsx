@@ -1,20 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "../styles/InputGroup.css";
 //import { srv_host } from "../types/user.type";
-
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let numApp;
-let apiUrlSrv;
-numApp = process.env.REACT_APP_NUM;
-if (Number(numApp) === 1) {
-  // api web
-  apiUrlSrv = process.env.REACT_APP_API;
-} else {
-  // local
-  apiUrlSrv = process.env.REACT_APP_LOC;
-}
-const ubihost = apiUrlSrv;
 
 // Definir una interfaz para la estructura de un usuario
 interface User {
@@ -29,6 +17,7 @@ interface User {
 
 const BoardUser: React.FC = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [ubihost, setHubihost] = useState<string>("");
   const [loading, setLoading] = useState(true);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -103,7 +92,28 @@ const BoardUser: React.FC = () => {
       }
     }
   };
-
+  //
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    }
+    //
+  }, []);
+  //
   // Inicia leyendo usuarios
   useEffect(() => {
     //

@@ -7,20 +7,8 @@ import UploadFilesEdit from "./UploadFilesEdit";
 import RadioButtonGroup from "./RadioButtons";
 import HistoryDisplay from "./HistoryDisplay";
 //import { srv_host } from "../types/user.type";
-
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
-let numApp;
-let apiUrlSrv;
-numApp = process.env.REACT_APP_NUM;
-if (Number(numApp) === 1) {
-  // api web
-  apiUrlSrv = process.env.REACT_APP_API;
-} else {
-  // local
-  apiUrlSrv = process.env.REACT_APP_LOC;
-}
-const ubihost = apiUrlSrv;
 
 const panels = [
   {
@@ -92,6 +80,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   const [selecPrjClie, setSelecPrjClie] = useState<string>("");
   const [selecOptRadi, setSelecOptRadi] = useState<string>("");
   const [selecDocument, setSelecDocument] = useState<string>("");
+  const [ubihost, setHubihost] = useState<string>("");
   //
   const [advancDoc, setAdvancDoc] = useState<string>("");
   const [authorDoc, setAuthorDoc] = useState<string>("");
@@ -336,6 +325,28 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
       }
     }
   };
+  //
+
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setHubihost(ubiho);
+      }
+    }
+    //
+  }, []);
   //
   //---- Lee Hisory proyect
   //

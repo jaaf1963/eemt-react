@@ -9,9 +9,9 @@ import {
   entypeOptions,
   moduleOptions,
 } from "../types/user.type";
-
 //const posic = Number(srv_host[0]);
 //const ubihost = srv_host[posic];
+
 interface PickProp {
   field: any;
   form: any;
