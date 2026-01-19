@@ -4,10 +4,6 @@ import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ProjectImage from "../services/projectImage";
-//import { srv_host } from "../types/user.type";
-//const posic = Number(srv_host[0]);
-//const ubihost = srv_host[posic];
-
 interface PickProp {
   field: any;
   form: any;
@@ -30,16 +26,31 @@ const DatePickerField = ({ field, form, ...props }: PickProp) => {
   );
 };
 
+interface clieProps {
+  id?: number | undefined;
+  client?: string | undefined;
+  activity?: string | undefined;
+  dnicom?: string | undefined;
+  owner?: string | undefined;
+  contact?: string | undefined;
+  email?: string | undefined;
+  country?: string | undefined;
+  usercpny?: string | undefined;
+  dateing?: string | undefined;
+  status?: string | undefined;
+}
 interface cmpnyProps {
   id: number | undefined;
   name?: string | undefined;
 }
 
 const BoardProject: React.FC = () => {
-  //const [cmpnySearch, setCmpnySearch] = useState<string | undefined>(undefined);
   const [cmpnySearch, setCmpnySearch] = useState<cmpnyProps[]>([]);
   const [searchCompany, setSearchCompany] = useState<boolean>(true);
+  const [clientsGet, setClientsGet] = useState<clieProps[]>([]);
+  const [estaVisible, setEstaVisible] = useState<boolean>(false);
   const [successful, setSuccessful] = useState<boolean>(false);
+  const [showClient, setShowClient] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [ubihost, setHubihost] = useState<string>("");
   //
@@ -78,56 +89,7 @@ const BoardProject: React.FC = () => {
     setAuthUserStore("");
     return "";
   });
-
-  const searchCompanys = async (companySel: boolean) => {
-    //
-    // Busca compañias en DB para seleccion
-    //
-    if (
-      textUserStore !== null &&
-      entyUserStore !== null &&
-      authUserStore !== null
-    ) {
-      if (textRoleStore === "admin" || textRoleStore === "edit") {
-        //
-        const dataProject = {
-          srhtext: "search_cpy",
-          entity: entyUserStore,
-          userna: textUserStore,
-          authen: authUserStore,
-        };
-        const API_URL_BACKEND = ubihost + "/search_companys_react";
-        //
-        try {
-          const response = await fetch(API_URL_BACKEND, {
-            method: "POST",
-            body: JSON.stringify(dataProject),
-            headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
-          });
-          const projectResp = await response.json();
-          //
-          if (projectResp.success === "err") {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          //
-          const projs = projectResp.msg;
-          setCmpnySearch(projs);
-          //
-          setSearchCompany(false);
-          //
-        } catch (err: any) {
-          //setError(err.message);
-          alert("Error al leer companys in DB...");
-          //
-        } finally {
-          //setLoading(false);
-        }
-      } else {
-        //
-        alert("No tiene privilegios para modificar datos.");
-      }
-    }
-  };
+  //
   //
   useEffect(() => {
     //
@@ -154,14 +116,62 @@ const BoardProject: React.FC = () => {
   //
   useEffect(() => {
     //
-    searchCompanys(searchCompany);
+    console.log("hola...");
+    //search_Companys(searchCompany);
     //
   }, []);
   //
-
+  //
+  const getClients = async () => {
+    const dataClient = {
+      srhtext: "search_cli",
+      entity: entyUserStore,
+      userna: textUserStore,
+      authen: authUserStore,
+      //client: clientSel,
+    };
+    //const API_URL_BACKEND = `${ubihost}/search_clients_react`;
+    const API_URL_BACKEND = "http://localhost:5055/search_clients_react";
+    //
+    try {
+      const response = await fetch(API_URL_BACKEND, {
+        method: "POST",
+        body: JSON.stringify(dataClient),
+        headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
+      });
+      const clientsResp = await response.json();
+      //
+      if (clientsResp.success === "err") {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      // Data ClientsGet for map() select
+      const clients = clientsResp.msg;
+      if (clientsGet) {
+        //
+        setClientsGet(clients);
+        setEstaVisible(true);
+        console.log(clientsGet);
+      }
+      //
+    } catch (err: any) {
+      //setError(err.message);
+      alert("Error al leer lista de clientes.");
+      //
+    } finally {
+      //setLoading(false);
+    }
+  };
+  //
+  //
+  useEffect(() => {
+    //
+    getClients();
+    //
+  }, []);
+  //
   //
   const initialValues = {
-    company: "",
+    client: "",
     project: "",
     codeprj: "",
     theme: "",
@@ -176,7 +186,7 @@ const BoardProject: React.FC = () => {
     instance?: string;
     entity?: string;
     userna?: string;
-    companys?: string;
+    client?: string;
     project: string;
     codeprj: string;
     theme: string;
@@ -189,20 +199,20 @@ const BoardProject: React.FC = () => {
   }
 
   const validationSchema = Yup.object().shape({
-    companys: Yup.string()
+    client: Yup.string()
       .test(
         "len",
-        "The company-name must be between 3 and 35 characters.",
+        "The client-name must be between 3 and 45 characters.",
         (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 35
+          val && val.toString().length >= 3 && val.toString().length <= 45
       )
       .required("This field is required!"),
     project: Yup.string()
       .test(
         "len",
-        "The project-name must be between 5 and 25 characters.",
+        "The project-name must be between 5 and 35 characters.",
         (val: any) =>
-          val && val.toString().length >= 5 && val.toString().length <= 25
+          val && val.toString().length >= 5 && val.toString().length <= 35
       )
       .required("This field is required!"),
     descrip: Yup.string()
@@ -243,7 +253,7 @@ const BoardProject: React.FC = () => {
   // se asigna PostData a formValue para igualar las variables
   // al desEstructurar los valores ingresados por el usuario
   const handleRegisterProject = async (formValue: PostData) => {
-    //console.log("Register...");
+    //alert("Register...");
     if (
       textRoleStore !== null &&
       entyUserStore !== null &&
@@ -251,14 +261,14 @@ const BoardProject: React.FC = () => {
       authUserStore !== null
     ) {
       //
-      if (textRoleStore === "admin" || textRoleStore === "moder") {
+      if (textRoleStore === "admin" || textRoleStore === "edit") {
         //
         const {
           //entity,
           //userna,
-          companys,
           project,
           codeprj,
+          client,
           theme,
           sigla,
           descrip,
@@ -271,9 +281,9 @@ const BoardProject: React.FC = () => {
           instance: "project",
           entity: entyUserStore,
           userna: textUserStore,
-          companys: companys,
           project: project,
           codeprj: codeprj,
+          client: client,
           theme: theme,
           sigla: sigla,
           descrip: descrip,
@@ -281,9 +291,9 @@ const BoardProject: React.FC = () => {
           dateini: dateini,
           datefin: datefin,
         };
-
         //-------------
-        const API_URL_BACKEND = ubihost + "/insert_project_react";
+        //const API_URL_BACKEND = `${ubihost}/insert_project_react`;
+        const API_URL_BACKEND = "http://localhost:5055/insert_project_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -315,7 +325,6 @@ const BoardProject: React.FC = () => {
             setMessage(respMessage);
             console.error("Error al obtener datos:", respMessage);
           }
-
           //
         } catch (error) {
           setSuccessful(false);
@@ -325,212 +334,235 @@ const BoardProject: React.FC = () => {
         }
       }
     }
-    //
   };
+  //
+  //
+  useEffect(() => {
+    //
+    //getActivitys();
+    setShowClient(true);
+    //
+  }, [showClient]);
+  //
   //
   return (
     <div className="col-md-12">
       <h4>Project entry</h4>
-      <div className="card card-container">
-        <ProjectImage />
-        <Formik
-          initialValues={initialValues}
-          validationSchema={validationSchema}
-          onSubmit={handleRegisterProject}
-        >
-          <Form>
-            {!successful && (
-              <div>
-                <div className="form-group">
-                  <label htmlFor="companys" style={{ height: "15px" }}>
-                    Client name
-                  </label>
-                  <Field as="select" name="companys">
-                    <option value="">
-                      - - - - - - Select client - - - - - -
-                    </option>{" "}
-                    {/* Opcion por defecto */}
-                    {cmpnySearch.map((option) => (
-                      <option key={option.id} value={option.name}>
-                        {option.name}
-                      </option>
-                    ))}
-                  </Field>
-                  <ErrorMessage
-                    name="companys"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
-                <div className="form-group">
-                  <label
-                    htmlFor="codeprj"
-                    style={{ height: "15px", color: "blue" }}
-                  >
-                    {" "}
-                    New Project code{" "}
-                  </label>
-                  <Field
-                    name="codeprj"
-                    type="text"
-                    className="form-control"
-                    style={{
-                      height: "25px",
-                      fontWeight: "bold",
-                      color: "#611111ff",
-                    }}
-                  />
-                  <ErrorMessage
-                    name="codeprj"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="project" style={{ height: "15px" }}>
-                    {" "}
-                    Project name{" "}
-                  </label>
-                  <Field
-                    name="project"
-                    type="text"
-                    className="form-control"
-                    style={{ height: "25px" }}
-                  />
-                  <ErrorMessage
-                    name="project"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="theme" style={{ height: "15px" }}>
-                    {" "}
-                    Project theme{" "}
-                  </label>
-                  <Field
-                    name="theme"
-                    type="text"
-                    className="form-control"
-                    style={{ height: "25px" }}
-                  />
-                  <ErrorMessage
-                    name="theme"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="sigla" style={{ height: "15px" }}>
-                    {" "}
-                    Project SIGLA{" "}
-                  </label>
-                  <Field
-                    name="sigla"
-                    type="text"
-                    className="form-control"
-                    style={{ height: "25px" }}
-                  />
-                  <ErrorMessage
-                    name="sigla"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="dateini" style={{ height: "15px" }}>
-                    Date initial project
-                  </label>
-                  <Field
-                    name="dateini"
-                    component={DatePickerField}
-                    placeholderText="Selecciona una fecha"
-                  />
-                  <ErrorMessage
-                    name="dateini"
-                    component="div"
-                    className="error"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="datefin" style={{ height: "15px" }}>
-                    Date finish project
-                  </label>
-                  <Field
-                    name="datefin"
-                    component={DatePickerField}
-                    placeholderText="Selecciona una fecha"
-                  />
-                  <ErrorMessage
-                    name="datefin"
-                    component="div"
-                    className="error"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="descrip" style={{ height: "15px" }}>
-                    {" "}
-                    Project description{" "}
-                  </label>
-                  <Field
-                    as="textarea"
-                    name="descrip"
-                    type="text"
-                    className="form-control"
-                    style={{ height: "25px" }}
-                  />
-                  <ErrorMessage
-                    name="descrip"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="observ"
-                    style={{ height: "15px", color: "red" }}
-                  >
-                    {" "}
-                    Project observation{" "}
-                  </label>
-                  <Field
-                    as="textarea"
-                    name="observ"
-                    type="text"
-                    className="form-control"
-                    style={{ height: "25px" }}
-                  />
-                  <ErrorMessage
-                    name="observ"
-                    component="div"
-                    className="alert alert-danger"
-                  />
-                </div>
-                <div className="form-group"></div>
-                <p> </p>
-                <div className="form-group">
-                  <button type="submit" className="btn btn-primary btn-block">
-                    Send Data
-                  </button>
-                </div>
-              </div>
-            )}
 
-            {message && (
-              <div className="form-group">
-                <div
-                  className={
-                    successful ? "alert alert-success" : "alert alert-danger"
-                  }
-                  role="alert"
-                >
-                  {message}
+      {/*<div>
+        <button
+          style={{ marginLeft: "1000px" }}
+          className="btn btn-primary btn-block"
+          onClick={handleAgregarClients}
+        >
+          {successful ? "Ver Proyectos" : "Nuevo Proyecto"}
+        </button>
+      </div> */}
+
+      {/*showClient && !successful && <ProjectsDisplay />*/}
+
+      {!successful && (
+        <div className="card card-container">
+          <ProjectImage />
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleRegisterProject}
+          >
+            <Form>
+              {!successful && (
+                <div>
+                  <div className="form-group">
+                    <label htmlFor="client" style={{ height: "15px" }}>
+                      Client name
+                    </label>
+                    <Field as="select" name="client">
+                      <option value="">
+                        - - - - - - Select client - - - - - -
+                      </option>{" "}
+                      {/* Opcion por defecto */}
+                      {clientsGet.map((option) => (
+                        <option key={option.id} value={option.client}>
+                          {option.client}
+                        </option>
+                      ))}
+                    </Field>
+                    <ErrorMessage
+                      name="client"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label
+                      htmlFor="codeprj"
+                      style={{ height: "15px", color: "blue" }}
+                    >
+                      {" "}
+                      New Project code{" "}
+                    </label>
+                    <Field
+                      name="codeprj"
+                      type="text"
+                      className="form-control"
+                      style={{
+                        height: "25px",
+                        fontWeight: "bold",
+                        color: "#611111ff",
+                      }}
+                    />
+                    <ErrorMessage
+                      name="codeprj"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="project" style={{ height: "15px" }}>
+                      {" "}
+                      Project name{" "}
+                    </label>
+                    <Field
+                      name="project"
+                      type="text"
+                      className="form-control"
+                      style={{ height: "25px" }}
+                    />
+                    <ErrorMessage
+                      name="project"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="theme" style={{ height: "15px" }}>
+                      {" "}
+                      Project theme{" "}
+                    </label>
+                    <Field
+                      name="theme"
+                      type="text"
+                      className="form-control"
+                      style={{ height: "25px" }}
+                    />
+                    <ErrorMessage
+                      name="theme"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="sigla" style={{ height: "15px" }}>
+                      {" "}
+                      Project SIGLA{" "}
+                    </label>
+                    <Field
+                      name="sigla"
+                      type="text"
+                      className="form-control"
+                      style={{ height: "25px" }}
+                    />
+                    <ErrorMessage
+                      name="sigla"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="dateini" style={{ height: "15px" }}>
+                      Date initial project
+                    </label>
+                    <Field
+                      name="dateini"
+                      component={DatePickerField}
+                      placeholderText="Selecciona una fecha"
+                    />
+                    <ErrorMessage
+                      name="dateini"
+                      component="div"
+                      className="error"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="datefin" style={{ height: "15px" }}>
+                      Date finish project
+                    </label>
+                    <Field
+                      name="datefin"
+                      component={DatePickerField}
+                      placeholderText="Selecciona una fecha"
+                    />
+                    <ErrorMessage
+                      name="datefin"
+                      component="div"
+                      className="error"
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label htmlFor="descrip" style={{ height: "15px" }}>
+                      {" "}
+                      Project description{" "}
+                    </label>
+                    <Field
+                      as="textarea"
+                      name="descrip"
+                      type="text"
+                      className="form-control"
+                      style={{ height: "25px" }}
+                    />
+                    <ErrorMessage
+                      name="descrip"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      htmlFor="observ"
+                      style={{ height: "15px", color: "red" }}
+                    >
+                      {" "}
+                      Project observation{" "}
+                    </label>
+                    <Field
+                      as="textarea"
+                      name="observ"
+                      type="text"
+                      className="form-control"
+                      style={{ height: "25px" }}
+                    />
+                    <ErrorMessage
+                      name="observ"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+                  <div className="form-group"></div>
+                  <p> </p>
+                  <div className="form-group">
+                    <button type="submit" className="btn btn-primary btn-block">
+                      Send Data
+                    </button>
+                  </div>
                 </div>
-              </div>
-            )}
-          </Form>
-        </Formik>
-      </div>
+              )}
+
+              {message && (
+                <div className="form-group">
+                  <div
+                    className={
+                      successful ? "alert alert-success" : "alert alert-danger"
+                    }
+                    role="alert"
+                  >
+                    {message}
+                  </div>
+                </div>
+              )}
+            </Form>
+          </Formik>
+        </div>
+      )}
     </div>
   );
 };

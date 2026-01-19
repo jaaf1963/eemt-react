@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import GridHistoryDisplay from "./HistoryGridDisplay";
+import GridHistoryDispView from "./HistoryGridDispView";
 import ProgressWithLabel from "./InfiniteProgress";
 //
 // Solo lista documentos segun Button/Project
@@ -26,7 +26,7 @@ interface fetchDocsProps {
 //
 //let descriPrj = "";
 
-const HistoryDisplay: React.FC<fetchDocsProps> = ({
+const HistoryDispView: React.FC<fetchDocsProps> = ({
   activarFetch,
   datoBtnFetch,
   codiPrjFetch,
@@ -282,7 +282,7 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
           }}
         >
           {showHistory && (
-            <GridHistoryDisplay
+            <GridHistoryDispView
               datos={dataHistory}
               estaVisible={showHistory}
               datoBtnFetch={datoBtnFetch}
@@ -296,4 +296,4 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
   );
 };
 
-export default HistoryDisplay;
+export default HistoryDispView;

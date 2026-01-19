@@ -15,10 +15,14 @@ import Register from "./components/Register";
 import SetClearStore from "./services/auth.clear.store";
 import * as AuthService from "./services/auth.local.service";
 //
-import BoardClient from "./components/BoardClient";
-import BoardProject from "./components/BoardProject";
+//import BoardClient from "./components/BoardClient";
+import AdminClients from "./components/AdminClients";
+//import BoardProject from "./components/BoardProject";
+import AdminProjects from "./components/AdminProjects";
 import BoardModerator from "./components/BoardModerator";
-import BoardPanels from "./components/BoardPanels";
+//import BoardPanels from "./components/BoardPanels";
+import AdminPanels from "./components/AdminPanels";
+import AdminUsers from "./components/AdminUsers";
 //import BoardUser from "./components/BoardUser";
 import BoardProfile from "./components/BoardProfile";
 import BoardAdmin from "./components/BoardAdmin";
@@ -40,7 +44,7 @@ const App: React.FC = () => {
     if (roleStore) {
       return roleStore;
     }
-    setTextRoleStore("");
+    //setTextRoleStore("");
     return "";
   });
   //
@@ -49,7 +53,7 @@ const App: React.FC = () => {
     if (userStore) {
       return userStore;
     }
-    setTextUserStore("");
+    //setTextUserStore("");
     return "";
   });
   //
@@ -129,28 +133,28 @@ const App: React.FC = () => {
           {(adminUserRole || moderUserRole) && (
             <li className="nav-item">
               <Link to={"/moder"} className="nav-link">
-                Moderator Board
+                Moderator
               </Link>
             </li>
           )}
           {(adminUserRole || moderUserRole) && (
             <li className="nav-item">
               <NavLink to={"/panels"} className="nav-link">
-                Panels Board
+                Panels
               </NavLink>
             </li>
           )}
           {(adminUserRole || moderUserRole) && (
             <li className="nav-item">
               <Link to={"/client"} className="nav-link">
-                Client Board
+                Clients
               </Link>
             </li>
           )}
           {(adminUserRole || moderUserRole) && (
             <li className="nav-item">
               <NavLink to={"/project"} className="nav-link">
-                Project Board
+                Projects
               </NavLink>
             </li>
           )}
@@ -158,6 +162,13 @@ const App: React.FC = () => {
             <li className="nav-item">
               <NavLink to={"/prjflow"} className="nav-link">
                 Projects Flow
+              </NavLink>
+            </li>
+          )}
+          {(adminUserRole || moderUserRole) && (
+            <li className="nav-item">
+              <NavLink to={"/users"} className="nav-link">
+                Users
               </NavLink>
             </li>
           )}
@@ -208,9 +219,11 @@ const App: React.FC = () => {
           <Route path="/prjedit" element={<PrjEdit />} />
           <Route path="/prjflow" element={<PrjFlow />} />
           <Route path="/moder" element={<BoardModerator />} />
-          <Route path="/panels" element={<BoardPanels />} />
-          <Route path="/client" element={<BoardClient />} />
-          <Route path="/project" element={<BoardProject />} />
+          <Route path="/panels" element={<AdminPanels />} />
+          <Route path="/client" element={<AdminClients />} />
+          <Route path="/project" element={<AdminProjects />} />
+          <Route path="/users" element={<AdminUsers />} />
+          {/*<Route path="/users" element={<BoardUser />} />*/}
           <Route path="/admin" element={<BoardAdmin />} />
           <Route
             path="/login"

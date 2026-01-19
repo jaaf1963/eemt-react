@@ -492,11 +492,6 @@ const PrjFlow = () => {
   // Maneja el envío del formulario
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // Previene la recarga de la página
-    //const userStore = localStorage.getItem("username");
-    //const roleStore = localStorage.getItem("role");
-    //const entyStore = localStorage.getItem("entity");
-    //const authStore = localStorage.getItem("token");
-    //console.log(roleStore, entyStore, userStore, authStore);
     //
     if (
       textRoleStore &&
@@ -504,14 +499,6 @@ const PrjFlow = () => {
       textUserStore !== null &&
       authUserStore !== null
     ) {
-      //const adm: boolean = roleStore === "admin";
-      //const mod: boolean = roleStore === "moder";
-      //setAdminUserRole(adm);
-      //setModerUserRole(mod);
-      //setTextUserStore(userStore);
-      //setEntyUserStore(entyStore);
-      //setAuthUserStore(authStore);
-      //setShowAdminBoard(adminUserRole);
       //
       if (textRoleStore === "admin" || textRoleStore === "edit") {
         // Creamos un FormData para enviar los archivos

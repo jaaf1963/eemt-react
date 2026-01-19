@@ -3,24 +3,29 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "react-datepicker/dist/react-datepicker.css";
 import PanelsImage from "../services/panelsImage";
-//import { srv_host } from "../types/user.type";
-//const posic = Number(srv_host[0]);
-//const ubihost = srv_host[posic];
-
 interface panelProps {
   id: number | undefined;
-  name?: string | undefined;
-  title?: string | undefined;
-  wpanel?: string | undefined;
-  hpanel?: string | undefined;
+  spanel?: string | undefined;
+  panel?: string | undefined;
+  ptitle?: string | undefined;
+  pwidth?: string | undefined;
+  pheigh?: string | undefined;
+  bcolor?: string | undefined;
+  pfontt?: string | undefined;
+  psizee?: string | undefined;
+  pcolor?: string | undefined;
 }
 
 const BoardPanels: React.FC = () => {
   const [panelSearch, setPanelSearch] = useState<panelProps[]>([]);
   const [searchPanel, setSearchPanel] = useState<boolean>(true);
   const [panelTitle, setPanelTitle] = useState<string>("");
-  const [panelWidth, setPanelWidth] = useState<string>("");
-  const [panelHeight, setPanelHeight] = useState<string>("");
+  //const [panelWidth, setPanelWidth] = useState<string>("");
+  //const [panelHeight, setPanelHeight] = useState<string>("");
+  //const [panelBgCol, setPanelBgCol] = useState<string>("");
+  //const [panelFontt, setPanelFontt] = useState<string>("");
+  //const [panelSizee, setPanelSizee] = useState<string>("");
+  //const [panelColor, setPanelColor] = useState<string>("");
   const [ubihost, setHubihost] = useState<string>("");
   //const [panelBgColor, setPanelBgColor] = useState<string>("");
   //const [panelFntColor, setPanelFntColor] = useState<string>("");
@@ -67,7 +72,6 @@ const BoardPanels: React.FC = () => {
   const searchPanels = async (panelSel: boolean) => {
     //
     // Busca paneles en DB para seleccion
-    //
     if (
       textUserStore !== null &&
       entyUserStore !== null &&
@@ -81,7 +85,10 @@ const BoardPanels: React.FC = () => {
           userna: textUserStore,
           authen: authUserStore,
         };
-        const API_URL_BACKEND = ubihost + "/search_titlespanel_react";
+        //
+        //const API_URL_BACKEND = `${ubihost}/search_titlespanel_react`;
+        const API_URL_BACKEND =
+          "http://localhost:5055/search_titlespanel_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -117,6 +124,7 @@ const BoardPanels: React.FC = () => {
     }
   };
   //
+  //
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -149,10 +157,15 @@ const BoardPanels: React.FC = () => {
   const initialValues = {
     entity: "",
     username: "",
+    spanel: "",
     panel: "",
-    title: "",
+    ptitle: "",
     wpanel: "",
     hpanel: "",
+    bpanel: "",
+    fpanel: "",
+    zpanel: "",
+    cpanel: "",
   };
 
   interface PostData {
@@ -160,32 +173,45 @@ const BoardPanels: React.FC = () => {
     entity: string;
     username: string;
     panel: string;
-    title: string;
+    ptitle: string;
     wpanel: string;
     hpanel: string;
+    bpanel: string;
+    fpanel: string;
+    zpanel: string;
+    cpanel: string;
     action?: string;
   }
 
   const validationSchema = Yup.object().shape({
+    /*
+    spanel: Yup.string()
+      .test(
+        "len",
+        "The Panel must be between 1 and 10 characters.",
+        (val: any) =>
+          val && val.toString().length >= 1 && val.toString().length <= 10
+      )
+      .required("This field is required!"),
     panel: Yup.string()
       .test(
         "len",
-        "The client-name must be between 2 and 15 characters.",
+        "The client-name must be between 1 and 10 characters.",
         (val: any) =>
-          val && val.toString().length >= 2 && val.toString().length <= 15
+          val && val.toString().length >= 1 && val.toString().length <= 10
       )
       .required("This field is required!"),
-    title: Yup.string().test(
+    ptitle: Yup.string().test(
       "len",
-      "The Owner must be between 1 and 25 characters.",
+      "The Owner must be between 1 and 35 characters.",
       (val: any) =>
-        val && val.toString().length >= 1 && val.toString().length <= 25
+        val && val.toString().length >= 1 && val.toString().length <= 35
     ),
     wpanel: Yup.number()
       .test(
         "len",
         "The widthpanel must be between 100 and 550 characters.",
-        (val: any) => val && val >= 100 && val <= 550
+        (val: any) => val && val >= 200 && val <= 550
       )
       .required("This field is required!"),
     hpanel: Yup.number()
@@ -195,6 +221,26 @@ const BoardPanels: React.FC = () => {
         (val: any) => val && val >= 200 && val <= 999
       )
       .required("This field is required!"),
+    bpanel: Yup.string()
+      .trim()
+      .min(4, "El style puede ser: Normal, Italic, Bold")
+      .required("This field is required!"),
+    fpanel: Yup.string()
+      .trim()
+      .min(4, "El style puede ser: Normal, Italic, Bold")
+      .required("This field is required!"),
+    cpanel: Yup.string()
+      .trim()
+      .min(4, "El style puede ser: < Normal, Italic, Bold >")
+      .required("This field is required!"),
+    zpanel: Yup.number()
+      .test(
+        "len",
+        "The heightpanel must be between 6 and 16 characters.",
+        (val: any) => val && val >= 6 && val <= 16
+      )
+      .required("This field is required!"),
+      */
   });
   //
   // se asigna PostData a formValue para igualar las variables
@@ -214,9 +260,13 @@ const BoardPanels: React.FC = () => {
           //entity,
           //username,
           panel,
-          title,
+          ptitle,
           wpanel,
           hpanel,
+          bpanel,
+          fpanel,
+          zpanel,
+          cpanel,
         } = formValue;
         //
         if (panel.slice(0, 2) !== "--") {
@@ -225,16 +275,21 @@ const BoardPanels: React.FC = () => {
             entity: entyUserStore,
             username: textUserStore,
             panel: panel,
-            title: title,
+            ptitle: ptitle,
             wpanel: wpanel,
             hpanel: hpanel,
+            bpanel: bpanel,
+            fpanel: fpanel,
+            zpanel: zpanel,
+            cpanel: cpanel,
             action: "UPDATE",
           };
-          //-------------
-          const API_URL_REGISTER = ubihost + "/update_panel_react";
+          //
+          //const API_URL_BACKEND = ubihost + "/update_panel_react";
+          const API_URL_BACKEND = "http://localhost:5055/update_panel_react";
           //
           try {
-            const response = await fetch(API_URL_REGISTER, {
+            const response = await fetch(API_URL_BACKEND, {
               method: "POST",
               body: JSON.stringify(postData),
               headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
@@ -274,11 +329,6 @@ const BoardPanels: React.FC = () => {
         }
       }
     }
-    //
-    //
-
-    //
-    //
   };
   //
   //
@@ -300,27 +350,35 @@ const BoardPanels: React.FC = () => {
               {!successful && (
                 <div>
                   <div className="form-group">
-                    <label htmlFor="panel" style={{ height: "15px" }}>
+                    <label htmlFor="spanel" style={{ height: "15px" }}>
                       Panel
                     </label>
                     <Field
                       as="select"
-                      name="panel"
+                      name="spanel"
                       onChange={(
                         event: React.ChangeEvent<HTMLSelectElement>
                       ) => {
                         //
                         const tar = event.target.value;
                         const foundOption = panelSearch.find(
-                          (option) => option.name === tar
+                          (option) => option.panel === tar
                         );
                         if (foundOption) {
-                          const panelDeLaOp = foundOption.name;
-                          const tituloDeLaOp = foundOption.title;
-                          const wpanelDeLaOp = foundOption.wpanel;
-                          const hpanelDeLaOp = foundOption.hpanel;
+                          //const spanelDeLaOp = foundOption.spanel;
+                          /*
+                          const panelDeLaOp = foundOption.panel;
+                          const tituloDeLaOp = foundOption.ptitle;
+                          const wpanelDeLaOp = foundOption.pwidth;
+                          const hpanelDeLaOp = foundOption.pheigh;
+                          const bpanelDeLaOp = foundOption.bcolor;
+                          const fpanelDeLaOp = foundOption.pfontt;
+                          const zpanelDeLaOp = foundOption.psizee;
+                          const cpanelDeLaOp = foundOption.pcolor;
+                          */
                           // Puedes usar las variables panelDeLaOpcion y tituloDeLaOpcion
                           //console.log(panelDeLaOp); // 'B'
+                          /*
                           if (tituloDeLaOp) {
                             setPanelTitle(tituloDeLaOp);
                           }
@@ -332,7 +390,20 @@ const BoardPanels: React.FC = () => {
                           if (hpanelDeLaOp) {
                             setPanelHeight(hpanelDeLaOp);
                           }
+                          if (bpanelDeLaOp) {
+                            setPanelBgCol(bpanelDeLaOp);
+                          }
+                          if (fpanelDeLaOp) {
+                            setPanelFontt(fpanelDeLaOp);
+                          }
+                          if (zpanelDeLaOp) {
+                            setPanelSizee(zpanelDeLaOp);
+                          }
+                          if (cpanelDeLaOp) {
+                            setPanelColor(cpanelDeLaOp);
+                          }
                           //console.log(  "Panel seleccionado:", event.target.value);
+                          */
                         }
                       }}
                     >
@@ -342,11 +413,25 @@ const BoardPanels: React.FC = () => {
 
                       {/* Opción por defecto */}
                       {panelSearch.map((option) => (
-                        <option key={option.id} value={option.name}>
-                          {option.name}
+                        <option key={option.id} value={option.panel}>
+                          {option.panel}
                         </option>
                       ))}
                     </Field>
+                  </div>
+
+                  <div>
+                    <label htmlFor="panel" style={{ height: "15px" }}>
+                      {" "}
+                      Panel{" "}
+                    </label>
+                    <Field
+                      name="panel"
+                      type="text"
+                      className="form-control"
+                      style={{ height: "25px" }}
+                      placeholder="new title"
+                    />
                     <ErrorMessage
                       name="panel"
                       component="div"
@@ -355,29 +440,19 @@ const BoardPanels: React.FC = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="title" style={{ height: "15px" }}>
+                    <label htmlFor="ptitle" style={{ height: "15px" }}>
                       {" "}
                       Panel title{" "}
                     </label>
                     <Field
-                      name="title"
+                      name="ptitle"
                       type="text"
                       className="form-control"
                       style={{ height: "25px" }}
                       placeholder="new title"
                     />
-                    <label
-                      style={{
-                        backgroundColor: "lightcyan",
-                        fontStyle: "italic",
-                        color: "brown",
-                        marginTop: "5px",
-                      }}
-                    >
-                      {panelTitle}
-                    </label>
                     <ErrorMessage
-                      name="title"
+                      name="ptitle"
                       component="div"
                       className="alert alert-danger"
                     />
@@ -395,16 +470,6 @@ const BoardPanels: React.FC = () => {
                       style={{ height: "25px" }}
                       placeholder="new width"
                     />
-                    <label
-                      style={{
-                        backgroundColor: "lightcyan",
-                        fontStyle: "italic",
-                        color: "brown",
-                        marginTop: "5px",
-                      }}
-                    >
-                      {panelWidth}
-                    </label>
                     <ErrorMessage
                       name="wpanel"
                       component="div"
@@ -424,103 +489,82 @@ const BoardPanels: React.FC = () => {
                       style={{ height: "25px" }}
                       placeholder="new height"
                     />
-                    <label
-                      style={{
-                        backgroundColor: "lightcyan",
-                        fontStyle: "italic",
-                        color: "brown",
-                        marginTop: "5px",
-                      }}
-                    >
-                      {panelHeight}
-                    </label>
                     <ErrorMessage
                       name="hpanel"
                       component="div"
                       className="alert alert-danger"
                     />
 
-                    <label htmlFor="bgpanel" style={{ height: "15px" }}>
+                    <label htmlFor="bpanel" style={{ height: "15px" }}>
                       {" "}
                       <span>Panel backGrowndColor</span>
                       <br></br>
                       <span>( hsla(60, 41%, 93%, 1.00) )</span>
                     </label>
                     <Field
-                      name="bgpanel"
+                      name="bpanel"
                       type="text"
                       className="form-control"
                       style={{ height: "25px" }}
                       placeholder="new bg-color"
                     />
-                    <label
-                      style={{
-                        backgroundColor: "lightcyan",
-                        fontStyle: "italic",
-                        color: "brown",
-                        marginTop: "5px",
-                      }}
-                    >
-                      {/*panelBgColor*/}
-                    </label>
                     <ErrorMessage
-                      name="bgpanel"
+                      name="bpanel"
                       component="div"
                       className="alert alert-danger"
                     />
 
-                    <label htmlFor="fntpanel" style={{ height: "15px" }}>
+                    <label htmlFor="fpanel" style={{ height: "15px" }}>
                       {" "}
                       Panel Font style ( Normal )
                     </label>
                     <Field
-                      name="fntpanel"
+                      name="fpanel"
                       type="text"
                       className="form-control"
                       style={{ height: "25px" }}
                       placeholder="new style"
                     />
-                    <label
-                      style={{
-                        backgroundColor: "lightcyan",
-                        fontStyle: "italic",
-                        color: "brown",
-                        marginTop: "5px",
-                      }}
-                    >
-                      {/*panelFntColor*/}
-                    </label>
                     <ErrorMessage
-                      name="fntpanel"
+                      name="fpanel"
                       component="div"
                       className="alert alert-danger"
                     />
 
-                    <label htmlFor="fntcolor" style={{ height: "15px" }}>
+                    <label htmlFor="zpanel" style={{ height: "15px" }}>
+                      {" "}
+                      Panel Font size ( 6 , 16 ) pixels
+                    </label>
+                    <Field
+                      name="zpanel"
+                      type="number"
+                      min="6"
+                      max="16"
+                      className="form-control"
+                      style={{ height: "25px" }}
+                      placeholder="new size font"
+                    />
+                    <ErrorMessage
+                      name="zpanel"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+
+                    <label htmlFor="cpanel" style={{ height: "15px" }}>
                       {" "}
                       <span>Panel Font color</span>
                       <br></br>
                       <span>( hsla(184, 73%, 53%, 1.00) )</span>
                     </label>
                     <Field
-                      name="fntcolor"
+                      name="cpanel"
                       type="text"
                       className="form-control"
                       style={{ height: "25px" }}
                       placeholder="new color"
                     />
-                    <label
-                      style={{
-                        backgroundColor: "lightcyan",
-                        fontStyle: "italic",
-                        color: "brown",
-                        marginTop: "5px",
-                      }}
-                    >
-                      {/*panelFntColor*/}
-                    </label>
                     <ErrorMessage
-                      name="fntcolor"
+                      name="cpanel"
                       component="div"
                       className="alert alert-danger"
                     />

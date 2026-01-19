@@ -240,7 +240,10 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
             formData.append("userna", textUserStore);
             formData.append("docums", existsdocs);
             //
-            const API_URL_BACKEND = ubihost + "/insert_documents_react";
+            //const API_URL_BACKEND = `${ubihost}/insert_documents_react`;
+            const API_URL_BACKEND =
+              "http://localhost:5055/insert_documents_react";
+            //
             // Send data to Backend
             try {
               const response = await fetch(API_URL_BACKEND, {

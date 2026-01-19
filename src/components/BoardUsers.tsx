@@ -2,17 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "react-datepicker/dist/react-datepicker.css";
-import CompanyImage from "../services/clientImage";
+import UserImage from "../services/usersImage";
+
 interface entypeProps {
   id: number | undefined;
   name?: string | undefined;
   descrip?: string | undefined;
 }
 
-const BoardClient: React.FC = () => {
-  const [activityGet, setActivityGet] = useState<entypeProps[]>([]);
+const BoardUsers: React.FC = () => {
+  const [profesionGet, setProfesionGet] = useState<entypeProps[]>([]);
   const [successful, setSuccessful] = useState<boolean>(false);
-  const [showClient, setShowClient] = useState<boolean>(false);
+  const [showUser, setShowUser] = useState<boolean>(false);
   const [ubihost, setHubihost] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   //
@@ -21,7 +22,7 @@ const BoardClient: React.FC = () => {
     if (roleStore) {
       return roleStore;
     }
-    //setTextRoleStore("");
+    setTextRoleStore("");
     return "";
   });
   //
@@ -53,46 +54,63 @@ const BoardClient: React.FC = () => {
   });
 
   const initialValues = {
-    entity: "",
-    username: "",
-    activity: "",
-    company: "",
+    //entity: "",
+    profes: "",
+    fname: "",
+    lname: "",
     dnicom: "",
-    owner: "",
-    country: "",
-    contact: "",
+    usern: "",
+    roles: "",
     eemail: "",
-    usercpy: "",
     password: "",
     passconf: "",
-    dataini: new Date().toString(),
-    dataend: new Date().toString(),
+    contact: "",
+    //insession: "",
+    //dasession: "",
+    //datain: new Date().toString(),
   };
 
   interface PostData {
     instance?: string;
-    entity: string;
-    username: string;
-    activity: string;
-    company: string;
+    entity?: string;
+    profes: string;
+    fname: string;
+    lname: string;
     dnicom: string;
-    owner: string;
-    country: string;
-    contact: string;
-    eemail: string;
-    usercpy?: string;
+    usern: string;
+    roles: string;
+    eemail?: string;
+    contact?: string;
     password?: string;
     passconf?: string;
     dataini?: string;
     dataend?: string;
+    username?: string;
     //author?: string;
   }
 
   const validationSchema = Yup.object().shape({
-    company: Yup.string()
+    profes: Yup.string()
       .test(
         "len",
-        "The company-name must be between 3 and 35 characters.",
+        "The profession must be between 3 and 35 characters.",
+        (val: any) =>
+          val && val.toString().length >= 3 && val.toString().length <= 35
+      )
+      .required("This field is required!"),
+
+    fname: Yup.string()
+      .test(
+        "len",
+        "The first-name must be between 3 and 35 characters.",
+        (val: any) =>
+          val && val.toString().length >= 3 && val.toString().length <= 35
+      )
+      .required("This field is required!"),
+    lname: Yup.string()
+      .test(
+        "len",
+        "The last-name must be between 3 and 35 characters.",
         (val: any) =>
           val && val.toString().length >= 3 && val.toString().length <= 35
       )
@@ -100,20 +118,12 @@ const BoardClient: React.FC = () => {
     dnicom: Yup.string()
       .test(
         "len",
-        "The Owner must be between 3 and 35 characters.",
+        "The Owner must be between 8 and 12 characters.",
         (val: any) =>
-          val && val.toString().length >= 9 && val.toString().length <= 12
+          val && val.toString().length >= 8 && val.toString().length <= 12
       )
       .required("This field is required!"),
-    owner: Yup.string()
-      .test(
-        "len",
-        "The Owner must be between 3 and 35 characters.",
-        (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 35
-      )
-      .required("This field is required!"),
-    country: Yup.string()
+    usern: Yup.string()
       .test(
         "len",
         "The Country must be between 3 and 25 characters.",
@@ -121,9 +131,22 @@ const BoardClient: React.FC = () => {
           val && val.toString().length >= 3 && val.toString().length <= 25
       )
       .required("This field is required!"),
-
     eemail: Yup.string()
       .email("This is not a valid email.")
+      .required("This field is required!"),
+    contact: Yup.string().test(
+      "len",
+      "The Contact must be between 6 and 12 characters.",
+      (val: any) =>
+        val && val.toString().length >= 6 && val.toString().length <= 12
+    ),
+    roles: Yup.string()
+      .test(
+        "len",
+        "The Role must be between 4 and 18 characters.",
+        (val: any) =>
+          val && val.toString().length >= 4 && val.toString().length <= 12
+      )
       .required("This field is required!"),
     password: Yup.string()
       .min(6, "Password must be at least 6 characters")
@@ -135,7 +158,7 @@ const BoardClient: React.FC = () => {
   //
   // se asigna PostData a formValue para igualar las variables
   // al desEstructurar los valores ingresados por el usuario
-  const handleRegisterClient = async (formValue: PostData) => {
+  const handleRegisterUser = async (formValue: PostData) => {
     if (
       textRoleStore !== null &&
       entyUserStore !== null &&
@@ -147,32 +170,34 @@ const BoardClient: React.FC = () => {
         //
         const {
           //entity,
-          //username,
-          activity,
-          company,
+          profes,
+          fname,
+          lname,
           dnicom,
-          owner,
-          country,
-          contact,
           eemail,
+          usern,
+          roles,
+          password,
+          contact,
         } = formValue;
 
         const postData: PostData = {
-          instance: "client",
+          instance: "user_insert",
           entity: entyUserStore,
-          username: textUserStore,
-          activity: activity,
-          company: company,
+          profes: profes,
+          fname: fname,
+          lname: lname,
           dnicom: dnicom,
-          owner: owner,
-          country: country,
-          contact: contact,
           eemail: eemail,
-          usercpy: eemail,
+          usern: usern,
+          roles: roles,
+          contact: contact,
+          username: textUserStore,
+          password: password,
         };
         //
         //const API_URL_BACKEND = `${ubihost}/insert_client_react`;
-        const API_URL_BACKEND = "http://localhost:5055/insert_client_react";
+        const API_URL_BACKEND = "http://localhost:5055/insert_users_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -194,14 +219,14 @@ const BoardClient: React.FC = () => {
             //
             setMessage("");
             setSuccessful(true);
-            setShowClient(true);
+            setShowUser(true);
             //
           } else {
             //
             const respMessage = data.msg;
             //setLoading(false);
             setSuccessful(false);
-            setShowClient(false);
+            setShowUser(false);
             setMessage(respMessage);
             console.error("Error al obtener datos:", respMessage);
           }
@@ -210,7 +235,7 @@ const BoardClient: React.FC = () => {
           setSuccessful(false);
           setMessage("error");
           console.error("Error en el inicio de sesión:", error);
-          // Mostrar un mensaje de error al usuario
+          // Aquí puedes mostrar un mensaje de error al usuario
         }
       }
     }
@@ -218,7 +243,7 @@ const BoardClient: React.FC = () => {
   };
   //
   //
-  const getActivitys = async () => {
+  const getProfesions = async () => {
     if (
       textUserStore !== null &&
       entyUserStore !== null &&
@@ -228,14 +253,14 @@ const BoardClient: React.FC = () => {
       //console.log(clientSel);
       if (textRoleStore === "admin" || textRoleStore === "edit") {
         const dataClient = {
-          srhtext: "search_acty",
+          srhtext: "search_prof",
           entity: entyUserStore,
           userna: textUserStore,
           authen: authUserStore,
           //client: clientSel,
         };
         //const API_URL_BACKEND = `${ubihost}/search_clients_react`;
-        const API_URL_BACKEND = "http://localhost:5055/search_activity_react";
+        const API_URL_BACKEND = "http://localhost:5055/search_profesion_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -243,28 +268,29 @@ const BoardClient: React.FC = () => {
             body: JSON.stringify(dataClient),
             headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
           });
-          const activityResp = await response.json();
+          const profesionResp = await response.json();
           //
-          if (activityResp.success === "err") {
+          if (profesionResp.success === "err") {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
           // Data ActivityGet for map() select
-          const activityGets = activityResp.msg;
-          setActivityGet(activityGets);
-          //console.log(activityGet);
+          const profesGets = profesionResp.msg;
+          setProfesionGet(profesGets);
+          //console.log(profesionGet);
           //
         } catch (err: any) {
           //setError(err.message);
-          alert("Error al leer Activity...");
+          alert("Error al leer Profesion...");
           //
         } finally {
           //setLoading(false);
         }
       } else {
-        alert("Código deactivity es nulo...revisar");
+        alert("Código de profesion es nulo...revisar");
       }
     }
   };
+  //
   //
   //
   useEffect(() => {
@@ -291,86 +317,104 @@ const BoardClient: React.FC = () => {
   //
   useEffect(() => {
     //
-    getActivitys();
-    setShowClient(true);
+    getProfesions();
+    setShowUser(true);
     //
-  }, [showClient]);
+  }, [showUser]);
   //
   // true true : muestra info
   // true false : muestra ingresar info
   //
-  const handleAgregarClients = async () => {
+  const handleAgregarUsers = async () => {
     //
-    if (showClient === true) {
+    if (showUser === true) {
       setSuccessful(!successful);
-      setShowClient(true);
+      setShowUser(true);
     }
   };
   //
   //
   return (
     <div className="col-md-12">
-      <h4>Client register</h4>
+      <h4>Users register</h4>
 
       {/* <div>
         <button
+          name="agregar"
           style={{ marginLeft: "1000px" }}
           className="btn btn-primary btn-block"
-          onClick={handleAgregarClients}
+          onClick={handleAgregarUsers}
         >
-          {successful ? "Ver Clientes" : "Nuevo Cliente"}
+          {successful ? "Ver Usuarios" : "Nuevo Usuario"}
         </button>
       </div> */}
-
-      {/*showClient && !successful && <ClientsDisplay />*/}
+      {/*showUser && !successful && <UsersDisplay />*/}
 
       {!successful && (
         <div className="card card-container">
-          <CompanyImage />
+          <UserImage />
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={handleRegisterClient}
+            onSubmit={handleRegisterUser}
           >
             <Form>
               {!successful && (
                 <div>
                   <div className="form-group">
-                    <label htmlFor="activity" style={{ height: "15px" }}>
-                      Activity
+                    <label htmlFor="profes" style={{ height: "15px" }}>
+                      Profession
                     </label>
-                    <Field as="select" name="activity">
+                    <Field as="select" name="profes">
                       <option value="">
-                        - - - - - - Select Activity - - - - - -
+                        - - - - - - Select Profession - - - - - -
                       </option>{" "}
                       {/* Opción por defecto */}
                       {/* entypeOptions.map((option) */}
-                      {activityGet.map((option) => (
+                      {profesionGet.map((option) => (
                         <option key={option.name} value={option.name}>
                           {option.descrip}
                         </option>
                       ))}
                     </Field>
                     <ErrorMessage
-                      name="activity"
+                      name="profes"
                       component="div"
                       className="alert alert-danger"
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="company" style={{ height: "15px" }}>
+                    <label htmlFor="fname" style={{ height: "15px" }}>
                       {" "}
-                      Client name{" "}
+                      first name{" "}
                     </label>
                     <Field
-                      name="company"
+                      name="fname"
                       type="text"
                       className="form-control"
                       style={{ height: "25px" }}
                     />
                     <ErrorMessage
-                      name="company"
+                      name="fname"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="lname" style={{ height: "15px" }}>
+                      {" "}
+                      last name{" "}
+                    </label>
+                    <Field
+                      name="lname"
+                      type="text"
+                      className="form-control"
+                      style={{ height: "25px" }}
+                    />
+                    <ErrorMessage
+                      name="lname"
                       component="div"
                       className="alert alert-danger"
                     />
@@ -398,45 +442,9 @@ const BoardClient: React.FC = () => {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="owner" style={{ height: "15px" }}>
-                      {" "}
-                      Owner name{" "}
-                    </label>
-                    <Field
-                      name="owner"
-                      type="text"
-                      className="form-control"
-                      style={{ height: "25px" }}
-                    />
-                    <ErrorMessage
-                      name="owner"
-                      component="div"
-                      className="alert alert-danger"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="country" style={{ height: "15px" }}>
-                      {" "}
-                      Country client{" "}
-                    </label>
-                    <Field
-                      name="country"
-                      type="text"
-                      className="form-control"
-                      style={{ height: "25px" }}
-                    />
-                    <ErrorMessage
-                      name="country"
-                      component="div"
-                      className="alert alert-danger"
-                    />
-                  </div>
-
-                  <div className="form-group">
                     <label htmlFor="contact" style={{ height: "15px" }}>
                       {" "}
-                      Contact client{" "}
+                      Contact user{" "}
                     </label>
                     <Field
                       name="contact"
@@ -454,7 +462,7 @@ const BoardClient: React.FC = () => {
                   <div className="form-group">
                     <label htmlFor="eemail" style={{ height: "15px" }}>
                       {" "}
-                      Email client{" "}
+                      Email user{" "}
                     </label>
                     <Field
                       name="eemail"
@@ -470,19 +478,36 @@ const BoardClient: React.FC = () => {
                   </div>
 
                   <div className="form-group">
-                    <label htmlFor="username" style={{ height: "15px" }}>
+                    <label htmlFor="usern" style={{ height: "15px" }}>
                       {" "}
-                      User client{" "}
+                      Username{" "}
                     </label>
                     <Field
-                      name="username"
+                      name="usern"
                       type="text"
-                      disabled
                       className="form-control"
                       style={{ height: "25px" }}
                     />
                     <ErrorMessage
-                      name="username"
+                      name="usern"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="roles" style={{ height: "15px" }}>
+                      {" "}
+                      roles{" <view, edit, admin>"}
+                    </label>
+                    <Field
+                      name="roles"
+                      type="text"
+                      className="form-control"
+                      style={{ height: "25px" }}
+                    />
+                    <ErrorMessage
+                      name="roles"
                       component="div"
                       className="alert alert-danger"
                     />
@@ -490,7 +515,7 @@ const BoardClient: React.FC = () => {
 
                   <div className="form-group">
                     <label htmlFor="password">
-                      Password client:
+                      Password user:
                       <Field
                         name="password"
                         type="password"
@@ -550,4 +575,4 @@ const BoardClient: React.FC = () => {
   );
 };
 
-export default BoardClient;
+export default BoardUsers;

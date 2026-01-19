@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import FileDisplayDownload from "./FileDisplayDownload";
+import FileDisplayDownView from "./FileDisplayDownView";
 import ProgressWithLabel from "./InfiniteProgress";
-//import { srv_host } from "../types/user.type";
-//const posic = Number(srv_host[0]);
-//const ubihost = srv_host[posic];
 //
 // Solo lista documentos segun Button/Project
 //
@@ -47,9 +44,7 @@ interface fetchDocsProps {
   //onDocusEx: (files: FileList) => void;
   onDocusEx: (updaDocExist: docsEx[]) => void;
 }
-//
-//let contenidoADibujar1: React.ReactNode;
-//let theme = "";
+
 let descriPrj = "";
 
 const FetchDataView: React.FC<fetchDocsProps> = ({
@@ -67,11 +62,11 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
   const [dataTasks, setDataTasks] = useState<tarea[]>([]);
   const [dataIters, setDataIters] = useState<itera[]>([]);
   const [existDocs, setExistDocs] = useState<docsEx[]>([]);
-  const [progress, setProgress] = useState(0); // Valor inicial 0%
   const [renderFiles, setRenderfiles] = useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isExisdoc, setIsExisdoc] = React.useState(false);
   const [ubihost, setHubihost] = useState<string>("");
+  const [progress, setProgress] = useState(0);
   //const [documentsButt, setDocumentsButt] = useState<string[]>([]);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -139,7 +134,8 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
             docume: fileSelect,
           };
           //
-          const API_URL_BACKEND = ubihost + "/delete_document_display_react";
+          const API_URL_BACKEND = `${ubihost}/delete_document_display_react`;
+          //const API_URL_BACKEND = "http://localhost:5055/delete_document_display_react";
           //
           try {
             const response = await fetch(API_URL_BACKEND, {
@@ -204,7 +200,9 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
             dcrprj: descriPrj,
           };
           //
-          const API_URL_BACKEND = ubihost + "/descrip_project_display_react";
+          //const API_URL_BACKEND = `${ubihost}/descrip_project_display_react`;
+          const API_URL_BACKEND =
+            "http://localhost:5055/descrip_project_display_react";
           //
           try {
             const response = await fetch(API_URL_BACKEND, {
@@ -273,9 +271,10 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
           cliprj: cliePrjFetch,
           button: buttonSel,
         };
-        //console.log("dataButton:", dataButton);
         //
-        const API_URL_BACKEND = ubihost + "/get_documents_display_react";
+        //const API_URL_BACKEND = `${ubihost}/get_documents_display_react`;
+        const API_URL_BACKEND =
+          "http://localhost:5055/get_documents_display_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -347,8 +346,6 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
       setExistDocs((prevExistDocs) => [...prevExistDocs, newDocu]);
     };
 
-    //
-    //console.log(files);
     //
     if (files) {
       setDataDocus([]);
@@ -579,7 +576,7 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
           <ul>
             {dataTasks.map((tsk) => (
               <li key={tsk.id} id="span-tasks">
-                <FileDisplayDownload
+                <FileDisplayDownView
                   fileName={tsk.task + " " + tsk.numtsk.toString()}
                   base64str={tsk.tskbs64}
                   numdocum={tsk.numtsk}
@@ -609,7 +606,7 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
               {" "}
               {dataDocus.map((doc) => (
                 <li key={doc.numdoc} id="span-docus">
-                  <FileDisplayDownload
+                  <FileDisplayDownView
                     fileName={doc.docu}
                     base64str={doc.docbs64}
                     numdocum={doc.numdoc}
@@ -629,7 +626,7 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
           <ul>
             {dataIters.map((ite) => (
               <li key={ite.id} id="span-iters">
-                <FileDisplayDownload
+                <FileDisplayDownView
                   fileName={ite.iter}
                   base64str={ite.itrbs64}
                   numdocum={ite.numitr}

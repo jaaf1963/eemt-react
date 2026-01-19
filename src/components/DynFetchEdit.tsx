@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FileDisplayDownload from "./FileDisplayDownload";
 import ProgressWithLabel from "./InfiniteProgress";
-//import { srv_host } from "../types/user.type";
-//const posic = Number(srv_host[0]);
-//const ubihost = srv_host[posic];
 //
 // Solo lista documentos segun Button/Project
 //
@@ -138,7 +135,9 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
             docume: fileSelect,
           };
           //
-          const API_URL_BACKEND = ubihost + "/delete_document_display_react";
+          //const API_URL_BACKEND = `${ubihost}/delete_document_display_react`;
+          const API_URL_BACKEND =
+            "http://localhost:5055/delete_document_display_react";
           //
           try {
             const response = await fetch(API_URL_BACKEND, {
@@ -203,7 +202,9 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
             dcrprj: descriPrj,
           };
           //
-          const API_URL_BACKEND = ubihost + "/descrip_project_display_react";
+          //const API_URL_BACKEND = `${ubihost}/descrip_project_display_react`;
+          const API_URL_BACKEND =
+            "http://localhost:5055/descrip_project_display_react";
           //
           try {
             const response = await fetch(API_URL_BACKEND, {
@@ -272,9 +273,10 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
           cliprj: cliePrjFetch,
           button: buttonSel,
         };
-        //console.log("dataButton:", dataButton);
         //
-        const API_URL_BACKEND = ubihost + "/get_documents_display_react";
+        //const API_URL_BACKEND = `${ubihost}/get_documents_display_react`;
+        const API_URL_BACKEND =
+          "http://localhost:5055/get_documents_display_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -288,6 +290,7 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
             //throw new Error(`HTTP error! status: ${response.status}`);
             const message = documsResp.msg[0];
             alert(message);
+            //console.log(message);
           } else {
             //
             const docums = documsResp.msg;

@@ -6,9 +6,6 @@ import FetchDataEdit from "./DynFetchEdit";
 import UploadFilesEdit from "./UploadFilesEdit";
 import RadioButtonGroup from "./RadioButtons";
 import HistoryDisplay from "./HistoryDisplay";
-//import { srv_host } from "../types/user.type";
-//const posic = Number(srv_host[0]);
-//const ubihost = srv_host[posic];
 
 const panels = [
   {
@@ -46,10 +43,17 @@ let selProject: string = "";
 let selPrjClie: string = "";
 
 interface projProps {
-  id: number | undefined;
-  name?: string | undefined;
-  code?: string | undefined;
-  client?: string | undefined;
+  id?: number | undefined;
+  codeprj?: string | undefined;
+  project?: string | undefined;
+  company?: string | undefined;
+  theme?: string | undefined;
+  sigla?: string | undefined;
+  descrip?: string | undefined;
+  observ?: string | undefined;
+  advance?: string | undefined;
+  dateini?: string | undefined;
+  dateend?: string | undefined;
 }
 
 interface docsEx {
@@ -86,9 +90,6 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   const [authorDoc, setAuthorDoc] = useState<string>("");
   const [observDoc, setObservDoc] = useState<string>("");
   const [taskssDoc, setTaskssDoc] = useState<string>("");
-  //const [dateinDoc, setDateinDoc] = useState<string>("");
-  //const [datendDoc, setDatendDoc] = useState<string>("");
-  // History project
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -228,10 +229,6 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
       activacionCompFetch(datoBtnFetch, selPrjCode);
     }
     //
-    //console.log("codePrj selecc:", selPrjCode);
-    //console.log("project selecc:", selProject);
-    //console.log("cliePrj selecc:", selPrjClie);
-    //
   };
   //
   // Maneja los cambios del input project
@@ -283,19 +280,16 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
       // && projSel !== ""
     ) {
       //console.log(projSel);
-      if (
-        textRoleStore === "admin" ||
-        textRoleStore === "edit" ||
-        textRoleStore === "view"
-      ) {
+      if (textRoleStore === "admin" || textRoleStore === "edit") {
         const dataProj = {
-          srhtext: "projects",
+          srhtext: "search_prj",
           entity: entyUserStore,
           userna: textUserStore,
           authen: authUserStore,
           projct: projSel,
         };
-        const API_URL_BACKEND = ubihost + "/search_projects_react";
+        //const API_URL_BACKEND = `${ubihost}/search_projects_react`;
+        const API_URL_BACKEND = "http://localhost:5055/search_projects_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -311,7 +305,6 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
           // Data ProjectsGet for map() select
           const projGets = projResp.msg;
           setProjectsGet(projGets);
-          //console.log(projectsGet);
           //
         } catch (err: any) {
           //setError(err.message);
@@ -354,14 +347,11 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     //
     // Esta función se pasará al hijo 'BtnsDynCall' como props
     const manejarDatoDesdeCall = (btnSel: string) => {
-      //console.log("manejaDatoDesdeCall", btnSel);
       // Llamada a funcion pata activar los 'useState()'
       activacionCompFetch(btnSel, selPrjCode);
       // Recibe mensaje de BtnsDymCall
       setMensajeDesdeCall(btnSel);
       //
-      // Filtra con datos del Hijo
-      //console.log("Button Hijo:", btnSel, dataTable[0].buttName);
     };
     //
     // Despliega 'Buttons' al inicio
@@ -435,9 +425,11 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
           {projectsGet.map((option) => (
             <option
               key={option.id}
-              value={option.code + " | " + option.name + " | " + option.client}
+              value={
+                option.codeprj + " | " + option.project + " | " + option.company
+              }
             >
-              {option.code} {option.name}
+              {option.codeprj} {option.project} {option.company}
             </option>
           ))}
         </select>

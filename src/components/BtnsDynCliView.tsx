@@ -2,10 +2,7 @@ import React, { useEffect, useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import BtnsDymCall from "./BtnsDynCall";
 import FetchDataView from "./DynFetchView";
-import HistoryDisplay from "./HistoryDisplay";
-//import { srv_host } from "../types/user.type";
-//const posic = Number(srv_host[0]);
-//const ubihost = srv_host[posic];
+import HistoryDispView from "./HistoryDispView";
 
 const panels = [
   {
@@ -36,10 +33,17 @@ let selProject: string = "";
 let selPrjClie: string = "";
 
 interface projProps {
-  id: number | undefined;
-  name?: string | undefined;
-  code?: string | undefined;
-  client?: string | undefined;
+  id?: number | undefined;
+  codeprj?: string | undefined;
+  project?: string | undefined;
+  company?: string | undefined;
+  theme?: string | undefined;
+  sigla?: string | undefined;
+  descrip?: string | undefined;
+  observ?: string | undefined;
+  advance?: string | undefined;
+  dateini?: string | undefined;
+  dateend?: string | undefined;
 }
 
 interface docsEx {
@@ -197,13 +201,14 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
         textRoleStore === "view"
       ) {
         const dataProj = {
-          srhtext: "projects",
+          srhtext: "search_prj",
           entity: entyUserStore,
           userna: textUserStore,
           authen: authUserStore,
           projct: projSel,
         };
-        const API_URL_BACKEND = ubihost + "/search_projects_react";
+        //const API_URL_BACKEND = `${ubihost}/search_projects_react`;
+        const API_URL_BACKEND = "http://localhost:5055/search_projects_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -306,7 +311,6 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
     //
   }, [mensajeDesdeCall]);
   //
-  console.log(existDocums);
   //
   return (
     <>
@@ -338,9 +342,11 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
           {projectsGet.map((option) => (
             <option
               key={option.id}
-              value={option.code + " | " + option.name + " | " + option.client}
+              value={
+                option.codeprj + " | " + option.project + " | " + option.company
+              }
             >
-              {option.code} {option.name}
+              {option.codeprj} {option.project} {option.company}
             </option>
           ))}
         </select>
@@ -362,7 +368,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
         />
       )}
       {activarHist && (
-        <HistoryDisplay
+        <HistoryDispView
           activarFetch={activarFetch}
           datoBtnFetch={datoBtnFetch}
           codiPrjFetch={selecPrjCode}

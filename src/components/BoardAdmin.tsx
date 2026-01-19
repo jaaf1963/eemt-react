@@ -1,11 +1,11 @@
 //import UsersImage from "../services/usersImage";
-import BoardUser from "./BoardUser";
+import BoardUsers from "./BoardUsers";
 
 const BoardAdmin: React.FC = () => {
   return (
     <div className="container">
       <div>
-        <BoardUser />
+        <BoardUsers />
       </div>
     </div>
   );

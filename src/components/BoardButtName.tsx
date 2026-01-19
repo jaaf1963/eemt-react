@@ -76,7 +76,8 @@ const BoardButtNames: React.FC = () => {
           userna: textUserStore,
           authen: authUserStore,
         };
-        const API_URL_BACKEND = ubihost + "/search_buttonames_react";
+        //const API_URL_BACKEND = `${ubihost}/search_buttonames_react`;
+        const API_URL_BACKEND = "http://localhost:5055/search_buttonames_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {

@@ -3,12 +3,14 @@ import React from "react";
 interface FileDisplayProps {
   base64str: string;
   fileName: string;
+  numdocum: number;
   onDelete: (fileName: string) => void;
 }
 
 const FileDisplayDownView: React.FC<FileDisplayProps> = ({
   base64str,
   fileName,
+  numdocum,
   onDelete,
 }) => {
   const handleDownload = () => {

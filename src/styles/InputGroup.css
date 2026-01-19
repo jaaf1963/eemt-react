@@ -276,7 +276,6 @@
   background-color: lch(92.58% 22.04 106.44);
   cursor: pointer;
 }
-
 .colorTextCboBox:hover {
   color: rgb(20, 97, 220);
   background-color: lch(90.99% 90.49 99.63);
@@ -290,9 +289,30 @@
   border: "4px";
   color: "tomato";
 }
-
 .btn-delete-doc:hover {
   background-color: rgb(241, 228, 222);
+  transform: scale(1.05);
+}
+
+.btn-delete-user {
+  width: "70px";
+  height: "25px";
+  border: "4px";
+  color: "tomato";
+}
+.btn-delete-user:hover {
+  background-color: rgb(237, 212, 200);
+  transform: scale(1.05);
+}
+
+.btn-modifi-user {
+  width: "70px";
+  height: "25px";
+  border: "4px";
+  color: "blue";
+}
+.btn-modifi-user:hover {
+  background-color: rgb(113, 170, 235);
   transform: scale(1.05);
 }
 

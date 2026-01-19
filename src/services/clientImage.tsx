@@ -1,11 +1,11 @@
 import React from "react";
-import companyImage from "../images/company.jpg"; // Ajusta la ruta
+import clientImage from "../images/client1.jpg"; // Ajusta la ruta
 
-const CompanyImage: React.FC = () => {
+const ClientImage: React.FC = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${companyImage})`,
+        backgroundImage: `url(${clientImage})`,
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover", // 'cover' O 'contain' si prefieres
         //width: "30vh",
@@ -19,4 +19,4 @@ const CompanyImage: React.FC = () => {
   );
 };
 
-export default CompanyImage;
+export default ClientImage;

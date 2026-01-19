@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import FileDisplayDownload from "./FileDisplayDownload";
+import FileDisplayDownView from "./FileDisplayDownView";
 interface ItemHist {
   id: number;
   numitr: number;
@@ -21,7 +21,7 @@ interface GridProps {
   cliePrjFetch: string;
 }
 
-const GridHistoryDisplay: React.FC<GridProps> = ({
+const GridHistoryDispView: React.FC<GridProps> = ({
   datos,
   estaVisible,
   datoBtnFetch,
@@ -201,7 +201,7 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
                 <td>{item.doctsk}</td>
 
                 <td key={item.id} id="span-iters">
-                  <FileDisplayDownload
+                  <FileDisplayDownView
                     fileName={item.docitr} //+ " " + item.numitr.toString()
                     base64str={item.b64itr}
                     numdocum={item.numtsk}
@@ -231,4 +231,4 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
   );
 };
 
-export default GridHistoryDisplay;
+export default GridHistoryDispView;

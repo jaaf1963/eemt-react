@@ -5,7 +5,8 @@ const BoardModerator: React.FC = () => {
   return (
     <div style={{ display: "flex" }}>
       <div className="container">
-        <BoardButtNames />
+        {/*<BoardButtNames />*/}
+        En construcción
       </div>
     </div>
   );

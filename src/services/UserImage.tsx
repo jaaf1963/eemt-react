@@ -1,11 +1,11 @@
 import React from "react";
-import homeImage from "../images/fondo1.png"; // Ajusta la ruta
+import userImage from "../images/user1.png"; // Ajusta la ruta
 
-const HomeImage: React.FC = () => {
+const UserImage: React.FC = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${homeImage})`,
+        backgroundImage: `url(${userImage})`,
         backgroundRepeat: "no-repeat",
         //backgroundSize: "contain", // 'cover' O 'contain' si prefieres
         width: "100%",
@@ -20,4 +20,4 @@ const HomeImage: React.FC = () => {
   );
 };
 
-export default HomeImage;
+export default UserImage;

@@ -42,7 +42,7 @@ interface pnlProp {
   tit: string;
   enviarDatoACliEdit: (btnSel: string) => void; // Esta es la función callback
 }
-// Define una interfaz para el resultado que esperas del backend
+// Define una interfaz para el resultado que esperas
 interface buttonsProps {
   id: number;
   panel: string;
@@ -118,7 +118,8 @@ function BtnsDynCall(pnl: pnlProp) {
   //
   //--------------------------------------------------------------------------
   //
-  const API_URL_BACKEND = ubihost + "/search_buttons_react";
+  //const API_URL_BACKEND = `${ubihost}/search_buttons_react`;
+  const API_URL_BACKEND = "http://localhost:5055/search_buttons_react";
   //
   // 1. Leer botones
   const fetchButtonsPanel = async () => {
@@ -144,7 +145,7 @@ function BtnsDynCall(pnl: pnlProp) {
             action: "read",
           };
           //
-          // Asegúrate que esta URL coincida con tu backend
+          // Asegúrate que esta URL coincida
           const response = await fetch(API_URL_BACKEND, {
             method: "POST",
             body: JSON.stringify(dataRead),
@@ -199,8 +200,7 @@ function BtnsDynCall(pnl: pnlProp) {
     fetchButtonsPanel();
     //
   }, []);
-  //
-  console.log(loading);
+
   //
   //--------------------------------------------------------------------------
   //
