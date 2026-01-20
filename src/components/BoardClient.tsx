@@ -94,7 +94,7 @@ const BoardClient: React.FC = () => {
         "len",
         "The company-name must be between 3 and 35 characters.",
         (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 35
+          val && val.toString().length >= 3 && val.toString().length <= 35,
       )
       .required("This field is required!"),
     dnicom: Yup.string()
@@ -102,7 +102,7 @@ const BoardClient: React.FC = () => {
         "len",
         "The Owner must be between 3 and 35 characters.",
         (val: any) =>
-          val && val.toString().length >= 9 && val.toString().length <= 12
+          val && val.toString().length >= 9 && val.toString().length <= 12,
       )
       .required("This field is required!"),
     owner: Yup.string()
@@ -110,7 +110,7 @@ const BoardClient: React.FC = () => {
         "len",
         "The Owner must be between 3 and 35 characters.",
         (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 35
+          val && val.toString().length >= 3 && val.toString().length <= 35,
       )
       .required("This field is required!"),
     country: Yup.string()
@@ -118,7 +118,7 @@ const BoardClient: React.FC = () => {
         "len",
         "The Country must be between 3 and 25 characters.",
         (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 25
+          val && val.toString().length >= 3 && val.toString().length <= 25,
       )
       .required("This field is required!"),
 
@@ -158,11 +158,11 @@ const BoardClient: React.FC = () => {
         } = formValue;
 
         const postData: PostData = {
-          instance: "client",
+          instance: "insert_cli",
           entity: entyUserStore,
           username: textUserStore,
           activity: activity,
-          company: company,
+          company: company, // client
           dnicom: dnicom,
           owner: owner,
           country: country,

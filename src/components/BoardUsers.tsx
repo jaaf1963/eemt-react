@@ -95,7 +95,7 @@ const BoardUsers: React.FC = () => {
         "len",
         "The profession must be between 3 and 35 characters.",
         (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 35
+          val && val.toString().length >= 3 && val.toString().length <= 35,
       )
       .required("This field is required!"),
 
@@ -104,7 +104,7 @@ const BoardUsers: React.FC = () => {
         "len",
         "The first-name must be between 3 and 35 characters.",
         (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 35
+          val && val.toString().length >= 3 && val.toString().length <= 35,
       )
       .required("This field is required!"),
     lname: Yup.string()
@@ -112,7 +112,7 @@ const BoardUsers: React.FC = () => {
         "len",
         "The last-name must be between 3 and 35 characters.",
         (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 35
+          val && val.toString().length >= 3 && val.toString().length <= 35,
       )
       .required("This field is required!"),
     dnicom: Yup.string()
@@ -120,7 +120,7 @@ const BoardUsers: React.FC = () => {
         "len",
         "The Owner must be between 8 and 12 characters.",
         (val: any) =>
-          val && val.toString().length >= 8 && val.toString().length <= 12
+          val && val.toString().length >= 8 && val.toString().length <= 12,
       )
       .required("This field is required!"),
     usern: Yup.string()
@@ -128,7 +128,7 @@ const BoardUsers: React.FC = () => {
         "len",
         "The Country must be between 3 and 25 characters.",
         (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 25
+          val && val.toString().length >= 3 && val.toString().length <= 25,
       )
       .required("This field is required!"),
     eemail: Yup.string()
@@ -138,14 +138,14 @@ const BoardUsers: React.FC = () => {
       "len",
       "The Contact must be between 6 and 12 characters.",
       (val: any) =>
-        val && val.toString().length >= 6 && val.toString().length <= 12
+        val && val.toString().length >= 6 && val.toString().length <= 12,
     ),
     roles: Yup.string()
       .test(
         "len",
         "The Role must be between 4 and 18 characters.",
         (val: any) =>
-          val && val.toString().length >= 4 && val.toString().length <= 12
+          val && val.toString().length >= 4 && val.toString().length <= 12,
       )
       .required("This field is required!"),
     password: Yup.string()

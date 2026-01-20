@@ -15,6 +15,8 @@ import Register from "./components/Register";
 import SetClearStore from "./services/auth.clear.store";
 import * as AuthService from "./services/auth.local.service";
 //
+//import BoardSegfin from "./components/BoardSegfin";
+import AdminSegfin from "./components/AdminSegfin";
 //import BoardClient from "./components/BoardClient";
 import AdminClients from "./components/AdminClients";
 //import BoardProject from "./components/BoardProject";
@@ -31,7 +33,7 @@ import EventBus from "./common/EventBus";
 const App: React.FC = () => {
   const [showAdminBoard, setShowAdminBoard] = useState<boolean>(false);
   const [existUserStore, setExistUserStore] = useState<boolean | undefined>(
-    undefined
+    undefined,
   );
   const [changeUserRole, setChangeUserRole] = useState<boolean>(false);
   const [adminUserRole, setAdminUserRole] = useState<boolean>(false);
@@ -116,6 +118,13 @@ const App: React.FC = () => {
               Home
             </NavLink>
           </li>
+          {(moderUserRole || adminUserRole) && (
+            <li className="nav-item">
+              <NavLink to={"/segfin"} className="nav-link">
+                Seg-Fin
+              </NavLink>
+            </li>
+          )}
           {(viewUserRole || moderUserRole || adminUserRole) && (
             <li className="nav-item">
               <NavLink to={"/prjview"} className="nav-link">
@@ -215,6 +224,7 @@ const App: React.FC = () => {
         <Routes>
           <Route path="/" element={<Eem />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/segfin" element={<AdminSegfin />} />
           <Route path="/prjview" element={<PrjView />} />
           <Route path="/prjedit" element={<PrjEdit />} />
           <Route path="/prjflow" element={<PrjFlow />} />

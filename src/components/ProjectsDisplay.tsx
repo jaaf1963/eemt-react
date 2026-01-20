@@ -124,11 +124,11 @@ const ProjectsDisplay: React.FC = () => {
         if (textRoleStore === "admin" || textRoleStore === "edit") {
           //
           const dataButton = {
-            instance: "delete_user",
+            instance: "delete_prj",
             entity: entyUserStore,
             userna: textUserStore,
             authen: authUserStore,
-            usrdel: projectSelect,
+            prjdel: projectSelect,
           };
           //
           //const API_URL_BACKEND = `${ubihost}/delete_project_react`;
@@ -155,16 +155,16 @@ const ProjectsDisplay: React.FC = () => {
             }
           } catch (err: any) {
             //setError(err.message);
-            alert("Error al Eliminar usuario.");
+            alert("Error al Eliminar Proyecto.");
             //
           } finally {
             setIsLoading(false);
           }
         } else {
-          alert("NO tiene credenciales para Eliminar usuarios.");
+          alert("NO tiene credenciales para Eliminar Proyectos.");
         }
       } else {
-        alert("No se advierte usuario...hacer Login");
+        alert("No se advierte Proyecto...hacer Login");
       }
     }
   };

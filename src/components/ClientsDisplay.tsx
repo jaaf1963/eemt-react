@@ -5,7 +5,7 @@ interface clieProps {
   id?: number | undefined;
   client: string;
   activity?: string | undefined;
-  dnicom?: string | undefined;
+  dnicom: string;
   owner?: string | undefined;
   contact?: string | undefined;
   email?: string | undefined;
@@ -129,7 +129,7 @@ const ClientsDisplay: React.FC = () => {
             entity: entyUserStore,
             userna: textUserStore,
             authen: authUserStore,
-            usrdel: clientSelect,
+            clidel: clientSelect,
           };
           //
           //const API_URL_BACKEND = `${ubihost}/delete_user_react`;
@@ -216,7 +216,7 @@ const ClientsDisplay: React.FC = () => {
                 >
                   <td>
                     <button
-                      onClick={() => handleDeleteClient(item.client)}
+                      onClick={() => handleDeleteClient(item.dnicom)}
                       className="btn-delete-user"
                       style={{
                         width: "70px",
