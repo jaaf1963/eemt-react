@@ -96,11 +96,15 @@ function SearchCompanys({
         setUbihost(ubiho);
       }
     }
-    //
+  }, []);
+  //
+  //
+  useEffect(() => {
     //
     handleClick();
     //
   }, []);
+  //
   //
   return (
     <div>

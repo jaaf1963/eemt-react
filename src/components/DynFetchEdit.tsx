@@ -457,12 +457,13 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
       setRenderfiles(true);
       //
     }
-
+    //
     if (renderFiles) {
       setRenderfiles(false);
     }
   };
-
+  //
+  //
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -481,9 +482,8 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
         setUbihost(ubiho);
       }
     }
-    //
   }, []);
-
+  //
   //
   useEffect(() => {
     // Aquí podrías hacer llamadas a API, actualizar estado, etc.

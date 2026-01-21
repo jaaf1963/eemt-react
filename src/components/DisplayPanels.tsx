@@ -177,13 +177,6 @@ const PanelsDisplay: React.FC = () => {
   //
   //
   useEffect(() => {
-    //
-    getPanels();
-    //
-  }, [isLoading]);
-  //
-  //
-  useEffect(() => {
     let numApp = process.env.REACT_APP_NUM;
     if (Number(numApp) === 1) {
       // api web
@@ -201,6 +194,13 @@ const PanelsDisplay: React.FC = () => {
       }
     }
   }, []);
+  //
+  //
+  useEffect(() => {
+    //
+    getPanels();
+    //
+  }, [isLoading]);
   //
   //
   return (

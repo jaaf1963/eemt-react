@@ -24,6 +24,7 @@ interface segfinProps {
 sfn_id sfn_entity sfn_cup sfn_client sfn_projec sfn_tiproy sfn_etapa sfn_esttec sfn_clpcom 
 sfn_usdcom sfn_uffcom sfn_estcom sfn_clppen sfn_usdpen sfn_uffpen sfn_status sfn_datein 
 */
+
 const SegfinDisplay: React.FC = () => {
   const [segfinsGet, setSegfinsGet] = useState<segfinProps[]>([]);
   const [ubihost, setUbihost] = useState<string>("");
@@ -85,6 +86,7 @@ const SegfinDisplay: React.FC = () => {
       //proct: clientSel,
     };
     //
+    alert("ubihost: " + ubihost);
     const API_URL_BACKEND = `${ubihost}/search_segfin_react`;
     //const API_URL_BACKEND = "http://localhost:5055/search_segfin_react";
     //
@@ -190,13 +192,6 @@ const SegfinDisplay: React.FC = () => {
   //
   //
   useEffect(() => {
-    //
-    getSegfins();
-    //
-  }, []);
-  //
-  //
-  useEffect(() => {
     let numApp = process.env.REACT_APP_NUM;
     if (Number(numApp) === 1) {
       // api web
@@ -213,6 +208,13 @@ const SegfinDisplay: React.FC = () => {
         setUbihost(ubiho);
       }
     }
+  }, []);
+  //
+  //
+  useEffect(() => {
+    //
+    getSegfins();
+    //
   }, []);
   //
   //

@@ -195,13 +195,6 @@ const ProjectsDisplay: React.FC = () => {
   //
   //
   useEffect(() => {
-    //
-    getProjects();
-    //
-  }, []);
-  //
-  //
-  useEffect(() => {
     let numApp = process.env.REACT_APP_NUM;
     if (Number(numApp) === 1) {
       // api web
@@ -218,6 +211,13 @@ const ProjectsDisplay: React.FC = () => {
         setUbihost(ubiho);
       }
     }
+  }, []);
+  //
+  //
+  useEffect(() => {
+    //
+    getProjects();
+    //
   }, []);
   //
   //

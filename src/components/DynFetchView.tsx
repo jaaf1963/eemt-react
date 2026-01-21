@@ -453,13 +453,13 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
       setRenderfiles(true);
       //
     }
-
+    //
     if (renderFiles) {
       setRenderfiles(false);
     }
   };
   //
-
+  //
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -478,9 +478,9 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
         setUbihost(ubiho);
       }
     }
-    //
   }, []);
-
+  //
+  //
   useEffect(() => {
     //onActivar(false); // Opcional: resetea el estado en el padre
     //
