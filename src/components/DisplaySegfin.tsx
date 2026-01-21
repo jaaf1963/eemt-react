@@ -208,6 +208,7 @@ const SegfinDisplay: React.FC = () => {
         setUbihost(ubiho);
       }
     }
+    console.log(ubihost);
   }, []);
   //
   //
