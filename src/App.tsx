@@ -56,8 +56,6 @@ const App: React.FC = () => {
   });
   //
   //
-
-  //
   useEffect(() => {
     //
     // Lee usuario desde backend, o registrar

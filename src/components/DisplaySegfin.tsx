@@ -20,10 +20,6 @@ interface segfinProps {
   status?: string | undefined;
   datein?: string | undefined;
 }
-/*
-sfn_id sfn_entity sfn_cup sfn_client sfn_projec sfn_tiproy sfn_etapa sfn_esttec sfn_clpcom 
-sfn_usdcom sfn_uffcom sfn_estcom sfn_clppen sfn_usdpen sfn_uffpen sfn_status sfn_datein 
-*/
 
 const SegfinDisplay: React.FC = () => {
   const [segfinsGet, setSegfinsGet] = useState<segfinProps[]>([]);
@@ -178,7 +174,7 @@ const SegfinDisplay: React.FC = () => {
               //
             } finally {
               //setIsLoading(false);
-              console.log("");
+              alert("Cargado...");
             }
           } else {
             alert("NO tiene credenciales para Eliminar usuarios.");
@@ -193,6 +189,7 @@ const SegfinDisplay: React.FC = () => {
   //
   useEffect(() => {
     let numApp = process.env.REACT_APP_NUM;
+    console.log(numApp);
     if (Number(numApp) === 1) {
       // api web
       const ubiho = process.env.REACT_APP_API_URL;
@@ -208,7 +205,6 @@ const SegfinDisplay: React.FC = () => {
         setUbihost(ubiho);
       }
     }
-    console.log(ubihost);
   }, []);
   //
   //
