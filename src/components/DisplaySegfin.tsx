@@ -145,7 +145,7 @@ const SegfinDisplay: React.FC = () => {
               entity: entyUserStore,
               userna: textUserStore,
               authen: authUserStore,
-              usrdel: projectSelect,
+              sfndel: projectSelect,
             };
             //
             const API_URL_BACKEND = `${ubihost}/delete_segfin_react`;
