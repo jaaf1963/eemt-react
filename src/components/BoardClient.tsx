@@ -21,7 +21,7 @@ const BoardClient: React.FC = () => {
     if (roleStore) {
       return roleStore;
     }
-    //setTextRoleStore("");
+    setTextRoleStore("");
     return "";
   });
   //

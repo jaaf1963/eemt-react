@@ -40,7 +40,7 @@ interface segfinProps {
 const BoardSegfin: React.FC = () => {
   const [clientsGet, setClientsGet] = useState<clieProps[]>([]);
   const [segfinsGet, setSegfinsGet] = useState<segfinProps[]>([]);
-  const [estaVisible, setEstaVisible] = useState<boolean>(false);
+  //const [estaVisible, setEstaVisible] = useState<boolean>(false);
   const [successful, setSuccessful] = useState<boolean>(false);
   const [showClient, setShowClient] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
@@ -141,7 +141,7 @@ const BoardSegfin: React.FC = () => {
       if (segfins) {
         //
         setSegfinsGet(segfins);
-        setEstaVisible(true);
+        //setEstaVisible(true);
         console.log(segfinsGet);
       }
       //
@@ -338,7 +338,7 @@ const BoardSegfin: React.FC = () => {
       if (segfins) {
         //
         setClientsGet(segfins);
-        setEstaVisible(true);
+        //setEstaVisible(true);
         console.log(clientsGet);
       }
       //

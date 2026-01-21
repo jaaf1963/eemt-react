@@ -66,7 +66,7 @@ function BtnsDynCall(pnl: pnlProp) {
   });
   //
   const [buttonsPanel, setButtonsPanel] = useState<buttonsProps[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  //const [loading, setLoading] = useState<boolean>(true);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -119,7 +119,7 @@ function BtnsDynCall(pnl: pnlProp) {
   //
   // 1. Leer botones
   const fetchButtonsPanel = async () => {
-    setLoading(true);
+    //setLoading(true);
     //
     if (
       textUserStore !== null &&
@@ -158,7 +158,7 @@ function BtnsDynCall(pnl: pnlProp) {
         } catch (error) {
           console.error("Error al obtener paneles:", error);
         } finally {
-          setLoading(false);
+          //setLoading(false);
         }
       } else {
         alert("No tiene privilegios para modificar datos.");

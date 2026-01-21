@@ -35,8 +35,8 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
   const [showHistory, setShowHistory] = useState(false);
   const [dataHistory, setDataHistory] = useState<itera[]>([]);
   const [ubihost, setUbihost] = useState<string>("");
-  const [progress, setProgress] = useState(0); // Valor inicial 0%
-  const [renderFiles, setRenderfiles] = useState(false);
+  //const [progress, setProgress] = useState(0); // Valor inicial 0%
+  //const [renderFiles, setRenderfiles] = useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -105,7 +105,7 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
     //buttonSel: string
     {
       //
-      setProgress(70);
+      //setProgress(70);
       setIsLoading(true);
       if (
         textRoleStore !== null &&
@@ -222,7 +222,7 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
       //
       // Despliega 'Files' al hacer Click en 'Buttons'
       //
-      setRenderfiles(true);
+      //setRenderfiles(true);
     }
   };
   //

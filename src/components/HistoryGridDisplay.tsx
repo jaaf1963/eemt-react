@@ -29,8 +29,8 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
   cliePrjFetch,
 }) => {
   const [ubihost, setUbihost] = useState<string>("");
-  const [progress, setProgress] = useState(0); // Valor inicial 0%
-  const [isLoading, setIsLoading] = React.useState(true);
+  //const [progress, setProgress] = useState(0); // Valor inicial 0%
+  //const [isLoading, setIsLoading] = React.useState(true);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -107,8 +107,8 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
     //console.log("Dato recibido para Delete:", fileSelect);
     if (fileSelect !== "") {
       //
-      setProgress(0);
-      setIsLoading(true);
+      //setProgress(0);
+      //setIsLoading(true);
       if (
         textRoleStore !== null &&
         entyUserStore !== null &&
@@ -156,8 +156,8 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
             alert("Error al eliminar documento...");
             //
           } finally {
-            setIsLoading(false);
-            //console.log(isLoading);
+            //setIsLoading(false);
+            console.log("");
           }
         } else {
           alert("NO tiene credenciales para eliminar documentos.");

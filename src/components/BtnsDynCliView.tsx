@@ -59,7 +59,7 @@ interface ComponenteProps {
 
 const ClientButtView: React.FC<ComponenteProps> = () => {
   const [mensajeDesdeCall, setMensajeDesdeCall] = useState<string>("");
-  const [existDocums, setExistDocums] = useState<docsEx[]>([]);
+  //const [existDocums, setExistDocums] = useState<docsEx[]>([]);
   const [renderButton, setRenderButton] = useState<boolean>(true);
   const [projectsGet, setProjectsGet] = useState<projProps[]>([]);
   const [activarFetch, setActivarFetch] = useState<boolean>(false);
@@ -183,7 +183,8 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
   const handleDocumentExist = (updaDocExist: docsEx[]) => {
     // Actualiza el estado del padre con la nueva lista
     if (updaDocExist) {
-      setExistDocums(updaDocExist);
+      //setExistDocums(updaDocExist);
+      console.log(" ");
     }
   };
   //

@@ -15,23 +15,18 @@ import Register from "./components/Register";
 import SetClearStore from "./services/auth.clear.store";
 import * as AuthService from "./services/auth.local.service";
 //
-//import BoardSegfin from "./components/BoardSegfin";
 import AdminSegfin from "./components/AdminSegfin";
-//import BoardClient from "./components/BoardClient";
 import AdminClients from "./components/AdminClients";
-//import BoardProject from "./components/BoardProject";
 import AdminProjects from "./components/AdminProjects";
 import BoardModerator from "./components/BoardModerator";
-//import BoardPanels from "./components/BoardPanels";
 import AdminPanels from "./components/AdminPanels";
 import AdminUsers from "./components/AdminUsers";
-//import BoardUser from "./components/BoardUser";
 import BoardProfile from "./components/BoardProfile";
 import BoardAdmin from "./components/BoardAdmin";
 import EventBus from "./common/EventBus";
 
 const App: React.FC = () => {
-  const [showAdminBoard, setShowAdminBoard] = useState<boolean>(false);
+  //const [showAdminBoard, setShowAdminBoard] = useState<boolean>(false);
   const [existUserStore, setExistUserStore] = useState<boolean | undefined>(
     undefined,
   );
@@ -66,23 +61,23 @@ const App: React.FC = () => {
     //
     // Lee usuario desde backend, o registrar
     //
-    console.log("textRoleStore:", textRoleStore);
+    //console.log("textRoleStore:", textRoleStore);
     if (textRoleStore) {
       const adm: boolean = textRoleStore === "admin";
       const viw: boolean = textRoleStore === "view";
       const mod: boolean = textRoleStore === "edit";
       const com: boolean = textRoleStore === "come";
       //
-      console.log(textRoleStore, "-->", textRoleStore);
+      //console.log(textRoleStore, "-->", textRoleStore);
       setAdminUserRole(adm);
       setModerUserRole(mod);
       setViewUserRole(viw);
       setComeUserRole(com);
-      console.log("adminRole:", adminUserRole);
-      console.log("moderRole:", moderUserRole);
-      console.log("viewsRole:", viewUserRole);
-      console.log("comesRole:", comeUserRole);
-      setShowAdminBoard(adminUserRole);
+      //console.log("adminRole:", adminUserRole);
+      //console.log("moderRole:", moderUserRole);
+      //console.log("viewsRole:", viewUserRole);
+      //console.log("comesRole:", comeUserRole);
+      //setShowAdminBoard(adminUserRole);
       //setAdminUserRole(true);
       //setExistUserStore(viw);
     }
@@ -118,7 +113,7 @@ const App: React.FC = () => {
               Home
             </NavLink>
           </li>
-          {(moderUserRole || adminUserRole) && (
+          {(moderUserRole || adminUserRole || comeUserRole) && (
             <li className="nav-item">
               <NavLink to={"/segfin"} className="nav-link">
                 Seg-Fin

@@ -26,7 +26,7 @@ const UsersDisplay: React.FC = () => {
     if (roleStore) {
       return roleStore;
     }
-    //setTextRoleStore("");
+    setTextRoleStore("");
     return "";
   });
   const [textUserStore, setTextUserStore] = useState(() => {
@@ -172,70 +172,6 @@ const UsersDisplay: React.FC = () => {
         } else {
           alert("No se advierte usuario...hacer Login");
         }
-      }
-    }
-  };
-  //
-  // Update user
-  //
-  const handleUpdateUser = async (userSelect: string) => {
-    //
-    //alert(userSelect);
-    if (userSelect !== "") {
-      //
-      //setProgress(0);
-      setIsLoading(true);
-      if (
-        textRoleStore !== null &&
-        entyUserStore !== null &&
-        textUserStore !== null &&
-        authUserStore !== null
-      ) {
-        //
-        if (textRoleStore === "admin" || textRoleStore === "edit") {
-          //
-          const dataButton = {
-            instance: "update_user",
-            entity: entyUserStore,
-            userna: textUserStore,
-            authen: authUserStore,
-            usrupd: userSelect,
-          };
-          //
-          const API_URL_BACKEND = `${ubihost}/update_user_react`;
-          //const API_URL_BACKEND = "http://localhost:5055/update_user_react";
-          //
-          try {
-            const response = await fetch(API_URL_BACKEND, {
-              method: "POST",
-              body: JSON.stringify(dataButton),
-              headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
-            });
-            const updateResp = await response.json();
-            //
-            if (updateResp.success === "err") {
-              //throw new Error(`HTTP error! status: ${response.status}`);
-              const message = updateResp.msg;
-              alert(message);
-              //
-            } else {
-              //
-              const docUpdate = updateResp.msg;
-              alert(docUpdate);
-              //
-            }
-          } catch (err: any) {
-            //setError(err.message);
-            alert("Error al Modificar usuario.");
-            //
-          } finally {
-            setIsLoading(false);
-          }
-        } else {
-          alert("NO tiene credenciales para Modificar usuarios.");
-        }
-      } else {
-        alert("No se advierte usuario...hacer Login.");
       }
     }
   };

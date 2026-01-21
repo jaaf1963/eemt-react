@@ -324,15 +324,6 @@ const BoardUsers: React.FC = () => {
   // true true : muestra info
   // true false : muestra ingresar info
   //
-  const handleAgregarUsers = async () => {
-    //
-    if (showUser === true) {
-      setSuccessful(!successful);
-      setShowUser(true);
-    }
-  };
-  //
-  //
   return (
     <div className="col-md-12">
       <h4>Users register</h4>

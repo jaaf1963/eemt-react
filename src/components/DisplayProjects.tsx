@@ -19,14 +19,14 @@ const ProjectsDisplay: React.FC = () => {
   const [projectsGet, setProjectsGet] = useState<projProps[]>([]);
   const [ubihost, setUbihost] = useState<string>("");
   const [estaVisible, setEstaVisible] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = React.useState(true);
+  //const [isLoading, setIsLoading] = React.useState(true);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
     if (roleStore) {
       return roleStore;
     }
-    //setTextRoleStore("");
+    setTextRoleStore("");
     return "";
   });
   //
@@ -120,7 +120,7 @@ const ProjectsDisplay: React.FC = () => {
         )
       ) {
         //setProgress(0);
-        setIsLoading(true);
+        //setIsLoading(true);
         if (
           textRoleStore !== null &&
           entyUserStore !== null &&
@@ -165,7 +165,8 @@ const ProjectsDisplay: React.FC = () => {
               alert("Error al Eliminar Proyecto.");
               //
             } finally {
-              setIsLoading(false);
+              //setIsLoading(false);
+              console.log("");
             }
           } else {
             alert("NO tiene credenciales para Eliminar Proyectos.");

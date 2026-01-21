@@ -26,8 +26,8 @@ interface clieProps {
 
 const BoardProject: React.FC = () => {
   const [clientsGet, setClientsGet] = useState<clieProps[]>([]);
-  const [estaVisible, setEstaVisible] = useState<boolean>(false);
-  const [successful, setSuccessful] = useState<boolean>(false);
+  //const [estaVisible, setEstaVisible] = useState<boolean>(false);
+  //const [successful, setSuccessful] = useState<boolean>(false);
   const [showClient, setShowClient] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
   const [ubihost, setHubihost] = useState<string>("");
@@ -36,11 +36,11 @@ const BoardProject: React.FC = () => {
   const [clientInp, setClientInp] = useState<string>("");
   const [themeInp, setThemeInp] = useState<string>("");
   const [siglaInp, setSiglaInp] = useState<string>("");
-  const [descripInp, setDescripInp] = useState<string>("");
-  const [observInp, setObservInp] = useState<string>("");
+  //const [descripInp, setDescripInp] = useState<string>("");
+  //const [observInp, setObservInp] = useState<string>("");
   const [avanceInp, setAvanceInp] = useState<string>("");
-  const [dateini, setDateini] = useState<string>("");
-  const [datefin, setDatefin] = useState<string>("");
+  //const [dateini, setDateini] = useState<string>("");
+  //const [datefin, setDatefin] = useState<string>("");
   const [selecDateIni, setSelecDateIni] = useState<Date | null>(null);
   const [selecDateEnd, setSelecDateEnd] = useState<Date | null>(null);
   //
@@ -139,13 +139,13 @@ const BoardProject: React.FC = () => {
       if (clientsGet) {
         //
         setClientsGet(clients);
-        setEstaVisible(true);
+        //setEstaVisible(true);
         console.log(clientsGet);
       }
       //
     } catch (err: any) {
       //setError(err.message);
-      alert("Error al leer lista de clientes.");
+      alert("Error al leer lista de clientes. " + message);
       //
     } finally {
       //setLoading(false);
@@ -216,11 +216,11 @@ const BoardProject: React.FC = () => {
             client: clientInp,
             theme: themeInp,
             sigla: siglaInp,
-            descrip: descripInp,
-            observ: observInp,
+            descrip: "",
+            observ: "",
             avance: avanceInp,
-            dateini: dateini,
-            datefin: datefin,
+            dateini: "",
+            datefin: "",
           };
           //
           const API_URL_BACKEND = `${ubihost}/insert_project_react`;
@@ -245,19 +245,19 @@ const BoardProject: React.FC = () => {
               //
               // Handle the successful response for REGISTER
               setMessage("");
-              setSuccessful(true);
+              //setSuccessful(true);
               //
             } else {
               //
               const respMessage = data.msg;
               //setLoading(false);
-              setSuccessful(false);
+              //setSuccessful(false);
               setMessage(respMessage);
               console.error("Error al obtener datos:", respMessage);
             }
             //
           } catch (error) {
-            setSuccessful(false);
+            //setSuccessful(false);
             setMessage("error");
             console.error("Error en el inicio de sesión:", error);
             // Aquí puedes mostrar un mensaje de error al usuario

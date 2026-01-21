@@ -3,6 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "react-datepicker/dist/react-datepicker.css";
 import PanelsImage from "../services/panelsImage";
+
 interface panelProps {
   id: number | undefined;
   spanel?: string | undefined;
@@ -107,6 +108,7 @@ const BoardPanels: React.FC = () => {
           alert("Error al leer panels en DB...");
           //
         } finally {
+          setPanelTitle("");
           //setLoading(false);
         }
       } else {
