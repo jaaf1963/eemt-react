@@ -39,7 +39,7 @@ const App: React.FC = () => {
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
     if (roleStore) {
-      setTextRoleStore("");
+      //setTextRoleStore("");
       return roleStore;
     }
     //setTextRoleStore("");
@@ -98,6 +98,7 @@ const App: React.FC = () => {
   const logOut = () => {
     AuthService.logout();
     //
+    setTextRoleStore("");
     SetClearStore();
     //
   };
