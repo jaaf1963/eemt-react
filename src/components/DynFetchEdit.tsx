@@ -64,11 +64,11 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
   const [dataTasks, setDataTasks] = useState<tarea[]>([]);
   const [dataIters, setDataIters] = useState<itera[]>([]);
   const [existDocs, setExistDocs] = useState<docsEx[]>([]);
+  const [ubihost, setUbihost] = useState<string>("");
   const [progress, setProgress] = useState(0); // Valor inicial 0%
   const [renderFiles, setRenderfiles] = useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isExisdoc, setIsExisdoc] = React.useState(false);
-  const [ubihost, setHubihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -135,9 +135,8 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
             docume: fileSelect,
           };
           //
-          //const API_URL_BACKEND = `${ubihost}/delete_document_display_react`;
-          const API_URL_BACKEND =
-            "http://localhost:5055/delete_document_display_react";
+          const API_URL_BACKEND = `${ubihost}/delete_document_display_react`;
+          //const API_URL_BACKEND ="http://localhost:5055/delete_document_display_react";
           //
           try {
             const response = await fetch(API_URL_BACKEND, {
@@ -202,9 +201,8 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
             dcrprj: descriPrj,
           };
           //
-          //const API_URL_BACKEND = `${ubihost}/descrip_project_display_react`;
-          const API_URL_BACKEND =
-            "http://localhost:5055/descrip_project_display_react";
+          const API_URL_BACKEND = `${ubihost}/descrip_project_display_react`;
+          //const API_URL_BACKEND = "http://localhost:5055/descrip_project_display_react";
           //
           try {
             const response = await fetch(API_URL_BACKEND, {
@@ -274,9 +272,8 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
           button: buttonSel,
         };
         //
-        //const API_URL_BACKEND = `${ubihost}/get_documents_display_react`;
-        const API_URL_BACKEND =
-          "http://localhost:5055/get_documents_display_react";
+        const API_URL_BACKEND = `${ubihost}/get_documents_display_react`;
+        //const API_URL_BACKEND ="http://localhost:5055/get_documents_display_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -474,14 +471,14 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
       const ubiho = process.env.REACT_APP_API_URL;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     } else {
       // local
       const ubiho = process.env.REACT_APP_LOC;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     }
     //

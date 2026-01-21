@@ -1,8 +1,6 @@
 // AdminClients.tsx
 import React, { useState, useCallback, useEffect } from "react";
-import BoardClient from "./BoardClient";
-import ClientsDisplay from "./ClientsDisplay";
-import ProjectsDisplay from "./ProjectsDisplay";
+import ProjectsDisplay from "./DisplayProjects";
 import BoardProject from "./BoardProject";
 
 //type ComponenteActual = 'A' | 'B' | 'C' | null;

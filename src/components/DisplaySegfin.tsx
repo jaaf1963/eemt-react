@@ -1,20 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 
-interface clieProps {
-  id?: number | undefined;
-  client?: string | undefined;
-  activity?: string | undefined;
-  dnicom?: string | undefined;
-  owner?: string | undefined;
-  contact?: string | undefined;
-  email?: string | undefined;
-  country?: string | undefined;
-  usercpny?: string | undefined;
-  dateing?: string | undefined;
-  status?: string | undefined;
-}
-
 interface segfinProps {
   id?: number | undefined;
   cup: string;
@@ -39,8 +25,8 @@ sfn_id sfn_entity sfn_cup sfn_client sfn_projec sfn_tiproy sfn_etapa sfn_esttec 
 sfn_usdcom sfn_uffcom sfn_estcom sfn_clppen sfn_usdpen sfn_uffpen sfn_status sfn_datein 
 */
 const SegfinDisplay: React.FC = () => {
-  //const [clientsGet, setClientsGet] = useState<clieProps[]>([]);
   const [segfinsGet, setSegfinsGet] = useState<segfinProps[]>([]);
+  const [ubihost, setUbihost] = useState<string>("");
   const [estaVisible, setEstaVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState(true);
   //
@@ -98,8 +84,9 @@ const SegfinDisplay: React.FC = () => {
       authen: authUserStore,
       //proct: clientSel,
     };
-    //const API_URL_BACKEND = `${ubihost}/search_segfin_react`;
-    const API_URL_BACKEND = "http://localhost:5055/search_segfin_react";
+    //
+    const API_URL_BACKEND = `${ubihost}/search_segfin_react`;
+    //const API_URL_BACKEND = "http://localhost:5055/search_segfin_react";
     //
     try {
       const response = await fetch(API_URL_BACKEND, {
@@ -137,59 +124,65 @@ const SegfinDisplay: React.FC = () => {
     //alert(userSelect);
     if (projectSelect !== "") {
       //
-      //setProgress(0);
-      setIsLoading(true);
       if (
-        textRoleStore !== null &&
-        entyUserStore !== null &&
-        textUserStore !== null &&
-        authUserStore !== null
+        window.confirm(
+          `¿Estás seguro de que quieres eliminar proyecto <${projectSelect}>?`,
+        )
       ) {
-        //
-        if (textRoleStore === "admin" || textRoleStore === "edit") {
+        //setProgress(0);
+        setIsLoading(true);
+        if (
+          textRoleStore !== null &&
+          entyUserStore !== null &&
+          textUserStore !== null &&
+          authUserStore !== null
+        ) {
           //
-          const dataButton = {
-            instance: "delete_segfin",
-            entity: entyUserStore,
-            userna: textUserStore,
-            authen: authUserStore,
-            usrdel: projectSelect,
-          };
-          //
-          //const API_URL_BACKEND = `${ubihost}/delete_project_react`;
-          const API_URL_BACKEND = "http://localhost:5055/delete_segfin_react";
-          //
-          try {
-            const response = await fetch(API_URL_BACKEND, {
-              method: "POST",
-              body: JSON.stringify(dataButton),
-              headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
-            });
-            const deleteResp = await response.json();
+          if (textRoleStore === "admin" || textRoleStore === "edit") {
             //
-            if (deleteResp.success === "err") {
-              //throw new Error(`HTTP error! status: ${response.status}`);
-              const message = deleteResp.msg;
-              alert(message);
+            const dataButton = {
+              instance: "delete_segfin",
+              entity: entyUserStore,
+              userna: textUserStore,
+              authen: authUserStore,
+              usrdel: projectSelect,
+            };
+            //
+            const API_URL_BACKEND = `${ubihost}/delete_segfin_react`;
+            //const API_URL_BACKEND = "http://localhost:5055/delete_segfin_react";
+            //
+            try {
+              const response = await fetch(API_URL_BACKEND, {
+                method: "POST",
+                body: JSON.stringify(dataButton),
+                headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
+              });
+              const deleteResp = await response.json();
               //
-            } else {
+              if (deleteResp.success === "err") {
+                //throw new Error(`HTTP error! status: ${response.status}`);
+                const message = deleteResp.msg;
+                alert(message);
+                //
+              } else {
+                //
+                const docDelete = deleteResp.msg;
+                alert(docDelete);
+                //
+              }
+            } catch (err: any) {
+              //setError(err.message);
+              alert("Error al Eliminar usuario.");
               //
-              const docDelete = deleteResp.msg;
-              alert(docDelete);
-              //
+            } finally {
+              setIsLoading(false);
             }
-          } catch (err: any) {
-            //setError(err.message);
-            alert("Error al Eliminar usuario.");
-            //
-          } finally {
-            setIsLoading(false);
+          } else {
+            alert("NO tiene credenciales para Eliminar usuarios.");
           }
         } else {
-          alert("NO tiene credenciales para Eliminar usuarios.");
+          alert("No se advierte usuario...hacer Login");
         }
-      } else {
-        alert("No se advierte usuario...hacer Login");
       }
     }
   };
@@ -199,6 +192,26 @@ const SegfinDisplay: React.FC = () => {
     //
     getSegfins();
     //
+  }, []);
+  //
+  //
+  useEffect(() => {
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    }
   }, []);
   //
   //
@@ -216,7 +229,7 @@ const SegfinDisplay: React.FC = () => {
                 <th style={{ width: "85px", marginLeft: "1px" }}> Acciones</th>
                 <th
                   style={{
-                    width: "90px",
+                    width: "80px",
                     marginLeft: "5px",
                     textAlign: "revert-layer",
                   }}
@@ -224,7 +237,7 @@ const SegfinDisplay: React.FC = () => {
                   Cod-Proy
                 </th>
                 <th style={{ width: "150px", marginLeft: "1px" }}>Cliente</th>
-                <th style={{ width: "120px", marginLeft: "5px" }}>Proyecto</th>
+                <th style={{ width: "150px", marginLeft: "5px" }}>Proyecto</th>
                 <th style={{ width: "070px", marginLeft: "5px" }}>
                   Tipo-Proy<noscript></noscript>
                 </th>
@@ -236,14 +249,16 @@ const SegfinDisplay: React.FC = () => {
                   style={{
                     width: "060px",
                     marginLeft: "5px",
+                    textAlign: "right",
                   }}
                 >
                   CLP-Com
                 </th>
                 <th
                   style={{
-                    width: "060px",
+                    width: "070px",
                     marginLeft: "5px",
+                    textAlign: "right",
                   }}
                 >
                   USD-Com
@@ -252,6 +267,7 @@ const SegfinDisplay: React.FC = () => {
                   style={{
                     width: "060px",
                     marginLeft: "5px",
+                    textAlign: "right",
                   }}
                 >
                   U.F-Com
@@ -260,14 +276,16 @@ const SegfinDisplay: React.FC = () => {
                   style={{
                     width: "100px",
                     marginLeft: "5px",
+                    textAlign: "center",
                   }}
                 >
-                  Estado
+                  Ingreso
                 </th>
                 <th
                   style={{
                     width: "060px",
                     marginLeft: "5px",
+                    textAlign: "center",
                   }}
                 >
                   CLP-Pen
@@ -276,6 +294,7 @@ const SegfinDisplay: React.FC = () => {
                   style={{
                     width: "060px",
                     marginLeft: "5px",
+                    textAlign: "right",
                   }}
                 >
                   USD-Pen
@@ -284,17 +303,19 @@ const SegfinDisplay: React.FC = () => {
                   style={{
                     width: "060px",
                     marginLeft: "5px",
+                    textAlign: "right",
                   }}
                 >
                   U.F-Pen
                 </th>
                 <th
                   style={{
-                    width: "100px",
+                    width: "80px",
                     marginLeft: "5px",
+                    textAlign: "center",
                   }}
                 >
-                  Fecha
+                  Ingresado
                 </th>
               </tr>
             </thead>
@@ -314,6 +335,7 @@ const SegfinDisplay: React.FC = () => {
                         border: "4px",
                         color: "tomato",
                         textAlign: "center",
+                        fontSize: "15px",
                       }}
                     >
                       Eliminar
@@ -342,31 +364,41 @@ const SegfinDisplay: React.FC = () => {
                   >
                     {item.cup}
                   </td>
-                  <td>{item.client}</td>
+                  <td style={{ fontSize: "14px" }}>{item.client}</td>
                   <td>{item.proyec}</td>
-                  <td>{item.tiproy}</td>
+                  <td
+                    style={{
+                      fontSize: "15px",
+                      fontWeight: "bold",
+                      color: "brown",
+                    }}
+                  >
+                    {item.tiproy}
+                  </td>
                   <td>{item.etapa}</td>
                   <td>{item.estado}</td>
-                  <td style={{ textAlign: "center", color: "blue" }}>
+                  <td style={{ textAlign: "right", color: "blue" }}>
                     {item.clpcom}
                   </td>
-                  <td style={{ textAlign: "center", color: "blue" }}>
+                  <td style={{ textAlign: "right", color: "blue" }}>
                     {item.usdcom}
                   </td>
-                  <td style={{ textAlign: "center", color: "blue" }}>
+                  <td style={{ textAlign: "right", color: "blue" }}>
                     {item.uffcom}
                   </td>
-                  <td>{item.estcom}</td>
-                  <td style={{ textAlign: "center", color: "magenta" }}>
+                  <td style={{ textAlign: "center" }}>{item.estcom}</td>
+                  <td style={{ textAlign: "right", color: "magenta" }}>
                     {item.clppen}
                   </td>
-                  <td style={{ textAlign: "center", color: "magenta" }}>
+                  <td style={{ textAlign: "right", color: "magenta" }}>
                     {item.usdpen}
                   </td>
-                  <td style={{ textAlign: "center", color: "magenta" }}>
+                  <td style={{ textAlign: "right", color: "magenta" }}>
                     {item.uffpen}
                   </td>
-                  <td>{item.datein}</td>
+                  <td style={{ fontSize: "11px", textAlign: "center" }}>
+                    {item.datein}
+                  </td>
                 </tr>
               ))}
             </tbody>

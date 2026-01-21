@@ -1,9 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import dayjs from "dayjs"; // Importa dayjs
-//import { srv_host } from "../types/user.type";
-
-//const posic = Number(srv_host[0]);
-//const ubihost = srv_host[posic];
 
 // Tipo para el objeto de cada archivo
 interface FileInfo {
@@ -52,7 +48,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
   //const [buttonSelEdit, setButtonSelEdit] = useState<string>("");
   // Estado para almacenar la lista de archivos y su estado de selección
   const [files, setFiles] = useState<FileInfo[]>([]);
-  const [ubihost, setHubihost] = useState<string>("");
+  const [ubihost, setUbihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -90,7 +86,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
     return "";
   });
   //
-
+  //
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -99,19 +95,20 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
       const ubiho = process.env.REACT_APP_API_URL;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     } else {
       // local
       const ubiho = process.env.REACT_APP_LOC;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     }
     //
   }, []);
-
+  //
+  //
   // Función para manejar el cambio del input de tipo file
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     // Limpia lista de Documentos
@@ -122,7 +119,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
         name: file.name.replaceAll(" ", "-"),
         selected: false,
         file: file,
-      })
+      }),
     );
     setFiles(newFiles);
   };
@@ -131,8 +128,8 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
   const handleCheckboxChange = (fileName: string) => {
     setFiles((prevFiles) =>
       prevFiles.map((f) =>
-        f.name === fileName ? { ...f, selected: !f.selected } : f
-      )
+        f.name === fileName ? { ...f, selected: !f.selected } : f,
+      ),
     );
   };
   //
@@ -194,14 +191,16 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
           //formData.append("files", base64);
         });
         //
-        let fecIniDocs: string = "";
+        let fecIniDocs: string = " ";
         if (dateindocs !== null) {
-          fecIniDocs = dateindocs?.toString();
+          let fec = dayjs(dateindocs).format("YYYY/MM/DD");
+          fecIniDocs = fec.toString();
         }
         //
-        let fecEndDocs: string = "";
+        let fecEndDocs: string = " ";
         if (datenddocs !== null) {
-          fecEndDocs = datenddocs?.toString();
+          let fec = dayjs(datenddocs).format("YYYY/MM/DD");
+          fecEndDocs = fec.toString();
         }
         //
         if (typedocums !== "") {
@@ -209,20 +208,11 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
             if (advancdocs.length === 0) {
               advancdocs = "0";
             }
-            console.log("entity: ", entyUserStore);
-            console.log("codprj: ", codSelEdit);
-            console.log("projct: ", prjSelEdit);
-            console.log("cliSel: ", cliSelEdit);
-            console.log("btnSel: ", btnSelEdit);
-            console.log("typdoc:", typedocums);
-            console.log("files: ", selectedFiles);
-            console.log("exidoc:", existsdocs);
             //
             if (typedocums === "reemplazo") {
-              authordocs = "aut";
-              observdocs = "obs";
-              taskssdocs = "tsk";
-              advancdocs = "adv";
+              if (authordocs === null) authordocs = "aut";
+              if (observdocs === null) observdocs = "obs";
+              if (taskssdocs === null) taskssdocs = "tsk";
             }
             //
             formData.append("entity", entyUserStore);
@@ -235,14 +225,13 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
             formData.append("obsdoc", observdocs);
             formData.append("tardoc", taskssdocs);
             formData.append("advdoc", advancdocs);
-            formData.append("inidoc", dayjs(fecIniDocs).format("YYYY/MM/DD"));
-            formData.append("enddoc", dayjs(fecEndDocs).format("YYYY/MM/DD"));
+            formData.append("inidoc", fecIniDocs);
+            formData.append("enddoc", fecEndDocs);
             formData.append("userna", textUserStore);
             formData.append("docums", existsdocs);
             //
-            //const API_URL_BACKEND = `${ubihost}/insert_documents_react`;
-            const API_URL_BACKEND =
-              "http://localhost:5055/insert_documents_react";
+            const API_URL_BACKEND = `${ubihost}/insert_documents_react`;
+            //const API_URL_BACKEND ="http://localhost:5055/insert_documents_react";
             //
             // Send data to Backend
             try {
@@ -256,12 +245,11 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
                 //
                 alert("Documentos almacenados exitosamente.");
                 //const result = await response.json();
-                //console.log("Archivos enviados correctamente:", result);
                 // Aqui puedes manejar la respuesta del backend
               } else {
                 console.error("Error al enviar los archivos.");
                 alert(
-                  "Server envió un error al procesar la petición . . . revisar."
+                  "Server envió un error al procesar la petición . . . revisar.",
                 );
               }
             } catch (error) {

@@ -34,10 +34,10 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
 }) => {
   const [showHistory, setShowHistory] = useState(false);
   const [dataHistory, setDataHistory] = useState<itera[]>([]);
+  const [ubihost, setUbihost] = useState<string>("");
   const [progress, setProgress] = useState(0); // Valor inicial 0%
   const [renderFiles, setRenderfiles] = useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [ubihost, setHubihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -75,8 +75,7 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
     return "";
   });
   //
-  //-----------------------------------------------------------------
-
+  //
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -85,19 +84,19 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
       const ubiho = process.env.REACT_APP_API_URL;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     } else {
       // local
       const ubiho = process.env.REACT_APP_LOC;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     }
     //
   }, []);
-
+  //
   //
   // Get documents History
   //
@@ -132,9 +131,8 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
           };
           //console.log("dataButton:", dataButton);
           //
-          //const API_URL_BACKEND = `${ubihost}/get_documents_history_react`;
-          const API_URL_BACKEND =
-            "http://localhost:5055/get_documents_history_react";
+          const API_URL_BACKEND = `${ubihost}/get_documents_history_react`;
+          //const API_URL_BACKEND ="http://localhost:5055/get_documents_history_react";
           //
           try {
             const response = await fetch(API_URL_BACKEND, {
@@ -203,9 +201,6 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
       let numbetsk = files.numtsk;
       //let obseritr = files.obserx;
       //let numbedoc = files.numdoc;
-      //console.log("dociters:", docsiter);
-      //console.log("datiters:", dateiter);
-      //console.log("advniter:", advniter);
       //
       if (docsiter) {
         for (let i: number = 0; i < docsiter.length; i++) {
@@ -224,36 +219,18 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
         }
         setShowHistory(true);
       }
-      //console.log("dataHistory:");
-      //console.log(dataHistory);
       //
       // Despliega 'Files' al hacer Click en 'Buttons'
       //
       setRenderfiles(true);
     }
-
-    if (renderFiles) {
-      console.log("RENDER OK...");
-    }
   };
   //
-  //
-  //useEffect(() => {
-  // Aquí podrías hacer llamadas a API, actualizar estado, etc.
-  // Aquí podrías hacer llamadas a API, actualizar estado, etc.
-  // onActivar: Llama a la función onActivar para resetear el estado en el padre
-  // y evitar que el efecto se ejecute cada vez que se renderiza el padre.
-  //onActivar(false); // Opcional: resetea el estado en el padre
-  //
-  //get_documents_history(); //codiPrjFetch, datoBtnFetch);
-  //
-  // fileSelected
-  //}, [activarFetch]);
 
   if (!activarFetch) {
     return <p>Presione un botón para ver info.</p>;
   }
-  console.log(progress);
+  //console.log(progress);
   //
   return (
     <>

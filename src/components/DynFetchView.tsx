@@ -62,10 +62,10 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
   const [dataTasks, setDataTasks] = useState<tarea[]>([]);
   const [dataIters, setDataIters] = useState<itera[]>([]);
   const [existDocs, setExistDocs] = useState<docsEx[]>([]);
+  const [ubihost, setUbihost] = useState<string>("");
   const [renderFiles, setRenderfiles] = useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isExisdoc, setIsExisdoc] = React.useState(false);
-  const [ubihost, setHubihost] = useState<string>("");
   const [progress, setProgress] = useState(0);
   //const [documentsButt, setDocumentsButt] = useState<string[]>([]);
   //
@@ -200,9 +200,8 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
             dcrprj: descriPrj,
           };
           //
-          //const API_URL_BACKEND = `${ubihost}/descrip_project_display_react`;
-          const API_URL_BACKEND =
-            "http://localhost:5055/descrip_project_display_react";
+          const API_URL_BACKEND = `${ubihost}/descrip_project_display_react`;
+          //const API_URL_BACKEND ="http://localhost:5055/descrip_project_display_react";
           //
           try {
             const response = await fetch(API_URL_BACKEND, {
@@ -272,9 +271,8 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
           button: buttonSel,
         };
         //
-        //const API_URL_BACKEND = `${ubihost}/get_documents_display_react`;
-        const API_URL_BACKEND =
-          "http://localhost:5055/get_documents_display_react";
+        const API_URL_BACKEND = `${ubihost}/get_documents_display_react`;
+        //const API_URL_BACKEND ="http://localhost:5055/get_documents_display_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -470,24 +468,20 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
       const ubiho = process.env.REACT_APP_API_URL;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     } else {
       // local
       const ubiho = process.env.REACT_APP_LOC;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     }
     //
   }, []);
 
   useEffect(() => {
-    // Aquí podrías hacer llamadas a API, actualizar estado, etc.
-    // Aquí podrías hacer llamadas a API, actualizar estado, etc.
-    // onActivar: Llama a la función onActivar para resetear el estado en el padre
-    // y evitar que el efecto se ejecute cada vez que se renderiza el padre.
     //onActivar(false); // Opcional: resetea el estado en el padre
     //
     getDocumentsButton(codiPrjFetch, datoBtnFetch);
@@ -500,8 +494,6 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
     return <p>Presione un botón para ver info.</p>;
   }
   //
-  //    <span>{mensajeDeBoton}</span>;
-  //    <InfiniteProgress isLoading={isLoading} />
   //
   return (
     <>

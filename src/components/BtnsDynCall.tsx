@@ -1,10 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import DynamicButton from "./BtnsDynamic";
-//import { srv_host } from "../types/user.type";
-
-//const posic = Number(srv_host[0]);
-//const ubihost = srv_host[posic];
 
 const shad = [
   // desplazX, desplazY, blur, color
@@ -118,8 +114,8 @@ function BtnsDynCall(pnl: pnlProp) {
   //
   //--------------------------------------------------------------------------
   //
-  //const API_URL_BACKEND = `${ubihost}/search_buttons_react`;
-  const API_URL_BACKEND = "http://localhost:5055/search_buttons_react";
+  const API_URL_BACKEND = `${ubihost}/search_buttons_react`;
+  //const API_URL_BACKEND = "http://localhost:5055/search_buttons_react";
   //
   // 1. Leer botones
   const fetchButtonsPanel = async () => {
@@ -257,7 +253,7 @@ function BtnsDynCall(pnl: pnlProp) {
         //buttonStatus: "inactive", //Deja todos los estados en 'activo'
         buttstat: item.buttstat === "disabled" ? "disabled" : "inactive",
         clasname: item.buttstat,
-      }))
+      })),
     );
   };
 
@@ -275,8 +271,8 @@ function BtnsDynCall(pnl: pnlProp) {
               buttstat: item.buttstat === "disabled" ? "disabled" : "active",
               clasname: item.buttstat,
             }
-          : item
-      )
+          : item,
+      ),
     );
     //
     // Envio al Padre 'BtnsDynCliEdit'

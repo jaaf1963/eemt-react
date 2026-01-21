@@ -135,6 +135,20 @@
   border-radius: 4px;
 }
 
+.label-date-project {
+  margin-left: 1px;
+  color: rgb(6, 5, 5);
+  margin-right: 15px;
+  font-style: normal;
+}
+
+.picker-date-project {
+  width: 265px;
+  margin-left: 1px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .input-textarea-upload {
   width: 350px;
   padding: 0.5rem;
@@ -156,7 +170,9 @@
 .button-upload-docs:hover {
   background-color: rgb(216, 231, 11);
   /* Transición para efectos de hover y clic */
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .button-send-update {
@@ -173,7 +189,9 @@
 .button-send-update:hover {
   background-color: rgb(216, 231, 11);
   /* Transición para efectos de hover y clic */
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .check-send-delete {
@@ -198,7 +216,9 @@
 .button-send-delete:hover {
   background-color: rgb(230, 134, 156);
   /* Transición para efectos de hover y clic */
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .button-upd-edit {

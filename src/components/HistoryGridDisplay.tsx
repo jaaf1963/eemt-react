@@ -28,9 +28,9 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
   codiPrjFetch,
   cliePrjFetch,
 }) => {
+  const [ubihost, setUbihost] = useState<string>("");
   const [progress, setProgress] = useState(0); // Valor inicial 0%
   const [isLoading, setIsLoading] = React.useState(true);
-  const [ubihost, setHubihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -67,7 +67,8 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
     setAuthUserStore("");
     return "";
   });
-
+  //
+  //
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -76,19 +77,19 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
       const ubiho = process.env.REACT_APP_API_URL;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     } else {
       // local
       const ubiho = process.env.REACT_APP_LOC;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     }
     //
   }, []);
-
+  //
   //
   //-----------------------------------------------------------------
   // Estilo para el efecto tenue (puedes usar CSS o Tailwind)
@@ -128,9 +129,8 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
             docume: fileSelect,
           };
           //
-          //const API_URL_BACKEND = `${ubihost}/delete_document_display_react`;
-          const API_URL_BACKEND =
-            "http://localhost:5055/delete_document_display_react";
+          const API_URL_BACKEND = `${ubihost}/delete_document_display_react`;
+          //const API_URL_BACKEND ="http://localhost:5055/delete_document_display_react";
           //
           try {
             const response = await fetch(API_URL_BACKEND, {
@@ -157,7 +157,7 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
             //
           } finally {
             setIsLoading(false);
-            console.log(isLoading);
+            //console.log(isLoading);
           }
         } else {
           alert("NO tiene credenciales para eliminar documentos.");

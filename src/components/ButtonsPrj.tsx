@@ -2,9 +2,6 @@ import React, { useState, useEffect, FormEvent } from "react";
 import ButtonsTableImage from "../services/buttonTableImage";
 import ButtonsPanelImage from "../services/buttonPanelImage";
 import "../styles/InputGroup.css";
-//import { srv_host } from "../types/user.type";
-//const posic = Number(srv_host[0]);
-//const ubihost = srv_host[posic];
 
 // Define el tipo para los datos del formulario
 interface FormData {
@@ -21,7 +18,7 @@ interface FormData {
 const PrjFlow = () => {
   // Estado para los datos del formulario
   const [panelButtons, setPanelButtons] = useState<string[]>([]);
-  const [ubihost, setHubihost] = useState<string>("");
+  const [ubihost, setUbihost] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   //
   const [activesino, setActivesino] = useState(false);
@@ -75,28 +72,7 @@ const PrjFlow = () => {
     classnam: "inactive",
     status: "inactive",
   });
-
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    }
-    //
-  }, []);
-
+  //
   const getPanelButtons = async (panelSel: string) => {
     //
     if (
@@ -114,7 +90,8 @@ const PrjFlow = () => {
           authen: authUserStore,
           buttpane: panelSel,
         };
-        const API_URL_BACKEND = ubihost + "/select_panel_butts_react";
+        const API_URL_BACKEND = `${ubihost}/select_panel_butts_react`;
+        //const API_URL_BACKEND = "http://localhost:5055/select_panel_butts_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -275,7 +252,6 @@ const PrjFlow = () => {
     const roleStore = localStorage.getItem("role");
     const entyStore = localStorage.getItem("entity");
     const authStore = localStorage.getItem("token");
-    //console.log(roleStore, entyStore, userStore, authStore);
     //
     if (
       roleStore &&
@@ -283,26 +259,14 @@ const PrjFlow = () => {
       userStore !== null &&
       authStore !== null
     ) {
-      //setTextUserStore(userStore);
-      //const adm: boolean = roleStore === "admin";
-      //const mod: boolean = roleStore === "moder";
-      //setAdminUserRole(adm);
-      //setModerUserRole(mod);
       setTextUserStore(userStore);
       setEntyUserStore(entyStore);
       setAuthUserStore(authStore);
-      //dataUser(entyStore, userStore);
-      //console.log("adminRole:", adminUserRole);
-      //console.log("moderRole:", moderUserRole);
-      //console.log(textUserStore);
-      //console.log(entyUserStore);
-      //setShowAdminBoard(adminUserRole);
       //
       if (textRoleStore === "admin" || textRoleStore === "edit") {
-        // Creamos un FormData para enviar los archivos
-        //const formData = new FormData();
         //
-        //console.log("formValues:", inputsData);
+        // Creamos un FormData para enviar los archivos
+        //
         const data = {
           buttext: "buttons_send",
           entity: entyUserStore,
@@ -318,8 +282,9 @@ const PrjFlow = () => {
           buttstat: inputsData.status,
         };
         //
-        const API_URL_BACKEND = ubihost + "/insert_button_react";
-        // Send data to Backend
+        const API_URL_BACKEND = `${ubihost}/insert_button_react`;
+        //const API_URL_BACKEND = "http://localhost:5055/insert_button_react";
+        //
         try {
           const response = await fetch(API_URL_BACKEND, {
             method: "POST",
@@ -360,6 +325,29 @@ const PrjFlow = () => {
       }
     }
   };
+  //
+  //
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    }
+    //
+  }, []);
+  //
   //
   return (
     <div className="input-group-container">

@@ -9,13 +9,15 @@ interface projProps {
   sigla?: string | undefined;
   descrip?: string | undefined;
   observ?: string | undefined;
-  advance?: string | undefined;
+  advance: string;
   dateini?: string | undefined;
   dateend?: string | undefined;
+  quedan?: string | undefined;
 }
 
 const ProjectsDisplay: React.FC = () => {
   const [projectsGet, setProjectsGet] = useState<projProps[]>([]);
+  const [ubihost, setUbihost] = useState<string>("");
   const [estaVisible, setEstaVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState(true);
   //
@@ -73,8 +75,9 @@ const ProjectsDisplay: React.FC = () => {
       authen: authUserStore,
       //proct: clientSel,
     };
-    //const API_URL_BACKEND = `${ubihost}/search_projects_react`;
-    const API_URL_BACKEND = "http://localhost:5055/search_projects_react";
+    //
+    const API_URL_BACKEND = `${ubihost}/search_projects_react`;
+    //const API_URL_BACKEND = "http://localhost:5055/search_projects_react";
     //
     try {
       const response = await fetch(API_URL_BACKEND, {
@@ -93,7 +96,6 @@ const ProjectsDisplay: React.FC = () => {
         //
         setProjectsGet(projects);
         setEstaVisible(true);
-        console.log(projectsGet);
       }
       //
     } catch (err: any) {
@@ -112,60 +114,81 @@ const ProjectsDisplay: React.FC = () => {
     //alert(userSelect);
     if (projectSelect !== "") {
       //
-      //setProgress(0);
-      setIsLoading(true);
       if (
-        textRoleStore !== null &&
-        entyUserStore !== null &&
-        textUserStore !== null &&
-        authUserStore !== null
+        window.confirm(
+          `¿Estás seguro de que quieres eliminar proyecto <${projectSelect}>?`,
+        )
       ) {
-        //
-        if (textRoleStore === "admin" || textRoleStore === "edit") {
+        //setProgress(0);
+        setIsLoading(true);
+        if (
+          textRoleStore !== null &&
+          entyUserStore !== null &&
+          textUserStore !== null &&
+          authUserStore !== null
+        ) {
           //
-          const dataButton = {
-            instance: "delete_prj",
-            entity: entyUserStore,
-            userna: textUserStore,
-            authen: authUserStore,
-            prjdel: projectSelect,
-          };
-          //
-          //const API_URL_BACKEND = `${ubihost}/delete_project_react`;
-          const API_URL_BACKEND = "http://localhost:5055/delete_project_react";
-          //
-          try {
-            const response = await fetch(API_URL_BACKEND, {
-              method: "POST",
-              body: JSON.stringify(dataButton),
-              headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
-            });
-            const deleteResp = await response.json();
+          if (textRoleStore === "admin" || textRoleStore === "edit") {
             //
-            if (deleteResp.success === "err") {
-              //throw new Error(`HTTP error! status: ${response.status}`);
-              const message = deleteResp.msg;
-              alert(message);
+            const dataButton = {
+              instance: "delete_prj",
+              entity: entyUserStore,
+              userna: textUserStore,
+              authen: authUserStore,
+              prjdel: projectSelect,
+            };
+            //
+            const API_URL_BACKEND = `${ubihost}/delete_project_react`;
+            //const API_URL_BACKEND ="http://localhost:5055/delete_project_react";
+            //
+            try {
+              const response = await fetch(API_URL_BACKEND, {
+                method: "POST",
+                body: JSON.stringify(dataButton),
+                headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
+              });
+              const deleteResp = await response.json();
               //
-            } else {
+              if (deleteResp.success === "err") {
+                //throw new Error(`HTTP error! status: ${response.status}`);
+                const message = deleteResp.msg;
+                alert(message);
+                //
+              } else {
+                //
+                const docDelete = deleteResp.msg;
+                alert(docDelete);
+                //
+              }
+            } catch (err: any) {
+              //setError(err.message);
+              alert("Error al Eliminar Proyecto.");
               //
-              const docDelete = deleteResp.msg;
-              alert(docDelete);
-              //
+            } finally {
+              setIsLoading(false);
             }
-          } catch (err: any) {
-            //setError(err.message);
-            alert("Error al Eliminar Proyecto.");
-            //
-          } finally {
-            setIsLoading(false);
+          } else {
+            alert("NO tiene credenciales para Eliminar Proyectos.");
           }
         } else {
-          alert("NO tiene credenciales para Eliminar Proyectos.");
+          alert("No se advierte Proyecto...hacer Login");
         }
-      } else {
-        alert("No se advierte Proyecto...hacer Login");
       }
+    }
+  };
+  //
+  // Función para obtener el color basado en el texto
+  //
+  const getTextColor = (texto: string): string => {
+    switch (texto) {
+      case "aprobado":
+        return "tomato";
+      case "urgente":
+        return "red";
+      case "normal":
+        return "black";
+      default:
+        return "gray";
     }
   };
   //
@@ -177,10 +200,30 @@ const ProjectsDisplay: React.FC = () => {
   }, []);
   //
   //
+  useEffect(() => {
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    }
+  }, []);
+  //
+  //
   return (
     <div>
       <p style={{ fontStyle: "italic", fontSize: "18px" }}>
-        Información de proyectos
+        Información técnica de proyectos
       </p>
       <div style={estiloGrilla}>
         {/* Renderizado condicional: solo mapea si está visible para optimizar */}
@@ -191,7 +234,7 @@ const ProjectsDisplay: React.FC = () => {
                 <th style={{ width: "85px", marginLeft: "1px" }}> Acciones</th>
                 <th
                   style={{
-                    width: "130px",
+                    width: "90px",
                     marginLeft: "5px",
                     textAlign: "revert-layer",
                   }}
@@ -206,9 +249,32 @@ const ProjectsDisplay: React.FC = () => {
                 <th style={{ width: "220px", marginLeft: "5px" }}>
                   Observación
                 </th>
-                <th style={{ width: "100px", marginLeft: "5px" }}>Advance</th>
+                <th
+                  style={{
+                    width: "100px",
+                    textAlign: "center",
+                  }}
+                >
+                  Avance
+                </th>
                 <th style={{ width: "100px", marginLeft: "5px" }}>Fecha-Ini</th>
                 <th style={{ width: "100px", marginLeft: "5px" }}>Fecha.Fin</th>
+                <th
+                  style={{
+                    width: "60px",
+                    marginLeft: "5px",
+                  }}
+                >
+                  Quenan
+                </th>
+                <th
+                  style={{
+                    width: "60px",
+                    textAlign: "center",
+                  }}
+                >
+                  Tipo
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -243,14 +309,54 @@ const ProjectsDisplay: React.FC = () => {
                       Modif
                     </button>*/}
                   </td>
-                  <td style={{ textAlign: "left" }}>{item.codeprj}</td>
-                  <td>{item.company}</td>
-                  <td>{item.theme}</td>
-                  <td style={{ color: "blue" }}>{item.descrip}</td>
-                  <td style={{ color: "tomato" }}>{item.observ}</td>
-                  <td style={{ textAlign: "center" }}>{item.advance}</td>
-                  <td>{item.dateini}</td>
-                  <td>{item.dateend}</td>
+                  <td
+                    style={{
+                      textAlign: "left",
+                      fontWeight: "bold",
+                      fontSize: "15px",
+                      color: "brown",
+                    }}
+                  >
+                    {item.codeprj}
+                  </td>
+                  <td style={{ fontSize: "13px" }}>{item.company}</td>
+                  <td style={{ fontSize: "13px" }}>{item.theme}</td>
+                  <td style={{ color: "blue", fontSize: "12px" }}>
+                    {item.descrip}
+                  </td>
+                  <td style={{ color: "brown", fontSize: "12px" }}>
+                    {item.observ}
+                  </td>
+                  <td
+                    style={{
+                      textAlign: "center",
+                      fontSize: "13px",
+                      fontWeight: "bold",
+                      color: getTextColor(item.advance),
+                    }}
+                  >
+                    {item.advance}
+                  </td>
+                  <td style={{ fontSize: "14px" }}>{item.dateini}</td>
+                  <td style={{ fontSize: "14px" }}>{item.dateend}</td>
+                  <td
+                    style={{
+                      fontSize: "13px",
+                      textAlign: "right",
+                      paddingRight: "5px",
+                      color: "brown",
+                    }}
+                  >
+                    {item.quedan}
+                  </td>
+                  <td
+                    style={{
+                      textAlign: "center",
+                      fontSize: "13px",
+                    }}
+                  >
+                    {item.sigla}
+                  </td>
                 </tr>
               ))}
             </tbody>

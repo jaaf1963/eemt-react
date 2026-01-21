@@ -18,7 +18,6 @@ const BoardProfile: React.FC = () => {
         storageDataUser("module", data.data.tkn_subsyst);
         storageDataUser("token", data.data.tkn_token);
         storageDataUser("datein", data.data.tkn_datein);
-
 */
 
   useEffect(() => {

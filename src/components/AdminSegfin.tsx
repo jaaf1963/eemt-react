@@ -1,6 +1,6 @@
 // AdminClients.tsx
 import React, { useState, useCallback, useEffect } from "react";
-import SigfinDisplay from "./SegfinDisplay";
+import SigfinDisplay from "./DisplaySegfin";
 import BoardSegfin from "./BoardSegfin";
 
 //type ComponenteActual = 'A' | 'B' | 'C' | null;

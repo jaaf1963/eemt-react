@@ -18,6 +18,7 @@ interface clieProps {
 const ClientsDisplay: React.FC = () => {
   const [clientsGet, setClientsGet] = useState<clieProps[]>([]);
   const [estaVisible, setEstaVisible] = useState<boolean>(false);
+  const [ubihost, setUbihost] = useState<string>("");
   const [isLoading, setIsLoading] = React.useState(true);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -74,8 +75,8 @@ const ClientsDisplay: React.FC = () => {
       authen: authUserStore,
       //client: clientSel,
     };
-    //const API_URL_BACKEND = `${ubihost}/search_clients_react`;
-    const API_URL_BACKEND = "http://localhost:5055/search_clients_react";
+    const API_URL_BACKEND = `${ubihost}/search_clients_react`;
+    //const API_URL_BACKEND = "http://localhost:5055/search_clients_react";
     //
     try {
       const response = await fetch(API_URL_BACKEND, {
@@ -94,7 +95,6 @@ const ClientsDisplay: React.FC = () => {
         //
         setClientsGet(clients);
         setEstaVisible(true);
-        console.log(clientsGet);
       }
       //
     } catch (err: any) {
@@ -113,62 +113,90 @@ const ClientsDisplay: React.FC = () => {
     //alert(userSelect);
     if (clientSelect !== "") {
       //
-      //setProgress(0);
-      setIsLoading(true);
       if (
-        textRoleStore !== null &&
-        entyUserStore !== null &&
-        textUserStore !== null &&
-        authUserStore !== null
+        window.confirm(
+          `¿Estás seguro de que quieres eliminar  cliente <${clientSelect}>?`,
+        )
       ) {
-        //
-        if (textRoleStore === "admin" || textRoleStore === "edit") {
+        //setProgress(0);
+        setIsLoading(true);
+        if (
+          textRoleStore !== null &&
+          entyUserStore !== null &&
+          textUserStore !== null &&
+          authUserStore !== null
+        ) {
           //
-          const dataButton = {
-            instance: "delete_cli",
-            entity: entyUserStore,
-            userna: textUserStore,
-            authen: authUserStore,
-            clidel: clientSelect,
-          };
-          //
-          //const API_URL_BACKEND = `${ubihost}/delete_user_react`;
-          const API_URL_BACKEND = "http://localhost:5055/delete_client_react";
-          //
-          try {
-            const response = await fetch(API_URL_BACKEND, {
-              method: "POST",
-              body: JSON.stringify(dataButton),
-              headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
-            });
-            const deleteResp = await response.json();
+          if (textRoleStore === "admin" || textRoleStore === "edit") {
             //
-            if (deleteResp.success === "err") {
-              //throw new Error(`HTTP error! status: ${response.status}`);
-              const message = deleteResp.msg;
-              alert(message);
+            const dataButton = {
+              instance: "delete_cli",
+              entity: entyUserStore,
+              userna: textUserStore,
+              authen: authUserStore,
+              clidel: clientSelect,
+            };
+            //
+            const API_URL_BACKEND = `${ubihost}/delete_client_react`;
+            //const API_URL_BACKEND = "http://localhost:5055/delete_client_react";
+            //
+            try {
+              const response = await fetch(API_URL_BACKEND, {
+                method: "POST",
+                body: JSON.stringify(dataButton),
+                headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
+              });
+              const deleteResp = await response.json();
               //
-            } else {
+              if (deleteResp.success === "err") {
+                //throw new Error(`HTTP error! status: ${response.status}`);
+                const message = deleteResp.msg;
+                alert(message);
+                //
+              } else {
+                //
+                const docDelete = deleteResp.msg;
+                alert(docDelete);
+                //
+              }
+            } catch (err: any) {
+              //setError(err.message);
+              alert("Error al Eliminar usuario.");
               //
-              const docDelete = deleteResp.msg;
-              alert(docDelete);
-              //
+            } finally {
+              setIsLoading(false);
             }
-          } catch (err: any) {
-            //setError(err.message);
-            alert("Error al Eliminar usuario.");
-            //
-          } finally {
-            setIsLoading(false);
+          } else {
+            alert("NO tiene credenciales para Eliminar usuarios.");
           }
         } else {
-          alert("NO tiene credenciales para Eliminar usuarios.");
+          alert("No se advierte usuario...hacer Login");
         }
-      } else {
-        alert("No se advierte usuario...hacer Login");
       }
     }
   };
+  //
+  //
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    }
+    //
+  }, []);
   //
   //
   useEffect(() => {

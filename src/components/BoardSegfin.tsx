@@ -4,30 +4,6 @@ import * as Yup from "yup";
 //import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SegfinImage from "../services/segfinImage";
-/*
-interface PickProp {
-  field: any;
-  form: any;
-  // Puedes añadir más propiedades aqui
-}*/
-
-// Componente de campo de fecha personalizado
-/*
-const DatePickerField = ({ field, form, ...props }: PickProp) => {
-  const { setFieldValue } = form;
-  return (
-    <DatePicker
-      {...field}
-      {...props}
-      selected={field.value}
-      onChange={(val) => setFieldValue(field.name, val)}
-      inputFormat="yyyy-MM-dd"
-      dateformat="yyyy-MM-dd hh:mm:ss"
-      //style={{ width: "270px", height: "25px" }}
-    />
-  );
-};
-*/
 
 interface clieProps {
   id?: number | undefined;
@@ -146,8 +122,8 @@ const BoardSegfin: React.FC = () => {
       authen: authUserStore,
       //client: clientSel,
     };
-    //const API_URL_BACKEND = `${ubihost}/search_segfin_react`;
-    const API_URL_BACKEND = "http://localhost:5055/search_segfin_react";
+    const API_URL_BACKEND = `${ubihost}/search_segfin_react`;
+    //const API_URL_BACKEND = "http://localhost:5055/search_segfin_react";
     //
     try {
       const response = await fetch(API_URL_BACKEND, {
@@ -233,55 +209,13 @@ const BoardSegfin: React.FC = () => {
           val && val.toString().length >= 3 && val.toString().length <= 45,
       )
       .required("This field is required!"),
-    proyec: Yup.string()
-      .test(
-        "len",
-        "The project-name must be between 5 and 35 characters.",
-        (val: any) =>
-          val && val.toString().length >= 5 && val.toString().length <= 35,
-      )
-      .required("This field is required!"),
-    */
-    /*
-    descrip: Yup.string()
-      .test(
-        "len",
-        "The Descrip must be between 2 and 512 characters.",
-        (val: any) =>
-          val && val.toString().length >= 2 && val.toString().length <= 512,
-      )
-      .required("This field is required!"),
-    theme: Yup.string()
-      .test(
-        "len",
-        "The Theme must be between 5 and 128 characters.",
-        (val: any) =>
-          val && val.toString().length >= 5 && val.toString().length <= 128,
-      )
-      .required("This field is required!"),
-    sigla: Yup.string()
-      .test(
-        "len",
-        "The Sigla must be between 3 and 10 characters.",
-        (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 10,
-      )
-      .required("This field is required!"),
-    observ: Yup.string().test(
-      "len",
-      "The Observ must be between 1 and 256 characters.",
-      (val: any) =>
-        val && val.toString().length >= 1 && val.toString().length <= 256,
-    ),
-    codeprj: Yup.string().required("This field is required!"),
-    dateini: Yup.string().required("This field is required!"),
-    datefin: Yup.string().required("This field is required!"),
+
     */
   });
 
   // se asigna PostData a formValue para igualar las variables
   // al desEstructurar los valores ingresados por el usuario
-  const handleRegisterProject = async (formValue: PostData) => {
+  const handleRegisterSegfin = async (formValue: PostData) => {
     //alert("Register...");
     if (
       textRoleStore !== null &&
@@ -331,8 +265,8 @@ const BoardSegfin: React.FC = () => {
           status: status,
         };
         //-------------
-        //const API_URL_BACKEND = `${ubihost}/insert_segfin_react`;
-        const API_URL_BACKEND = "http://localhost:5055/insert_segfin_react";
+        const API_URL_BACKEND = `${ubihost}/insert_segfin_react`;
+        //const API_URL_BACKEND = "http://localhost:5055/insert_segfin_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -346,7 +280,6 @@ const BoardSegfin: React.FC = () => {
             throw new Error(`Error del servidor: ${response.status}`);
           }
           const data = await response.json();
-          //console.log("Registro exitoso:", data);
           // Aquí puedes manejar la respuesta del servidor (por ejemplo, guardar un token)
           //
           if (data) {
@@ -367,7 +300,7 @@ const BoardSegfin: React.FC = () => {
         } catch (error) {
           setSuccessful(false);
           setMessage("error");
-          console.error("Error en el inicio de sesión:", error);
+          //console.error("Error en el inicio de sesión:", error);
           // Aquí puedes mostrar un mensaje de error al usuario
         }
       }
@@ -386,8 +319,8 @@ const BoardSegfin: React.FC = () => {
       authen: authUserStore,
       //client: clientSel,
     };
-    //const API_URL_BACKEND = `${ubihost}/search_clients_react`;
-    const API_URL_BACKEND = "http://localhost:5055/search_clients_react";
+    const API_URL_BACKEND = `${ubihost}/search_clients_react`;
+    //const API_URL_BACKEND = "http://localhost:5055/search_clients_react";
     //
     try {
       const response = await fetch(API_URL_BACKEND, {
@@ -444,7 +377,7 @@ const BoardSegfin: React.FC = () => {
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={handleRegisterProject}
+            onSubmit={handleRegisterSegfin}
           >
             <Form>
               {!successful && (
@@ -510,7 +443,7 @@ const BoardSegfin: React.FC = () => {
                   <div>
                     <label htmlFor="tiproy" style={{ height: "15px" }}>
                       {" "}
-                      Tipo Proyecto{" "}
+                      Tipo Proyecto: ( Estudio, Ensayo, ...)
                     </label>
                     <Field
                       name="tiproy"
@@ -528,7 +461,7 @@ const BoardSegfin: React.FC = () => {
                   <div>
                     <label htmlFor="etapa" style={{ height: "15px" }}>
                       {" "}
-                      Etapa{" "}
+                      Etapa: ( EO , PES, ... )
                     </label>
                     <Field
                       name="etapa"
@@ -546,7 +479,7 @@ const BoardSegfin: React.FC = () => {
                   <div>
                     <label htmlFor="estado" style={{ height: "15px" }}>
                       {" "}
-                      Estado{" "}
+                      Desarrollo: ( en curso, aprobado, ... )
                     </label>
                     <Field
                       name="estado"
@@ -564,7 +497,7 @@ const BoardSegfin: React.FC = () => {
                   <div>
                     <label htmlFor="clpcom" style={{ height: "15px" }}>
                       {" "}
-                      Costo CLP${" "}
+                      Valor CLP${" "}
                     </label>
                     <Field
                       name="clpcom"
@@ -582,7 +515,7 @@ const BoardSegfin: React.FC = () => {
                   <div>
                     <label htmlFor="usdcom" style={{ height: "15px" }}>
                       {" "}
-                      Costo USD${" "}
+                      Valor USD${" "}
                     </label>
                     <Field
                       name="usdcom"
@@ -600,7 +533,7 @@ const BoardSegfin: React.FC = () => {
                   <div>
                     <label htmlFor="uffcom" style={{ height: "15px" }}>
                       {" "}
-                      Costo UF${" "}
+                      Valor UF${" "}
                     </label>
                     <Field
                       name="uffcom"
@@ -618,7 +551,8 @@ const BoardSegfin: React.FC = () => {
                   <div>
                     <label htmlFor="estcom" style={{ height: "15px" }}>
                       {" "}
-                      Estado Comercial{" "}
+                      Estado Comercial: ( facturado, por cobrar, en desarrollo,
+                      ... )
                     </label>
                     <Field
                       name="estcom"

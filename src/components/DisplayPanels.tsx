@@ -17,6 +17,7 @@ interface panelProps {
 
 const PanelsDisplay: React.FC = () => {
   const [panelsGet, setPanelsGet] = useState<panelProps[]>([]);
+  const [ubihost, setUbihost] = useState<string>("");
   const [estaVisible, setEstaVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState(true);
   //
@@ -72,8 +73,8 @@ const PanelsDisplay: React.FC = () => {
       authen: authUserStore,
       //panel: panelSel,
     };
-    //const API_URL_BACKEND = `${ubihost}/search_titlespanels_react`;
-    const API_URL_BACKEND = "http://localhost:5055/search_titlespanel_react";
+    const API_URL_BACKEND = `${ubihost}/search_titlespanels_react`;
+    //const API_URL_BACKEND = "http://localhost:5055/search_titlespanel_react";
     //
     try {
       const response = await fetch(API_URL_BACKEND, {
@@ -111,59 +112,65 @@ const PanelsDisplay: React.FC = () => {
     //alert(userSelect);
     if (panelSelect !== "") {
       //
-      //setProgress(0);
-      setIsLoading(true);
       if (
-        textRoleStore !== null &&
-        entyUserStore !== null &&
-        textUserStore !== null &&
-        authUserStore !== null
+        window.confirm(
+          `¡¡CUIDADO!! ¿Seguro de que quieres eliminar panel <${panelSelect}>?`,
+        )
       ) {
-        //
-        if (textRoleStore === "admin" || textRoleStore === "edit") {
+        //setProgress(0);
+        setIsLoading(true);
+        if (
+          textRoleStore !== null &&
+          entyUserStore !== null &&
+          textUserStore !== null &&
+          authUserStore !== null
+        ) {
           //
-          const dataButton = {
-            instance: "delete_pan",
-            entity: entyUserStore,
-            userna: textUserStore,
-            authen: authUserStore,
-            pandel: panelSelect,
-          };
-          //
-          //const API_URL_BACKEND = `${ubihost}/delete_user_react`;
-          const API_URL_BACKEND = "http://localhost:5055/delete_panel_react";
-          //
-          try {
-            const response = await fetch(API_URL_BACKEND, {
-              method: "POST",
-              body: JSON.stringify(dataButton),
-              headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
-            });
-            const deleteResp = await response.json();
+          if (textRoleStore === "admin" || textRoleStore === "edit") {
             //
-            if (deleteResp.success === "err") {
-              //throw new Error(`HTTP error! status: ${response.status}`);
-              const message = deleteResp.msg;
-              alert(message);
+            const dataButton = {
+              instance: "delete_pan",
+              entity: entyUserStore,
+              userna: textUserStore,
+              authen: authUserStore,
+              pandel: panelSelect,
+            };
+            //
+            const API_URL_BACKEND = `${ubihost}/delete_panel_react`;
+            //onst API_URL_BACKEND = "http://localhost:5055/delete_panel_react";
+            //
+            try {
+              const response = await fetch(API_URL_BACKEND, {
+                method: "POST",
+                body: JSON.stringify(dataButton),
+                headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
+              });
+              const deleteResp = await response.json();
               //
-            } else {
+              if (deleteResp.success === "err") {
+                //throw new Error(`HTTP error! status: ${response.status}`);
+                const message = deleteResp.msg;
+                alert(message);
+                //
+              } else {
+                //
+                const docDelete = deleteResp.msg;
+                alert(docDelete);
+                //
+              }
+            } catch (err: any) {
+              //setError(err.message);
+              alert("Error al Eliminar usuario.");
               //
-              const docDelete = deleteResp.msg;
-              alert(docDelete);
-              //
+            } finally {
+              setIsLoading(false);
             }
-          } catch (err: any) {
-            //setError(err.message);
-            alert("Error al Eliminar usuario.");
-            //
-          } finally {
-            setIsLoading(false);
+          } else {
+            alert("NO tiene credenciales para Eliminar paneles.");
           }
         } else {
-          alert("NO tiene credenciales para Eliminar paneles.");
+          alert("No se advierte usuario...hacer Login");
         }
-      } else {
-        alert("No se advierte usuario...hacer Login");
       }
     }
   };
@@ -194,8 +201,8 @@ const PanelsDisplay: React.FC = () => {
             panupd: panelSelect,
           };
           //
-          //const API_URL_BACKEND = `${ubihost}/update_panel_react`;
-          const API_URL_BACKEND = "http://localhost:5055/update_panel_react";
+          const API_URL_BACKEND = `${ubihost}/update_panel_react`;
+          //const API_URL_BACKEND = "http://localhost:5055/update_panel_react";
           //
           try {
             const response = await fetch(API_URL_BACKEND, {
@@ -233,12 +240,31 @@ const PanelsDisplay: React.FC = () => {
   };
   //
   //
-  //
   useEffect(() => {
     //
     getPanels();
     //
   }, [isLoading]);
+  //
+  //
+  useEffect(() => {
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    }
+  }, []);
   //
   //
   return (

@@ -17,6 +17,7 @@ interface userProps {
 
 const UsersDisplay: React.FC = () => {
   const [usersGet, setUsersGet] = useState<userProps[]>([]);
+  const [ubihost, setUbihost] = useState<string>("");
   const [estaVisible, setEstaVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState(true);
   //
@@ -72,8 +73,9 @@ const UsersDisplay: React.FC = () => {
       authen: authUserStore,
       //client: clientSel,
     };
-    //const API_URL_BACKEND = `${ubihost}/search_users_react`;
-    const API_URL_BACKEND = "http://localhost:5055/search_users_react";
+    //
+    const API_URL_BACKEND = `${ubihost}/search_users_react`;
+    //const API_URL_BACKEND = "http://localhost:5055/search_users_react";
     //
     try {
       const response = await fetch(API_URL_BACKEND, {
@@ -110,60 +112,66 @@ const UsersDisplay: React.FC = () => {
     //
     //alert(userSelect);
     if (userSelect !== "") {
-      //
-      //setProgress(0);
-      setIsLoading(true);
       if (
-        textRoleStore !== null &&
-        entyUserStore !== null &&
-        textUserStore !== null &&
-        authUserStore !== null
+        window.confirm(
+          `¿Estás seguro de que quieres eliminar usuario <${userSelect}>?`,
+        )
       ) {
         //
-        if (textRoleStore === "admin" || textRoleStore === "edit") {
+        //setProgress(0);
+        setIsLoading(true);
+        if (
+          textRoleStore !== null &&
+          entyUserStore !== null &&
+          textUserStore !== null &&
+          authUserStore !== null
+        ) {
           //
-          const dataButton = {
-            instance: "delete_user",
-            entity: entyUserStore,
-            userna: textUserStore,
-            authen: authUserStore,
-            usrdel: userSelect,
-          };
-          //
-          //const API_URL_BACKEND = `${ubihost}/delete_user_react`;
-          const API_URL_BACKEND = "http://localhost:5055/delete_user_react";
-          //
-          try {
-            const response = await fetch(API_URL_BACKEND, {
-              method: "POST",
-              body: JSON.stringify(dataButton),
-              headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
-            });
-            const deleteResp = await response.json();
+          if (textRoleStore === "admin" || textRoleStore === "edit") {
             //
-            if (deleteResp.success === "err") {
-              //throw new Error(`HTTP error! status: ${response.status}`);
-              const message = deleteResp.msg;
-              alert(message);
+            const dataButton = {
+              instance: "delete_user",
+              entity: entyUserStore,
+              userna: textUserStore,
+              authen: authUserStore,
+              usrdel: userSelect,
+            };
+            //
+            const API_URL_BACKEND = `${ubihost}/delete_user_react`;
+            //const API_URL_BACKEND = "http://localhost:5055/delete_user_react";
+            //
+            try {
+              const response = await fetch(API_URL_BACKEND, {
+                method: "POST",
+                body: JSON.stringify(dataButton),
+                headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
+              });
+              const deleteResp = await response.json();
               //
-            } else {
+              if (deleteResp.success === "err") {
+                //throw new Error(`HTTP error! status: ${response.status}`);
+                const message = deleteResp.msg;
+                alert(message);
+                //
+              } else {
+                //
+                const docDelete = deleteResp.msg;
+                alert(docDelete);
+                //
+              }
+            } catch (err: any) {
+              //setError(err.message);
+              alert("Error al Eliminar usuario.");
               //
-              const docDelete = deleteResp.msg;
-              alert(docDelete);
-              //
+            } finally {
+              setIsLoading(false);
             }
-          } catch (err: any) {
-            //setError(err.message);
-            alert("Error al Eliminar usuario.");
-            //
-          } finally {
-            setIsLoading(false);
+          } else {
+            alert("NO tiene credenciales para Eliminar usuarios.");
           }
         } else {
-          alert("NO tiene credenciales para Eliminar usuarios.");
+          alert("No se advierte usuario...hacer Login");
         }
-      } else {
-        alert("No se advierte usuario...hacer Login");
       }
     }
   };
@@ -194,8 +202,8 @@ const UsersDisplay: React.FC = () => {
             usrupd: userSelect,
           };
           //
-          //const API_URL_BACKEND = `${ubihost}/update_user_react`;
-          const API_URL_BACKEND = "http://localhost:5055/update_user_react";
+          const API_URL_BACKEND = `${ubihost}/update_user_react`;
+          //const API_URL_BACKEND = "http://localhost:5055/update_user_react";
           //
           try {
             const response = await fetch(API_URL_BACKEND, {
@@ -233,12 +241,31 @@ const UsersDisplay: React.FC = () => {
   };
   //
   //
-  //
   useEffect(() => {
     //
     getUsers();
     //
   }, [isLoading]);
+  //
+  //
+  useEffect(() => {
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    }
+  }, []);
   //
   //
   return (
@@ -306,9 +333,9 @@ const UsersDisplay: React.FC = () => {
                   <td>{item.usern}</td>
                   <td>{item.inses}</td>
                   <td>{item.dases}</td>
-                  <td>{item.fname}</td>
+                  <td style={{ color: "blue" }}>{item.fname}</td>
                   <td>{item.lname}</td>
-                  <td style={{ color: "tomato" }}>{item.email}</td>
+                  <td style={{ color: "brown" }}>{item.email}</td>
                   <td>{item.typus}</td>
                   <td>{item.profe}</td>
                 </tr>

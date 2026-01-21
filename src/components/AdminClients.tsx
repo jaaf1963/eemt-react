@@ -1,7 +1,7 @@
 // AdminClients.tsx
 import React, { useState, useCallback, useEffect } from "react";
 import BoardClient from "./BoardClient";
-import ClientsDisplay from "./ClientsDisplay";
+import ClientsDisplay from "./DisplayClients";
 
 //type ComponenteActual = 'A' | 'B' | 'C' | null;
 type ComponenteActual = "A" | "B" | null;

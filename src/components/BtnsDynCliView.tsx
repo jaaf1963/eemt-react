@@ -69,7 +69,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
   const [selecProject, setSelecProject] = useState<string>("");
   const [selecPrjCode, setSelecPrjCode] = useState<string>("");
   const [selecPrjClie, setSelecPrjClie] = useState<string>("");
-  const [ubihost, setHubihost] = useState<string>("");
+  const [ubihost, setUbihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -122,7 +122,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
   const setProjectData = (
     selPrjCode: string,
     selProject: string,
-    selPrjClie: string
+    selPrjClie: string,
   ) => {
     if (selPrjCode !== "") {
       setSelecPrjCode(selPrjCode);
@@ -207,8 +207,8 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
           authen: authUserStore,
           projct: projSel,
         };
-        //const API_URL_BACKEND = `${ubihost}/search_projects_react`;
-        const API_URL_BACKEND = "http://localhost:5055/search_projects_react";
+        const API_URL_BACKEND = `${ubihost}/search_projects_react`;
+        //const API_URL_BACKEND = "http://localhost:5055/search_projects_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -238,7 +238,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
     }
   };
   //
-
+  //
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -247,19 +247,19 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
       const ubiho = process.env.REACT_APP_API_URL;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     } else {
       // local
       const ubiho = process.env.REACT_APP_LOC;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     }
     //
   }, []);
-
+  //
   //
   //---- Lee Hisory proyect
   //

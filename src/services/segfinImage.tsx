@@ -10,7 +10,7 @@ const SegfinImage: React.FC = () => {
         //backgroundSize: "contain", // 'cover' O 'contain' si prefieres
         width: "100%",
         //height: "100%",
-        height: "88vh", // Asegura que ocupe toda la altura de la pantalla*/
+        height: "18vh", // Asegura que ocupe toda la altura de la pantalla*/
         //objectFit: "contain" /* O 'cover', 'fill', 'contain', etc. */,
       }}
     >

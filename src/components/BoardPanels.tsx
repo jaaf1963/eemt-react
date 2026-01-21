@@ -20,15 +20,7 @@ const BoardPanels: React.FC = () => {
   const [panelSearch, setPanelSearch] = useState<panelProps[]>([]);
   const [searchPanel, setSearchPanel] = useState<boolean>(true);
   const [panelTitle, setPanelTitle] = useState<string>("");
-  //const [panelWidth, setPanelWidth] = useState<string>("");
-  //const [panelHeight, setPanelHeight] = useState<string>("");
-  //const [panelBgCol, setPanelBgCol] = useState<string>("");
-  //const [panelFontt, setPanelFontt] = useState<string>("");
-  //const [panelSizee, setPanelSizee] = useState<string>("");
-  //const [panelColor, setPanelColor] = useState<string>("");
   const [ubihost, setHubihost] = useState<string>("");
-  //const [panelBgColor, setPanelBgColor] = useState<string>("");
-  //const [panelFntColor, setPanelFntColor] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -86,9 +78,8 @@ const BoardPanels: React.FC = () => {
           authen: authUserStore,
         };
         //
-        //const API_URL_BACKEND = `${ubihost}/search_titlespanel_react`;
-        const API_URL_BACKEND =
-          "http://localhost:5055/search_titlespanel_react";
+        const API_URL_BACKEND = `${ubihost}/search_titlespanel_react`;
+        //const API_URL_BACKEND ="http://localhost:5055/search_titlespanel_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -193,53 +184,6 @@ const BoardPanels: React.FC = () => {
           val && val.toString().length >= 1 && val.toString().length <= 10
       )
       .required("This field is required!"),
-    panel: Yup.string()
-      .test(
-        "len",
-        "The client-name must be between 1 and 10 characters.",
-        (val: any) =>
-          val && val.toString().length >= 1 && val.toString().length <= 10
-      )
-      .required("This field is required!"),
-    ptitle: Yup.string().test(
-      "len",
-      "The Owner must be between 1 and 35 characters.",
-      (val: any) =>
-        val && val.toString().length >= 1 && val.toString().length <= 35
-    ),
-    wpanel: Yup.number()
-      .test(
-        "len",
-        "The widthpanel must be between 100 and 550 characters.",
-        (val: any) => val && val >= 200 && val <= 550
-      )
-      .required("This field is required!"),
-    hpanel: Yup.number()
-      .test(
-        "len",
-        "The heightpanel must be between 200 and 999 characters.",
-        (val: any) => val && val >= 200 && val <= 999
-      )
-      .required("This field is required!"),
-    bpanel: Yup.string()
-      .trim()
-      .min(4, "El style puede ser: Normal, Italic, Bold")
-      .required("This field is required!"),
-    fpanel: Yup.string()
-      .trim()
-      .min(4, "El style puede ser: Normal, Italic, Bold")
-      .required("This field is required!"),
-    cpanel: Yup.string()
-      .trim()
-      .min(4, "El style puede ser: < Normal, Italic, Bold >")
-      .required("This field is required!"),
-    zpanel: Yup.number()
-      .test(
-        "len",
-        "The heightpanel must be between 6 and 16 characters.",
-        (val: any) => val && val >= 6 && val <= 16
-      )
-      .required("This field is required!"),
       */
   });
   //
@@ -285,8 +229,8 @@ const BoardPanels: React.FC = () => {
             action: "UPDATE",
           };
           //
-          //const API_URL_BACKEND = ubihost + "/update_panel_react";
-          const API_URL_BACKEND = "http://localhost:5055/update_panel_react";
+          const API_URL_BACKEND = ubihost + "/update_panel_react";
+          //const API_URL_BACKEND = "http://localhost:5055/update_panel_react";
           //
           try {
             const response = await fetch(API_URL_BACKEND, {
@@ -301,7 +245,6 @@ const BoardPanels: React.FC = () => {
             }
 
             const data = await response.json();
-            //console.log("Registro exitoso:", data);
             // Aquí puedes manejar la respuesta del servidor (por ejemplo, guardar un token)
             //
             if (data) {
@@ -357,24 +300,18 @@ const BoardPanels: React.FC = () => {
                       as="select"
                       name="spanel"
                       onChange={(
-                        event: React.ChangeEvent<HTMLSelectElement>
+                        event: React.ChangeEvent<HTMLSelectElement>,
                       ) => {
                         //
                         const tar = event.target.value;
                         const foundOption = panelSearch.find(
-                          (option) => option.panel === tar
+                          (option) => option.panel === tar,
                         );
                         if (foundOption) {
                           //const spanelDeLaOp = foundOption.spanel;
                           /*
                           const panelDeLaOp = foundOption.panel;
                           const tituloDeLaOp = foundOption.ptitle;
-                          const wpanelDeLaOp = foundOption.pwidth;
-                          const hpanelDeLaOp = foundOption.pheigh;
-                          const bpanelDeLaOp = foundOption.bcolor;
-                          const fpanelDeLaOp = foundOption.pfontt;
-                          const zpanelDeLaOp = foundOption.psizee;
-                          const cpanelDeLaOp = foundOption.pcolor;
                           */
                           // Puedes usar las variables panelDeLaOpcion y tituloDeLaOpcion
                           //console.log(panelDeLaOp); // 'B'
@@ -384,24 +321,6 @@ const BoardPanels: React.FC = () => {
                           }
                           setFieldValue("panel", panelDeLaOp);
                           //
-                          if (wpanelDeLaOp) {
-                            setPanelWidth(wpanelDeLaOp);
-                          }
-                          if (hpanelDeLaOp) {
-                            setPanelHeight(hpanelDeLaOp);
-                          }
-                          if (bpanelDeLaOp) {
-                            setPanelBgCol(bpanelDeLaOp);
-                          }
-                          if (fpanelDeLaOp) {
-                            setPanelFontt(fpanelDeLaOp);
-                          }
-                          if (zpanelDeLaOp) {
-                            setPanelSizee(zpanelDeLaOp);
-                          }
-                          if (cpanelDeLaOp) {
-                            setPanelColor(cpanelDeLaOp);
-                          }
                           //console.log(  "Panel seleccionado:", event.target.value);
                           */
                         }

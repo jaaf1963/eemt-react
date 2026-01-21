@@ -4,13 +4,10 @@ import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
-  //srv_host,
   entityOptions,
   entypeOptions,
   moduleOptions,
 } from "../types/user.type";
-//const posic = Number(srv_host[0]);
-//const ubihost = srv_host[posic];
 
 interface PickProp {
   field: any;
@@ -36,7 +33,7 @@ const DatePickerField = ({ field, form, ...props }: PickProp) => {
 //
 const Register: React.FC = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
-  const [ubihost, setHubihost] = useState<string>("");
+  const [ubihost, setUbihost] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
   const initialValues = {
@@ -73,34 +70,13 @@ const Register: React.FC = () => {
     roless?: string;
   }
 
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    }
-    //
-  }, []);
-
   const validationSchema = Yup.object().shape({
     firstname: Yup.string()
       .test(
         "len",
         "The username must be between 2 and 30 characters.",
         (val: any) =>
-          val && val.toString().length >= 1 && val.toString().length <= 30
+          val && val.toString().length >= 1 && val.toString().length <= 30,
       )
       .required("This field is required!"),
     lastname: Yup.string()
@@ -108,7 +84,7 @@ const Register: React.FC = () => {
         "len",
         "The username must be between 2 and 30 characters.",
         (val: any) =>
-          val && val.toString().length >= 1 && val.toString().length <= 30
+          val && val.toString().length >= 1 && val.toString().length <= 30,
       )
       .required("This field is required!"),
     username: Yup.string()
@@ -116,7 +92,7 @@ const Register: React.FC = () => {
         "len",
         "The username must be between 3 and 20 characters.",
         (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 20
+          val && val.toString().length >= 3 && val.toString().length <= 20,
       )
       .required("This field is required!"),
     eemail: Yup.string()
@@ -133,12 +109,8 @@ const Register: React.FC = () => {
     module: Yup.string().required("This field is required!"),
     entini: Yup.string().required("This field is required!"),
     entend: Yup.string().required("This field is required!"),
-    //usrmail: Yup.string().required("This field is required!"),
-    //  .email("This is not a valid email.")
-    //enttok: Yup.string().required("This field is required!"),
-    //entity: Yup.string().required("This field is required!"),
   });
-
+  //
   // se asigna PostData a formValue para igualar las variables
   // al desEstructurar los valores ingresados por el usuario
   const handleRegister = async (formValue: PostData) => {
@@ -176,10 +148,11 @@ const Register: React.FC = () => {
 
     //-------------
     //console.log(entend);
-    const API_URL_REGISTER = ubihost + "/register_user_react";
+    const API_URL_BACKEND = `${ubihost}/register_user_react`;
+    //const API_URL_BACKEND ="http://localhost:5055/register_user_react";
     //
     try {
-      const response = await fetch(API_URL_REGISTER, {
+      const response = await fetch(API_URL_BACKEND, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -220,6 +193,29 @@ const Register: React.FC = () => {
     }
     //
   };
+  //
+  //
+  useEffect(() => {
+    //
+    let numApp = process.env.REACT_APP_NUM;
+    if (Number(numApp) === 1) {
+      // api web
+      const ubiho = process.env.REACT_APP_API_URL;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    } else {
+      // local
+      const ubiho = process.env.REACT_APP_LOC;
+      //
+      if (ubiho) {
+        setUbihost(ubiho);
+      }
+    }
+    //
+  }, []);
+  //
   //
   return (
     <div className="col-md-12">

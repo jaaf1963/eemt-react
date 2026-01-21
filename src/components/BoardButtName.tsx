@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "react-datepicker/dist/react-datepicker.css";
-//import { srv_host } from "../types/user.type";
-
-//const posic = Number(srv_host[0]);
-//const ubihost = srv_host[posic];
 
 interface buttNameProps {
   id: number | undefined;
@@ -20,8 +16,6 @@ const BoardButtNames: React.FC = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
   const [ubihost, setHubihost] = useState<string>("");
   const [message, setMessage] = useState<string>("");
-  //const [panelWidth, setPanelWidth] = useState<string>("");
-  //const [panelHeight, setPanelHeight] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -76,8 +70,8 @@ const BoardButtNames: React.FC = () => {
           userna: textUserStore,
           authen: authUserStore,
         };
-        //const API_URL_BACKEND = `${ubihost}/search_buttonames_react`;
-        const API_URL_BACKEND = "http://localhost:5055/search_buttonames_react";
+        const API_URL_BACKEND = `${ubihost}/search_buttonames_react`;
+        //const API_URL_BACKEND = "http://localhost:5055/search_buttonames_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -160,14 +154,14 @@ const BoardButtNames: React.FC = () => {
         "len",
         "The client-name must be between 2 and 15 characters.",
         (val: any) =>
-          val && val.toString().length >= 2 && val.toString().length <= 15
+          val && val.toString().length >= 2 && val.toString().length <= 15,
       )
       .required("This field is required!"),
     title: Yup.string().test(
       "len",
       "The Owner must be between 1 and 25 characters.",
       (val: any) =>
-        val && val.toString().length >= 1 && val.toString().length <= 25
+        val && val.toString().length >= 1 && val.toString().length <= 25,
     ),
   });
   //
@@ -200,11 +194,12 @@ const BoardButtNames: React.FC = () => {
             title: title,
             action: "UPDATE",
           };
-          //-------------
-          const API_URL_REGISTER = ubihost + "/update_buttonames_react";
+          //
+          const API_URL_BACKEND = `${ubihost}/update_buttonames_react`;
+          //const API_URL_BACKEND = ubihost + "/update_buttonames_react";
           //
           try {
-            const response = await fetch(API_URL_REGISTER, {
+            const response = await fetch(API_URL_BACKEND, {
               method: "POST",
               body: JSON.stringify(postData),
               headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
@@ -276,12 +271,12 @@ const BoardButtNames: React.FC = () => {
                       as="select"
                       name="panel"
                       onChange={(
-                        event: React.ChangeEvent<HTMLSelectElement>
+                        event: React.ChangeEvent<HTMLSelectElement>,
                       ) => {
                         //
                         const tar = event.target.value;
                         const foundOption = buttNameSearch.find(
-                          (option) => option.name === tar
+                          (option) => option.name === tar,
                         );
                         if (foundOption) {
                           const panelDeLaOp = foundOption.name;

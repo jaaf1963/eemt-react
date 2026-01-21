@@ -1,8 +1,5 @@
 // DisplayCompanys.tsx
 import { useState, useEffect } from "react";
-//import { srv_host } from "../types/user.type";
-//const posic = Number(srv_host[0]);
-//const ubihost = srv_host[posic];
 
 interface cmpnyProps {
   id: number | undefined;
@@ -25,8 +22,8 @@ function SearchCompanys({
   rolee,
 }: dataProps) {
   //
-  const [ubihost, setHubihost] = useState<string>("");
-
+  const [ubihost, setUbihost] = useState<string>("");
+  //
   const handleClick = async () => {
     // Ejemplo de fetch que podría hacer el hijo
     const entyUserStore = entity;
@@ -50,7 +47,9 @@ function SearchCompanys({
           authen: authUserStore,
         };
         //
-        const API_URL_BACKEND = ubihost + "/search_companys_react";
+        const API_URL_BACKEND = `${ubihost}/search_companys_react`;
+        //const API_URL_BACKEND = "http://localhost:5055/search_companys_react";
+        //
         //try {
         // Reemplaza con la URL de tu API de FastAPI
         const response = await fetch(API_URL_BACKEND, {
@@ -87,14 +86,14 @@ function SearchCompanys({
       const ubiho = process.env.REACT_APP_API_URL;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     } else {
       // local
       const ubiho = process.env.REACT_APP_LOC;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     }
     //

@@ -1,4 +1,4 @@
-import BoardButtNames from "./BoardButtName";
+//import BoardButtNames from "./BoardButtName";
 
 const BoardModerator: React.FC = () => {
   //

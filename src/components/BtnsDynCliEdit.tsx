@@ -84,7 +84,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   const [selecPrjClie, setSelecPrjClie] = useState<string>("");
   const [selecOptRadi, setSelecOptRadi] = useState<string>("");
   const [selecDocument, setSelecDocument] = useState<string>("");
-  const [ubihost, setHubihost] = useState<string>("");
+  const [ubihost, setUbihost] = useState<string>("");
   //
   const [advancDoc, setAdvancDoc] = useState<string>("");
   const [authorDoc, setAuthorDoc] = useState<string>("");
@@ -143,7 +143,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   const setProjectData = (
     selPrjCode: string,
     selProject: string,
-    selPrjClie: string
+    selPrjClie: string,
   ) => {
     //console.log("*", selPrjCode, selProject, selPrjClie);
     if (selPrjCode !== "") {
@@ -241,7 +241,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   //
   // Maneja los cambios del select box 'projects'
   const handleSelectDocument = (
-    event: React.ChangeEvent<HTMLSelectElement>
+    event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
     //console.log("Opción seleccionada:", event.target.value);
     const documSel = event.target.value;
@@ -288,8 +288,8 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
           authen: authUserStore,
           projct: projSel,
         };
-        //const API_URL_BACKEND = `${ubihost}/search_projects_react`;
-        const API_URL_BACKEND = "http://localhost:5055/search_projects_react";
+        const API_URL_BACKEND = `${ubihost}/search_projects_react`;
+        //const API_URL_BACKEND = "http://localhost:5055/search_projects_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -319,7 +319,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     }
   };
   //
-
+  //
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -328,14 +328,14 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
       const ubiho = process.env.REACT_APP_API_URL;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     } else {
       // local
       const ubiho = process.env.REACT_APP_LOC;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     }
     //
@@ -515,13 +515,9 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
           selected={selecDateIni}
           // Actualiza el estado con la nueva fecha
           onChange={(date) => setSelecDateIni(date)}
-          //onChange={handleChangeDateIni}
-          dateFormat="dd/MM/yyyy" // Formato de visualización
-          isClearable // Opción para limpiar la fecha
+          dateFormat="dd/MM/yyyy"
+          isClearable
           placeholderText="Fecha inicio"
-          // Otras props útiles:
-          // minDate={new Date()} // Para no seleccionar fechas pasadas
-          // maxDate={new Date()} // Para no seleccionar fechas futuras
         />
       </label>{" "}
       <label className="label-date-proj">
@@ -530,14 +526,10 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
           className="picker-date-proj"
           selected={selecDateEnd}
           // Actualiza el estado con la nueva fecha
-          //onChange={(date) => setSelecDateEnd(date?.toString)}
           onChange={(date) => setSelecDateEnd(date)}
-          dateFormat="dd/MM/yyyy" // Formato de visualización
-          isClearable // Opción para limpiar la fecha
+          dateFormat="dd/MM/yyyy"
+          isClearable
           placeholderText="Fecha limite"
-          // Otras props útiles:
-          // minDate={new Date()} // Para no seleccionar fechas pasadas
-          // maxDate={new Date()} // Para no seleccionar fechas futuras
         />
       </label>
       <p>...</p>

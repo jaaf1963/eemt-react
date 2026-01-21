@@ -196,8 +196,8 @@ const BoardUsers: React.FC = () => {
           password: password,
         };
         //
-        //const API_URL_BACKEND = `${ubihost}/insert_client_react`;
-        const API_URL_BACKEND = "http://localhost:5055/insert_users_react";
+        const API_URL_BACKEND = `${ubihost}/insert_users_react`;
+        //const API_URL_BACKEND = "http://localhost:5055/insert_users_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -212,7 +212,6 @@ const BoardUsers: React.FC = () => {
           }
 
           const data = await response.json();
-          //console.log("Registro exitoso:", data);
           // Aquí puedes manejar la respuesta del servidor (por ejemplo, guardar un token)
           //
           if (data) {
@@ -259,8 +258,8 @@ const BoardUsers: React.FC = () => {
           authen: authUserStore,
           //client: clientSel,
         };
-        //const API_URL_BACKEND = `${ubihost}/search_clients_react`;
-        const API_URL_BACKEND = "http://localhost:5055/search_profesion_react";
+        const API_URL_BACKEND = `${ubihost}/search_profesion_react`;
+        //const API_URL_BACKEND = "http://localhost:5055/search_profesion_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -338,16 +337,6 @@ const BoardUsers: React.FC = () => {
     <div className="col-md-12">
       <h4>Users register</h4>
 
-      {/* <div>
-        <button
-          name="agregar"
-          style={{ marginLeft: "1000px" }}
-          className="btn btn-primary btn-block"
-          onClick={handleAgregarUsers}
-        >
-          {successful ? "Ver Usuarios" : "Nuevo Usuario"}
-        </button>
-      </div> */}
       {/*showUser && !successful && <UsersDisplay />*/}
 
       {!successful && (

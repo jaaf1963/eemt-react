@@ -3,12 +3,6 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { entityOptions } from "../types/user.type";
-//import { srv_host } from "../types/user.type";
-
-//const posic = Number(srv_host[0]);
-//const ubihost = srv_host[posic];
-//let numApp;
-//let apiUrlSrv;
 
 //type Props = {};
 interface Props {
@@ -18,7 +12,7 @@ interface Props {
 const Login: React.FC<Props> = ({ onRoleChange }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const [ubihost, setHubihost] = useState<string>("");
+  const [ubihost, setUbihost] = useState<string>("");
   let navigate: NavigateFunction = useNavigate();
 
   useEffect(() => {
@@ -29,14 +23,14 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
       const ubiho = process.env.REACT_APP_API_URL;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     } else {
       // local
       const ubiho = process.env.REACT_APP_LOC;
       //
       if (ubiho) {
-        setHubihost(ubiho);
+        setUbihost(ubiho);
       }
     }
     //
@@ -90,9 +84,9 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
       password: password,
       //token: tokenusr,
     };
-
-    const API_URL_BACKEND = ubihost + "/login_user_react";
-    //-------------
+    //
+    const API_URL_BACKEND = `${ubihost}/login_user_react`;
+    //const API_URL_BACKEND ="http://localhost:5055/login_user_react";
     //
     try {
       const response = await fetch(API_URL_BACKEND, {

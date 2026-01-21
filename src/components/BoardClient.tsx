@@ -171,8 +171,8 @@ const BoardClient: React.FC = () => {
           usercpy: eemail,
         };
         //
-        //const API_URL_BACKEND = `${ubihost}/insert_client_react`;
-        const API_URL_BACKEND = "http://localhost:5055/insert_client_react";
+        const API_URL_BACKEND = `${ubihost}/insert_client_react`;
+        //const API_URL_BACKEND = "http://localhost:5055/insert_client_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -234,8 +234,8 @@ const BoardClient: React.FC = () => {
           authen: authUserStore,
           //client: clientSel,
         };
-        //const API_URL_BACKEND = `${ubihost}/search_clients_react`;
-        const API_URL_BACKEND = "http://localhost:5055/search_activity_react";
+        const API_URL_BACKEND = `${ubihost}/search_activity_react`;
+        //const API_URL_BACKEND = "http://localhost:5055/search_activity_react";
         //
         try {
           const response = await fetch(API_URL_BACKEND, {
@@ -296,31 +296,11 @@ const BoardClient: React.FC = () => {
     //
   }, [showClient]);
   //
-  // true true : muestra info
-  // true false : muestra ingresar info
-  //
-  const handleAgregarClients = async () => {
-    //
-    if (showClient === true) {
-      setSuccessful(!successful);
-      setShowClient(true);
-    }
-  };
   //
   //
   return (
     <div className="col-md-12">
       <h4>Client register</h4>
-
-      {/* <div>
-        <button
-          style={{ marginLeft: "1000px" }}
-          className="btn btn-primary btn-block"
-          onClick={handleAgregarClients}
-        >
-          {successful ? "Ver Clientes" : "Nuevo Cliente"}
-        </button>
-      </div> */}
 
       {/*showClient && !successful && <ClientsDisplay />*/}
 
