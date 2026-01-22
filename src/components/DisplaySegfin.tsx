@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 interface segfinProps {
   id?: number | undefined;
@@ -23,7 +25,7 @@ interface segfinProps {
 
 const SegfinDisplay: React.FC = () => {
   const [segfinsGet, setSegfinsGet] = useState<segfinProps[]>([]);
-  const [ubihost, setUbihost] = useState<string>("");
+  //const [ubihost, setUbihost] = useState<string>("");
   const [estaVisible, setEstaVisible] = useState<boolean>(false);
   //const [isLoading, setIsLoading] = React.useState(true);
   //
@@ -82,7 +84,6 @@ const SegfinDisplay: React.FC = () => {
       //proct: clientSel,
     };
     //
-    alert("ubihost: " + ubihost);
     const API_URL_BACKEND = `${ubihost}/search_segfin_react`;
     //const API_URL_BACKEND = "http://localhost:5055/search_segfin_react";
     //
@@ -187,6 +188,7 @@ const SegfinDisplay: React.FC = () => {
   };
   //
   //
+  /*
   useEffect(() => {
     let numApp = process.env.REACT_APP_NUM;
     console.log(numApp);
@@ -206,6 +208,7 @@ const SegfinDisplay: React.FC = () => {
       }
     }
   }, []);
+  */
   //
   //
   useEffect(() => {
