@@ -67,18 +67,13 @@ const App: React.FC = () => {
       const mod: boolean = textRoleStore === "edit";
       const com: boolean = textRoleStore === "come";
       //
-      //console.log(textRoleStore, "-->", textRoleStore);
       setAdminUserRole(adm);
       setModerUserRole(mod);
       setViewUserRole(viw);
       setComeUserRole(com);
-      //console.log("adminRole:", adminUserRole);
-      //console.log("moderRole:", moderUserRole);
-      //console.log("viewsRole:", viewUserRole);
-      //console.log("comesRole:", comeUserRole);
       //setShowAdminBoard(adminUserRole);
       //setAdminUserRole(true);
-      //setExistUserStore(viw);
+      setExistUserStore(viw);
     }
     //
     if (textUserStore) {
@@ -91,7 +86,7 @@ const App: React.FC = () => {
       EventBus.remove("logout", logOut);
       console.log("EventBus remove Logout");
     };
-  }, [changeUserRole]);
+  }, []);
 
   const logOut = () => {
     AuthService.logout();
