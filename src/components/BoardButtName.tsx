@@ -105,7 +105,8 @@ const BoardButtNames: React.FC = () => {
   //
   useEffect(() => {
     //
-    let numApp = process.env.REACT_APP_NUM;
+    let numApp = 1;
+    //let numApp = process.env.REACT_APP_NUM;
     if (Number(numApp) === 1) {
       // api web
       const ubiho = process.env.REACT_APP_API_URL;
@@ -129,7 +130,7 @@ const BoardButtNames: React.FC = () => {
     //
     searchButtonsName(searchNames);
     //
-  }, []);
+  }, [ubihost]);
   //
 
   const initialValues = {
