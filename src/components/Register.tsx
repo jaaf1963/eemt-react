@@ -8,6 +8,8 @@ import {
   entypeOptions,
   moduleOptions,
 } from "../types/user.type";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 interface PickProp {
   field: any;
@@ -33,7 +35,7 @@ const DatePickerField = ({ field, form, ...props }: PickProp) => {
 //
 const Register: React.FC = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
-  const [ubihost, setUbihost] = useState<string>("");
+  //const [ubihost, setUbihost] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
   const initialValues = {
@@ -195,8 +197,8 @@ const Register: React.FC = () => {
   };
   //
   //
+  /*
   useEffect(() => {
-    //
     let numApp = process.env.REACT_APP_NUM;
     if (Number(numApp) === 1) {
       // api web
@@ -213,8 +215,8 @@ const Register: React.FC = () => {
         setUbihost(ubiho);
       }
     }
-    //
   }, []);
+  */
   //
   //
   return (

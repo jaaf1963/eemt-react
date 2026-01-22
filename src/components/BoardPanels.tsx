@@ -3,6 +3,8 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "react-datepicker/dist/react-datepicker.css";
 import PanelsImage from "../services/panelsImage";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 interface panelProps {
   id: number | undefined;
@@ -21,7 +23,7 @@ const BoardPanels: React.FC = () => {
   const [panelSearch, setPanelSearch] = useState<panelProps[]>([]);
   const [searchPanel, setSearchPanel] = useState<boolean>(true);
   const [panelTitle, setPanelTitle] = useState<string>("");
-  const [ubihost, setHubihost] = useState<string>("");
+  //const [ubihost, setHubihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -118,6 +120,7 @@ const BoardPanels: React.FC = () => {
   };
   //
   //
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -138,6 +141,7 @@ const BoardPanels: React.FC = () => {
     }
     //
   }, []);
+  */
   //
   //
   useEffect(() => {

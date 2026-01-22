@@ -2,6 +2,8 @@ import React, { useState, useEffect, FormEvent } from "react";
 import ButtonsTableImage from "../services/buttonTableImage";
 import ButtonsPanelImage from "../services/buttonPanelImage";
 import "../styles/InputGroup.css";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 const panels = [
   { label: "CEM Y OTROS", value: "1_CEM Y OTROS" },
@@ -99,7 +101,7 @@ const PrjFlow = () => {
   // Estado para los datos del formulario
   const [panelss, setPanelss] = useState<string[]>([]);
   const [groupss, setGroupss] = useState<groupProps[]>([]);
-  const [ubihost, setUbihost] = useState<string>("");
+  //const [ubihost, setUbihost] = useState<string>("");
   //
   const [selecTexPanel, setSelecTexPanel] = useState("");
   const [selecNumPanel, setSelecNumPanel] = useState(0);
@@ -165,8 +167,8 @@ const PrjFlow = () => {
   });
   //
   //
+  /*
   useEffect(() => {
-    //
     let numApp = process.env.REACT_APP_NUM;
     if (Number(numApp) === 1) {
       // api web
@@ -185,7 +187,7 @@ const PrjFlow = () => {
     }
     //
   }, []);
-  //
+  */
   //
   //---- Lee paneles al entrar
   //

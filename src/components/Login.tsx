@@ -3,8 +3,9 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { entityOptions } from "../types/user.type";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
-//type Props = {};
 interface Props {
   onRoleChange: (value: boolean) => void;
 }
@@ -12,9 +13,10 @@ interface Props {
 const Login: React.FC<Props> = ({ onRoleChange }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const [ubihost, setUbihost] = useState<string>("");
+  //const [ubihost, setUbihost] = useState<string>("");
   let navigate: NavigateFunction = useNavigate();
 
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -35,6 +37,7 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
     }
     //
   }, []);
+  */
 
   const initialValues: {
     username: string;

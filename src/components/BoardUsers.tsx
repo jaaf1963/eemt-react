@@ -3,6 +3,8 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "react-datepicker/dist/react-datepicker.css";
 import UserImage from "../services/usersImage";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 interface entypeProps {
   id: number | undefined;
@@ -14,7 +16,7 @@ const BoardUsers: React.FC = () => {
   const [profesionGet, setProfesionGet] = useState<entypeProps[]>([]);
   const [successful, setSuccessful] = useState<boolean>(false);
   const [showUser, setShowUser] = useState<boolean>(false);
-  const [ubihost, setHubihost] = useState<string>("");
+  //const [ubihost, setHubihost] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -291,7 +293,7 @@ const BoardUsers: React.FC = () => {
   };
   //
   //
-  //
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -312,6 +314,7 @@ const BoardUsers: React.FC = () => {
     }
     //
   }, []);
+  */
   //
   //
   useEffect(() => {

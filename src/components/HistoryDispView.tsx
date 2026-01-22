@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import GridHistoryDispView from "./HistoryGridDispView";
 import ProgressWithLabel from "./InfiniteProgress";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 //
 // Solo lista documentos segun Button/Project
 //
@@ -34,7 +36,7 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
 }) => {
   const [showHistory, setShowHistory] = useState(false);
   const [dataHistory, setDataHistory] = useState<itera[]>([]);
-  const [ubihost, setUbihost] = useState<string>("");
+  //const [ubihost, setUbihost] = useState<string>("");
   //const [progress, setProgress] = useState(0); // Valor inicial 0%
   //const [renderFiles, setRenderfiles] = useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -76,6 +78,7 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
   });
   //
   //
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -96,6 +99,7 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
     }
     //
   }, []);
+  */
   //
   //
   // Get documents History

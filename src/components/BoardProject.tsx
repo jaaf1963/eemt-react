@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ProjectImage from "../services/projectImage";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 interface clieProps {
   id?: number | undefined;
@@ -30,7 +32,7 @@ const BoardProject: React.FC = () => {
   //const [successful, setSuccessful] = useState<boolean>(false);
   const [showClient, setShowClient] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const [ubihost, setHubihost] = useState<string>("");
+  //const [ubihost, setHubihost] = useState<string>("");
   //
   const [projecInp, setProjecInp] = useState<string>("");
   const [clientInp, setClientInp] = useState<string>("");
@@ -81,6 +83,7 @@ const BoardProject: React.FC = () => {
   });
   //
   //
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -101,6 +104,7 @@ const BoardProject: React.FC = () => {
     }
     //
   }, []);
+  */
   //
   // Inici leyendo Proyectos
   //

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import FileDisplayDownView from "./FileDisplayDownView";
 import ProgressWithLabel from "./InfiniteProgress";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 //
 // Solo lista documentos segun Button/Project
 //
@@ -62,7 +64,7 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
   const [dataTasks, setDataTasks] = useState<tarea[]>([]);
   const [dataIters, setDataIters] = useState<itera[]>([]);
   const [existDocs, setExistDocs] = useState<docsEx[]>([]);
-  const [ubihost, setUbihost] = useState<string>("");
+  //const [ubihost, setUbihost] = useState<string>("");
   const [renderFiles, setRenderfiles] = useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isExisdoc, setIsExisdoc] = React.useState(false);
@@ -460,6 +462,7 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
   };
   //
   //
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -479,6 +482,7 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
       }
     }
   }, []);
+  */
   //
   //
   useEffect(() => {

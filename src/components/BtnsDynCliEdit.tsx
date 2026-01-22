@@ -6,6 +6,8 @@ import FetchDataEdit from "./DynFetchEdit";
 import UploadFilesEdit from "./UploadFilesEdit";
 import RadioButtonGroup from "./RadioButtons";
 import HistoryDisplay from "./HistoryDisplay";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 const panels = [
   {
@@ -84,7 +86,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   const [selecPrjClie, setSelecPrjClie] = useState<string>("");
   const [selecOptRadi, setSelecOptRadi] = useState<string>("");
   const [selecDocument, setSelecDocument] = useState<string>("");
-  const [ubihost, setUbihost] = useState<string>("");
+  //const [ubihost, setUbihost] = useState<string>("");
   //
   const [advancDoc, setAdvancDoc] = useState<string>("");
   const [authorDoc, setAuthorDoc] = useState<string>("");
@@ -320,6 +322,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   };
   //
   //
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -340,6 +343,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     }
     //
   }, []);
+  */
   //
   //---- Lee Hisory proyect
   //

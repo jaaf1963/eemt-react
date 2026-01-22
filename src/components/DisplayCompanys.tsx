@@ -1,5 +1,7 @@
 // DisplayCompanys.tsx
 import { useState, useEffect } from "react";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 interface cmpnyProps {
   id: number | undefined;
@@ -22,7 +24,7 @@ function SearchCompanys({
   rolee,
 }: dataProps) {
   //
-  const [ubihost, setUbihost] = useState<string>("");
+  //const [ubihost, setUbihost] = useState<string>("");
   //
   const handleClick = async () => {
     // Ejemplo de fetch que podría hacer el hijo
@@ -78,6 +80,7 @@ function SearchCompanys({
   };
   // <button onClick={handleClick}>Obtener datos y enviar al padre</button>
   //
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -97,6 +100,7 @@ function SearchCompanys({
       }
     }
   }, []);
+  */
   //
   //
   useEffect(() => {

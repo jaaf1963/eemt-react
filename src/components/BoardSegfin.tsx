@@ -4,6 +4,8 @@ import * as Yup from "yup";
 //import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import SegfinImage from "../services/segfinImage";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 interface clieProps {
   id?: number | undefined;
@@ -44,7 +46,7 @@ const BoardSegfin: React.FC = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
   const [showClient, setShowClient] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const [ubihost, setHubihost] = useState<string>("");
+  //const [ubihost, setHubihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -83,6 +85,7 @@ const BoardSegfin: React.FC = () => {
   });
   //
   //
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -103,6 +106,7 @@ const BoardSegfin: React.FC = () => {
     }
     //
   }, []);
+  */
   //
   // Inici leyendo Proyectos
   //

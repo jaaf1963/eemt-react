@@ -1,6 +1,8 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import DynamicButton from "./BtnsDynamic";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 const shad = [
   // desplazX, desplazY, blur, color
@@ -57,7 +59,7 @@ let btnSelect = "";
 
 function BtnsDynCall(pnl: pnlProp) {
   const [buttonSel, setButtonSel] = useState("");
-  const [ubihost, setHubihost] = useState<string>("");
+  //const [ubihost, setHubihost] = useState<string>("");
   //console.log(panels);
   const [filters, setFilters] = useState<FilterState>({
     panel: pnl.pnl,
@@ -166,6 +168,7 @@ function BtnsDynCall(pnl: pnlProp) {
     }
   };
   //
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -186,6 +189,7 @@ function BtnsDynCall(pnl: pnlProp) {
     }
     //
   }, []);
+  */
   //
   // Inicia leyendo botones
   // Este 'hayClick' debe estar aqui... no mover

@@ -3,6 +3,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import BtnsDymCall from "./BtnsDynCall";
 import FetchDataView from "./DynFetchView";
 import HistoryDispView from "./HistoryDispView";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 const panels = [
   {
@@ -69,7 +71,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
   const [selecProject, setSelecProject] = useState<string>("");
   const [selecPrjCode, setSelecPrjCode] = useState<string>("");
   const [selecPrjClie, setSelecPrjClie] = useState<string>("");
-  const [ubihost, setUbihost] = useState<string>("");
+  //const [ubihost, setUbihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -240,6 +242,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
   };
   //
   //
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -260,7 +263,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
     }
     //
   }, []);
-  //
+  */
   //
   //---- Lee Hisory proyect
   //

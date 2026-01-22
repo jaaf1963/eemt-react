@@ -1,5 +1,7 @@
 import React, { useState, useEffect, ChangeEvent } from "react";
 import dayjs from "dayjs"; // Importa dayjs
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 // Tipo para el objeto de cada archivo
 interface FileInfo {
@@ -48,7 +50,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
   //const [buttonSelEdit, setButtonSelEdit] = useState<string>("");
   // Estado para almacenar la lista de archivos y su estado de selección
   const [files, setFiles] = useState<FileInfo[]>([]);
-  const [ubihost, setUbihost] = useState<string>("");
+  //const [ubihost, setUbihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -87,6 +89,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
   });
   //
   //
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -107,7 +110,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
     }
     //
   }, []);
-  //
+  */
   //
   // Función para manejar el cambio del input de tipo file
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {

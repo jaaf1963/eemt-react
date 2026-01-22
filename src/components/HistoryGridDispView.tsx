@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import FileDisplayDownView from "./FileDisplayDownView";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
+
 interface ItemHist {
   id: number;
   numitr: number;
@@ -29,9 +32,9 @@ const GridHistoryDispView: React.FC<GridProps> = ({
   cliePrjFetch,
 }) => {
   //
-  const [ubihost, setUbihost] = useState<string>("");
-  const [progress, setProgress] = useState(0); // Valor inicial 0%
-  const [isLoading, setIsLoading] = React.useState(true);
+  //const [ubihost, setUbihost] = useState<string>("");
+  //const [progress, setProgress] = useState(0); // Valor inicial 0%
+  //const [isLoading, setIsLoading] = React.useState(true);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -69,6 +72,7 @@ const GridHistoryDispView: React.FC<GridProps> = ({
     return "";
   });
 
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -89,7 +93,7 @@ const GridHistoryDispView: React.FC<GridProps> = ({
     }
     //
   }, []);
-
+  */
   //
   //-----------------------------------------------------------------
   // Estilo para el efecto tenue (puedes usar CSS o Tailwind)
@@ -107,8 +111,8 @@ const GridHistoryDispView: React.FC<GridProps> = ({
     //console.log("Dato recibido para Delete:", fileSelect);
     if (fileSelect !== "") {
       //
-      setProgress(0);
-      setIsLoading(true);
+      //setProgress(0);
+      //setIsLoading(true);
       if (
         textRoleStore !== null &&
         entyUserStore !== null &&
@@ -156,8 +160,9 @@ const GridHistoryDispView: React.FC<GridProps> = ({
             alert("Error al eliminar documento...");
             //
           } finally {
-            setIsLoading(false);
+            //setIsLoading(false);
             //console.log(isLoading);
+            console.log("");
           }
         } else {
           alert("NO tiene credenciales para eliminar documentos.");

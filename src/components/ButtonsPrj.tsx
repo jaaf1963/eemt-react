@@ -2,6 +2,8 @@ import React, { useState, useEffect, FormEvent } from "react";
 import ButtonsTableImage from "../services/buttonTableImage";
 import ButtonsPanelImage from "../services/buttonPanelImage";
 import "../styles/InputGroup.css";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 // Define el tipo para los datos del formulario
 interface FormData {
@@ -18,7 +20,7 @@ interface FormData {
 const PrjFlow = () => {
   // Estado para los datos del formulario
   const [panelButtons, setPanelButtons] = useState<string[]>([]);
-  const [ubihost, setUbihost] = useState<string>("");
+  //const [ubihost, setUbihost] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   //
   const [activesino, setActivesino] = useState(false);
@@ -327,6 +329,7 @@ const PrjFlow = () => {
   };
   //
   //
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -347,6 +350,7 @@ const PrjFlow = () => {
     }
     //
   }, []);
+  */
   //
   //
   return (

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import "react-datepicker/dist/react-datepicker.css";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 interface buttNameProps {
   id: number | undefined;
@@ -14,7 +16,7 @@ const BoardButtNames: React.FC = () => {
   const [searchNames, setSearchNames] = useState<boolean>(true);
   const [panelTitle, setPanelTitle] = useState<string>("");
   const [successful, setSuccessful] = useState<boolean>(false);
-  const [ubihost, setHubihost] = useState<string>("");
+  //const [ubihost, setHubihost] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -103,6 +105,7 @@ const BoardButtNames: React.FC = () => {
     }
   };
   //
+  /*
   useEffect(() => {
     //
     let numApp = 1;
@@ -124,15 +127,16 @@ const BoardButtNames: React.FC = () => {
     }
     //
   }, []);
+  */
   //
   //
   useEffect(() => {
     //
     searchButtonsName(searchNames);
     //
-  }, [ubihost]);
+  }, []);
   //
-
+  //
   const initialValues = {
     entity: "",
     username: "",

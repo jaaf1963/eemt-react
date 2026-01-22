@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "react-datepicker/dist/react-datepicker.css";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
 
 interface userProps {
   id?: number | undefined;
@@ -17,7 +19,7 @@ interface userProps {
 
 const UsersDisplay: React.FC = () => {
   const [usersGet, setUsersGet] = useState<userProps[]>([]);
-  const [ubihost, setUbihost] = useState<string>("");
+  //onst [ubihost, setUbihost] = useState<string>("");
   const [estaVisible, setEstaVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState(true);
   //
@@ -177,6 +179,7 @@ const UsersDisplay: React.FC = () => {
   };
   //
   //
+  /*
   useEffect(() => {
     let numApp = process.env.REACT_APP_NUM;
     if (Number(numApp) === 1) {
@@ -195,6 +198,7 @@ const UsersDisplay: React.FC = () => {
       }
     }
   }, []);
+  */
   //
   //
   useEffect(() => {

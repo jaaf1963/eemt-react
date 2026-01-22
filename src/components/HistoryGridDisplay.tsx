@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import FileDisplayDownload from "./FileDisplayDownload";
+const ubihost = process.env.REACT_APP_API_URL;
+//const apiKey = process.env.REACT_APP_API_KEY;
+
 interface ItemHist {
   id: number;
   numitr: number;
@@ -28,7 +31,7 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
   codiPrjFetch,
   cliePrjFetch,
 }) => {
-  const [ubihost, setUbihost] = useState<string>("");
+  //const [ubihost, setUbihost] = useState<string>("");
   //const [progress, setProgress] = useState(0); // Valor inicial 0%
   //const [isLoading, setIsLoading] = React.useState(true);
   //
@@ -69,6 +72,7 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
   });
   //
   //
+  /*
   useEffect(() => {
     //
     let numApp = process.env.REACT_APP_NUM;
@@ -89,7 +93,7 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
     }
     //
   }, []);
-  //
+  */
   //
   //-----------------------------------------------------------------
   // Estilo para el efecto tenue (puedes usar CSS o Tailwind)
