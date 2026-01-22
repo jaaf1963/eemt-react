@@ -75,7 +75,7 @@ const PanelsDisplay: React.FC = () => {
       authen: authUserStore,
       //panel: panelSel,
     };
-    const API_URL_BACKEND = `${ubihost}/search_titlespanels_react`;
+    const API_URL_BACKEND = `${ubihost}/search_titlespanel_react`;
     //const API_URL_BACKEND = "http://localhost:5055/search_titlespanel_react";
     //
     try {
