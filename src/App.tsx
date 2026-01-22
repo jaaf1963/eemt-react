@@ -51,9 +51,13 @@ const App: React.FC = () => {
     if (userStore) {
       return userStore;
     }
-    setTextUserStore("");
     return "";
   });
+  //
+  if (changeUserRole) {
+    setTextRoleStore("");
+    setTextUserStore("");
+  }
   //
   //
   useEffect(() => {
@@ -91,7 +95,6 @@ const App: React.FC = () => {
   const logOut = () => {
     AuthService.logout();
     //
-    setTextRoleStore("");
     SetClearStore();
     //
   };
