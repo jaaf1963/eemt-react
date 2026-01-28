@@ -7,7 +7,7 @@ import { Routes, Route, Link, Navigate } from "react-router-dom";
 //
 import SetClearStore from "./services/auth.clear.store";
 import * as AuthService from "./services/auth.local.service";
-import Eem from "./components/EEM";
+import Eemt from "./components/EEMT";
 import Home from "./components/Home";
 import PrjView from "./components/PrjView";
 import PrjEdit from "./components/PrjEdit";
@@ -210,7 +210,7 @@ const App: React.FC = () => {
 
       <div className="container mt-3">
         <Routes>
-          <Route path="/" element={<Eem />} />
+          <Route path="/" element={<Eemt />} />
           <Route path="/home" element={<Home />} />
           <Route path="/segfin" element={<AdminSegfin />} />
           <Route path="/prjview" element={<PrjView />} />
