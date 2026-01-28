@@ -3,7 +3,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, Navigate } from "react-router-dom";
 //
 import SetClearStore from "./services/auth.clear.store";
 import * as AuthService from "./services/auth.local.service";
@@ -228,6 +228,8 @@ const App: React.FC = () => {
           />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<BoardProfile />} />
+          {/* Captura cualquier ruta no definida y redirige al home */}
+          <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
       </div>
     </div>
