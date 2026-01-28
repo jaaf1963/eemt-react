@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useState, FormEvent } from "react";
 import ButtonsTableImage from "../services/buttonTableImage";
 import ButtonsPanelImage from "../services/buttonPanelImage";
 import "../styles/InputGroup.css";
@@ -98,10 +98,8 @@ interface FormData {
 }
 
 const PrjFlow = () => {
-  // Estado para los datos del formulario
   const [panelss, setPanelss] = useState<string[]>([]);
   const [groupss, setGroupss] = useState<groupProps[]>([]);
-  //const [ubihost, setUbihost] = useState<string>("");
   //
   const [selecTexPanel, setSelecTexPanel] = useState("");
   const [selecNumPanel, setSelecNumPanel] = useState(0);
@@ -116,7 +114,6 @@ const PrjFlow = () => {
   //
   const [activesino, setActivesino] = useState(false);
   const [visiblesino, setVisiblesino] = useState(false);
-  //const [classnam, setClassnam] = useState<string>("inactive");
   const [statusss, setStatusss] = useState<string>("inactive");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -165,29 +162,6 @@ const PrjFlow = () => {
     classnam: "inactive",
     status: "inactive",
   });
-  //
-  //
-  /*
-  useEffect(() => {
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
   //
   //---- Lee paneles al entrar
   //
@@ -310,36 +284,30 @@ const PrjFlow = () => {
   }
   //
   const handlePanelSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    //console.log("Opción seleccionada:", event.target.value);
     let panelSel = event.target.value;
     //
     const num = Number(panelSel.slice(0, 1));
     const txt = panelSel.slice(2, panelSel.length);
     setSelecNumPanel(num);
     setSelecTexPanel(txt);
-    //console.log("Button seleccionado:", panelSel);
   };
   //
   const handleTypeSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    //console.log("Opción seleccionada:", event.target.value);
     let typeSel = event.target.value;
     //
     const num = Number(typeSel.slice(0, 1));
     const txt = typeSel.slice(2, typeSel.length);
     setSelecNumLevel(num);
     setSelecTexLevel(txt);
-    //console.log("Type seleccionado:", typeSel);
   };
   //
   const handleGroupSelect = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    //console.log("Opción seleccionada:", event.target.value);
     let groupSel = event.target.value;
     //
     const num = Number(groupSel.slice(0, 1));
     const txt = groupSel.slice(2, groupSel.length);
     setSelecNumSpot(num);
     setSelecTexSpot(txt);
-    //console.log("Type seleccionado:", groupSel);
     //
     // Get Buttons by Panel an Group in Backend
     //
@@ -349,31 +317,23 @@ const PrjFlow = () => {
   };
   //
   const handleButtonGroup = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    //console.log("Opción seleccionada:", event.target.value);
     let buttonSel = event.target.value;
     //
     const num = Number(buttonSel.slice(0, 1));
     const txt = buttonSel.slice(2, buttonSel.length);
     setSelecNumButton(num);
     setSelecTexButton(txt);
-    //console.log("Button seleccionado:", buttonSel);
   };
   //
   const handleButtonItem = (event: React.ChangeEvent<HTMLSelectElement>) => {
     let itemSel = event.target.value;
-    //
     const num = 1 + groupss.length;
-    //const num = Number(itemSel.slice(0, 1));
-    //const txt = buttonSel.slice(2, buttonSel.length);
     setSelecNumButton(num);
-    //setSelecTexButton(txt);
     setSelecTexButton(itemSel);
-    //console.log("Item seleccionado:", itemSel);
   };
   //
   // Maneja los cambios en los inputs
   const handleChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //setClassnam("inactivo");
     setStatusss("inactivo");
     const { name, value } = e.target;
     //
@@ -435,7 +395,6 @@ const PrjFlow = () => {
       //
       if (name === "classnam") {
         setActivesino(false);
-        //const value2 = "inactivo";
         setInputsData({
           ...inputsData, // Copia el estado actual
           // Actualiza la propiedad correspondiente
@@ -445,7 +404,6 @@ const PrjFlow = () => {
       } else if (name === "status") {
         //
         setVisiblesino(!visiblesino);
-        //let value2 = "Apagado"; //gris
         setStatusss("inactive");
         if (!visiblesino) {
           setStatusss("active");
@@ -504,9 +462,7 @@ const PrjFlow = () => {
       //
       if (textRoleStore === "admin" || textRoleStore === "edit") {
         // Creamos un FormData para enviar los archivos
-        //const formData = new FormData();
         //
-        //console.log("formValues:", inputsData);
         const data = {
           buttext: "buttons_send",
           entity: entyUserStore,
@@ -535,8 +491,6 @@ const PrjFlow = () => {
           });
           //
           if (response.ok) {
-            //const result = await response.json();
-            //console.log("Datos enviados con éxito:", result);
             //
             // Opcional: limpiar el formulario o redirigir
             setInputsData({
@@ -549,7 +503,6 @@ const PrjFlow = () => {
               classnam: "",
               status: "",
             });
-            //setClassnam("inactivo");
             setStatusss("inactivo");
             //
           } else {
@@ -569,7 +522,7 @@ const PrjFlow = () => {
   //
   return (
     <div className="input-group-container">
-      <h4>Create Buttons Struct for Panel.</h4>
+      <h4>Creación de Botones para Paneles</h4>
       <div style={{ display: "flex" }}>
         <form
           onSubmit={handleSubmit}
@@ -705,7 +658,7 @@ const PrjFlow = () => {
             </div>
             <p></p>
 
-            <div className="form-group">
+            <div className="div-grid-btns">
               <select
                 onChange={handleButtonGroup}
                 style={{ marginInlineStart: "8px", width: "190px" }}

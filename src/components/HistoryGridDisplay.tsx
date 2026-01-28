@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import FileDisplayDownload from "./FileDisplayDownload";
 const ubihost = process.env.REACT_APP_API_URL;
 //const apiKey = process.env.REACT_APP_API_KEY;
@@ -31,9 +31,6 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
   codiPrjFetch,
   cliePrjFetch,
 }) => {
-  //const [ubihost, setUbihost] = useState<string>("");
-  //const [progress, setProgress] = useState(0); // Valor inicial 0%
-  //const [isLoading, setIsLoading] = React.useState(true);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -71,44 +68,15 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
     return "";
   });
   //
-  //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
-  //
-  //-----------------------------------------------------------------
   // Estilo para el efecto tenue (puedes usar CSS o Tailwind)
   const estiloGrilla = {
     opacity: estaVisible ? 1 : 0,
     transition: "opacity 0.5s ease-in-out",
-    //display: "block",
-    // O si usas Tailwind:
-    // className={`transition-opacity duration-500 ${estaVisible ? 'opacity-100' : 'opacity-0'}`}
   };
   //
   // Delete documents
   //
   const manejarFileDelete = async (fileSelect: string) => {
-    //console.log("Dato recibido para Delete:", fileSelect);
     if (fileSelect !== "") {
       //
       //setProgress(0);
@@ -171,7 +139,7 @@ const GridHistoryDisplay: React.FC<GridProps> = ({
       }
     }
   };
-  //console.log(progress);
+  //
   //
   return (
     <div style={estiloGrilla}>

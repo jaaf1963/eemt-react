@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getEemContent } from "../services/user.local.service";
 import EemImage from "../services/eemtImage";
+//import PortadaGif from "./portadagif";
 
 const EEM: React.FC = () => {
   const [content, setContent] = useState<string>("");

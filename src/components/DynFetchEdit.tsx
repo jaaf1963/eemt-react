@@ -43,12 +43,9 @@ interface fetchDocsProps {
   // Esta prop permite al padre resetear el estado. No en uso aqui
   onActivar: (valor: boolean) => void;
   // Define el tipo para devolver documentos
-  //onDocusEx: (files: FileList) => void;
   onDocusEx: (updaDocExist: docsEx[]) => void;
 }
 //
-//let contenidoADibujar1: React.ReactNode;
-//let theme = "";
 let descriPrj = "";
 
 const FetchDataEdit: React.FC<fetchDocsProps> = ({
@@ -66,7 +63,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
   const [dataTasks, setDataTasks] = useState<tarea[]>([]);
   const [dataIters, setDataIters] = useState<itera[]>([]);
   const [existDocs, setExistDocs] = useState<docsEx[]>([]);
-  //const [ubihost, setUbihost] = useState<string>("");
   const [progress, setProgress] = useState(0); // Valor inicial 0%
   const [renderFiles, setRenderfiles] = useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
@@ -107,8 +103,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
     setAuthUserStore("");
     return "";
   });
-  //
-  //-----------------------------------------------------------------
   //
   // Delete documents
   //
@@ -178,7 +172,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
   // Descrip Project Update
   //
   const handleUpdateDescrip = async () => {
-    //console.log("Dato recibido para Delete:", fileSelect);
     if (descriPrj !== "") {
       //
       setProgress(0);
@@ -289,7 +282,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
             //throw new Error(`HTTP error! status: ${response.status}`);
             const message = documsResp.msg[0];
             alert(message);
-            //console.log(message);
           } else {
             //
             const docums = documsResp.msg;
@@ -316,16 +308,13 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
     }
   };
   //
-  //
   // Función para manejar el cambio de la 'Observacion'
   const handleChangeDescrip = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value) {
-      //setDescrProj(e.target.value);
       descriPrj = e.target.value;
       setDescrProj(descriPrj);
     }
   };
-  //
   //
   const handleFetchDocuments = (files: any) => {
     //
@@ -348,9 +337,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
       setExistDocs((prevExistDocs) => [...prevExistDocs, newDocu]);
     };
 
-    //
-    //console.log(files);
-    //
     if (files) {
       setDataDocus([]);
       setDataTasks([]);
@@ -359,7 +345,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
       //
       // Themes
       //
-      //theme = files.theme;
       setThemeProj(files.theme);
       setDescrProj(files.descri);
       setResponsab(files.author[0]);
@@ -367,7 +352,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
       //
       // Docs
       //
-      ////const docsNames = Object.entries(dataFiles[0].docs);
       let docnames = files.docus;
       let bs64docum = files.docusx;
       let numedocu = files.numdoc;
@@ -419,7 +403,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
       if (doctasks) {
         for (let i: number = 0; i < doctasks.length; i++) {
           //
-          //let tsk = doctasks[i];
           addDataTasks({
             id: i,
             task: doctasks[i].toString(),
@@ -442,7 +425,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
       if (dociters) {
         for (let i: number = 0; i < dociters.length; i++) {
           //
-          //let tsk = doctasks[i];
           addDataIters({
             id: i,
             iter: dociters[i].toString(),
@@ -466,29 +448,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
   };
   //
   //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-  }, []);
-  */
-  //
-  //
   useEffect(() => {
     // Aquí podrías hacer llamadas a API, actualizar estado, etc.
     // Aquí podrías hacer llamadas a API, actualizar estado, etc.
@@ -506,8 +465,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
     return <p>Presione un botón para ver info.</p>;
   }
   //
-  //    <span>{mensajeDeBoton}</span>;
-  //    <InfiniteProgress isLoading={isLoading} />
   //
   return (
     <>
@@ -526,7 +483,6 @@ const FetchDataEdit: React.FC<fetchDocsProps> = ({
           display: "flex",
           //overflow: "auto",
         }}
-        //         <div style={{ display: "flex", backgroundColor: "orange" }}>
       >
         <div style={{ width: "30%", backgroundColor: "yellow" }}>
           <span style={{ marginLeft: "2%" }}>Tema: </span>

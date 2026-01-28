@@ -1,4 +1,4 @@
-import React, { useState, useEffect, FormEvent } from "react";
+import React, { useState, FormEvent } from "react";
 import ButtonsTableImage from "../services/buttonTableImage";
 import ButtonsPanelImage from "../services/buttonPanelImage";
 import "../styles/InputGroup.css";
@@ -242,7 +242,6 @@ const PrjFlow = () => {
         });
       }
     }
-    //
   };
   //
   // Maneja el envío del formulario
@@ -327,30 +326,6 @@ const PrjFlow = () => {
       }
     }
   };
-  //
-  //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
   //
   //
   return (

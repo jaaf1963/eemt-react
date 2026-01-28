@@ -1,4 +1,4 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, ChangeEvent } from "react";
 import dayjs from "dayjs"; // Importa dayjs
 const ubihost = process.env.REACT_APP_API_URL;
 //const apiKey = process.env.REACT_APP_API_KEY;
@@ -9,9 +9,6 @@ interface FileInfo {
   selected: boolean;
   file: File; // Se guarda el objeto File para la carga
 }
-
-//const auth =
-//"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJqdWFuYWxiaXMiLCJleHAiOjE3NTg2NjI1MTV9.vP5ja3C28T0X_uyJ1u7yxHprB8zfAnvz8wj-yv_EHts";
 
 interface btnSelProps {
   btnSelEdit: string;
@@ -46,12 +43,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
   existsdocs,
 }) => {
   //
-  // Estado del Boton de Envio
-  //const [buttonSelEdit, setButtonSelEdit] = useState<string>("");
-  // Estado para almacenar la lista de archivos y su estado de selección
   const [files, setFiles] = useState<FileInfo[]>([]);
-  //const [ubihost, setUbihost] = useState<string>("");
-  //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
     if (roleStore) {
@@ -88,30 +80,6 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
     return "";
   });
   //
-  //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
-  //
   // Función para manejar el cambio del input de tipo file
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     // Limpia lista de Documentos
@@ -142,24 +110,6 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
     document.getElementById("fileInput")?.click();
   };
   //
-  /*
-  // Genera Base64 desde File
-  const getBlobFromFile = (file: File): Promise<Blob> => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        // El resultado de la lectura es un ArrayBuffer. Lo convertimos en Blob.
-        const blob = new Blob([reader.result as ArrayBuffer]);
-        resolve(blob);
-      };
-      reader.onerror = (error) => {
-        reject(error);
-      };
-      reader.readAsArrayBuffer(file);
-    });
-  };
-  */
-  //
   // Función para enviar los archivos seleccionados al BACKEND
   //
   const handleSendBackend = async () => {
@@ -170,7 +120,6 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
       existsdocs = "empty.txt";
     }
     if (existsdocs !== null && existsdocs.length > 3 && files.length < 1) {
-      //alert("Archivo existente -> " + existsdocs);
       files.push({ file: emptyFile, selected: true, name: existsdocs });
     }
     //
@@ -190,8 +139,6 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
         const formData = new FormData();
         selectedFiles.forEach((f) => {
           formData.append("files", f.file);
-          //const base64 = getBlobFromFile(f.file);
-          //formData.append("files", base64);
         });
         //
         let fecIniDocs: string = " ";
@@ -236,7 +183,6 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
             const API_URL_BACKEND = `${ubihost}/insert_documents_react`;
             //const API_URL_BACKEND ="http://localhost:5055/insert_documents_react";
             //
-            // Send data to Backend
             try {
               const response = await fetch(API_URL_BACKEND, {
                 method: "POST",
@@ -247,8 +193,7 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
               if (response.ok) {
                 //
                 alert("Documentos almacenados exitosamente.");
-                //const result = await response.json();
-                // Aqui puedes manejar la respuesta del backend
+                //
               } else {
                 console.error("Error al enviar los archivos.");
                 alert(

@@ -1,21 +1,17 @@
 import React from "react";
-import homeImage from "../images/fondo1.png"; // Ajusta la ruta
+import registerImage from "../images/register.png"; // Ajusta la ruta
 
-const HomeImage: React.FC = () => {
-  //
-  //
+const RegisterImage: React.FC = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${homeImage})`,
+        backgroundImage: `url(${registerImage})`,
         backgroundRepeat: "no-repeat",
-        filter: "brightness(80%)", // Reduce el brillo al 50% [2]
         //backgroundSize: "contain", // 'cover' O 'contain' si prefieres
         width: "100%",
         //height: "100%",
-        height: "88vh", // Asegura que ocupe toda la altura de la pantalla*/
+        height: "48vh", // Asegura que ocupe toda la altura de la pantalla*/
         //objectFit: "contain" /* O 'cover', 'fill', 'contain', etc. */,
-        position: "relative",
       }}
     >
       {/* Aquí va el contenido de tu componente */}
@@ -24,4 +20,4 @@ const HomeImage: React.FC = () => {
   );
 };
 
-export default HomeImage;
+export default RegisterImage;

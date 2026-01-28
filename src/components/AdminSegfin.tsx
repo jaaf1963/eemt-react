@@ -3,7 +3,6 @@ import React, { useState, useCallback, useEffect } from "react";
 import SigfinDisplay from "./DisplaySegfin";
 import BoardSegfin from "./BoardSegfin";
 
-//type ComponenteActual = 'A' | 'B' | 'C' | null;
 type ComponenteActual = "A" | "B" | null;
 
 const AdminSegfin: React.FC = () => {
@@ -50,14 +49,11 @@ const AdminSegfin: React.FC = () => {
       >
         New Project
       </button>
-      {/*<button onClick={() => mostrarComponente('C')}>Mostrar C</button>*/}
       <hr />
       {/* Renderizado condicional del componente activo */}
       <div>
         {componenteActivo === "A" && <SigfinDisplay />}
         {componenteActivo === "B" && <BoardSegfin />}
-        {/*componenteActivo === 'C' && <ComponenteC />*/}
-        {/* Alternativamente, puedes usar un Switch o un Objeto de mapeo para más componentes */}
       </div>
     </div>
   );

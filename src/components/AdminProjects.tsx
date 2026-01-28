@@ -3,7 +3,6 @@ import React, { useState, useCallback, useEffect } from "react";
 import ProjectsDisplay from "./DisplayProjects";
 import BoardProject from "./BoardProject";
 
-//type ComponenteActual = 'A' | 'B' | 'C' | null;
 type ComponenteActual = "A" | "B" | null;
 
 const AdminProjects: React.FC = () => {
@@ -50,14 +49,11 @@ const AdminProjects: React.FC = () => {
       >
         New Project
       </button>
-      {/*<button onClick={() => mostrarComponente('C')}>Mostrar C</button>*/}
       <hr />
       {/* Renderizado condicional del componente activo */}
       <div>
         {componenteActivo === "A" && <ProjectsDisplay />}
         {componenteActivo === "B" && <BoardProject />}
-        {/*componenteActivo === 'C' && <ComponenteC />*/}
-        {/* Alternativamente, puedes usar un Switch o un Objeto de mapeo para más componentes */}
       </div>
     </div>
   );

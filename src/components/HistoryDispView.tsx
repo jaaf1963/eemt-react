@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import GridHistoryDispView from "./HistoryGridDispView";
 import ProgressWithLabel from "./InfiniteProgress";
 const ubihost = process.env.REACT_APP_API_URL;
@@ -25,8 +25,6 @@ interface fetchDocsProps {
   // Esta prop permite al padre resetear el estado. No en uso aqui
   //onActivar: (valor: boolean) => void;
 }
-//
-//let descriPrj = "";
 
 const HistoryDispView: React.FC<fetchDocsProps> = ({
   activarFetch,
@@ -36,9 +34,6 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
 }) => {
   const [showHistory, setShowHistory] = useState(false);
   const [dataHistory, setDataHistory] = useState<itera[]>([]);
-  //const [ubihost, setUbihost] = useState<string>("");
-  //const [progress, setProgress] = useState(0); // Valor inicial 0%
-  //const [renderFiles, setRenderfiles] = useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -77,31 +72,6 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
     return "";
   });
   //
-  //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
-  //
-  //
   // Get documents History
   //
   const get_documents_history = async () =>
@@ -118,8 +88,6 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
         authUserStore !== null
       ) {
         //
-        //setResponsab("");
-        //setNumiterac("");
         setDataHistory([]);
         //
         if (textRoleStore === "admin" || textRoleStore === "edit") {
@@ -133,7 +101,6 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
             cliprj: cliePrjFetch,
             button: datoBtnFetch, // buttonSel,
           };
-          //console.log("dataButton:", dataButton);
           //
           const API_URL_BACKEND = `${ubihost}/get_documents_history_react`;
           //const API_URL_BACKEND ="http://localhost:5055/get_documents_history_react";
@@ -155,8 +122,6 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
               const docums = documsResp.msg;
               //
               if (docums) {
-                //
-                //setDocsHistory(docums);
                 //
                 handleFetchDocuments(docums);
                 //
@@ -185,13 +150,9 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
       setDataHistory((prevDataHistory) => [...prevDataHistory, newIter]);
     };
     //
-    //let files = [[]]
-    //console.log("datoBtnFetch:", datoBtnFetch);
-    //console.log(files);
     //
     if (files) {
       setDataHistory([]);
-      //setResponsab(files.author[0]);
       //
       // Iterations
       //
@@ -203,8 +164,6 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
       let authiter = files.author;
       let dateiter = files.upddat;
       let numbetsk = files.numtsk;
-      //let obseritr = files.obserx;
-      //let numbedoc = files.numdoc;
       //
       if (docsiter) {
         for (let i: number = 0; i < docsiter.length; i++) {
@@ -226,7 +185,6 @@ const HistoryDispView: React.FC<fetchDocsProps> = ({
       //
       // Despliega 'Files' al hacer Click en 'Buttons'
       //
-      //setRenderfiles(true);
     }
   };
   //

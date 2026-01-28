@@ -64,12 +64,10 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
   const [dataTasks, setDataTasks] = useState<tarea[]>([]);
   const [dataIters, setDataIters] = useState<itera[]>([]);
   const [existDocs, setExistDocs] = useState<docsEx[]>([]);
-  //const [ubihost, setUbihost] = useState<string>("");
   const [renderFiles, setRenderfiles] = useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isExisdoc, setIsExisdoc] = React.useState(false);
   const [progress, setProgress] = useState(0);
-  //const [documentsButt, setDocumentsButt] = useState<string[]>([]);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -106,8 +104,6 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
     setAuthUserStore("");
     return "";
   });
-  //
-  //-----------------------------------------------------------------
   //
   // Delete documents
   //
@@ -355,7 +351,6 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
       //
       // Themes
       //
-      //theme = files.theme;
       setThemeProj(files.theme);
       setDescrProj(files.descri);
       setResponsab(files.author[0]);
@@ -363,7 +358,6 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
       //
       // Docs
       //
-      ////const docsNames = Object.entries(dataFiles[0].docs);
       let docnames = files.docus;
       let bs64docum = files.docusx;
       let numedocu = files.numdoc;
@@ -415,7 +409,6 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
       if (doctasks) {
         for (let i: number = 0; i < doctasks.length; i++) {
           //
-          //let tsk = doctasks[i];
           addDataTasks({
             id: i,
             task: doctasks[i].toString(),
@@ -438,7 +431,6 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
       if (dociters) {
         for (let i: number = 0; i < dociters.length; i++) {
           //
-          //let tsk = doctasks[i];
           addDataIters({
             id: i,
             iter: dociters[i].toString(),
@@ -462,31 +454,7 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
   };
   //
   //
-  /*
   useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-  }, []);
-  */
-  //
-  //
-  useEffect(() => {
-    //onActivar(false); // Opcional: resetea el estado en el padre
     //
     getDocumentsButton(codiPrjFetch, datoBtnFetch);
     //
@@ -516,7 +484,6 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
           display: "flex",
           //overflow: "auto",
         }}
-        //         <div style={{ display: "flex", backgroundColor: "orange" }}>
       >
         <div style={{ width: "30%", backgroundColor: "yellow" }}>
           <span style={{ marginLeft: "2%" }}>Tema: </span>

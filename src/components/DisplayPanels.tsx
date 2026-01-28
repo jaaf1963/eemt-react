@@ -19,7 +19,6 @@ interface panelProps {
 
 const PanelsDisplay: React.FC = () => {
   const [panelsGet, setPanelsGet] = useState<panelProps[]>([]);
-  //const [ubihost, setUbihost] = useState<string>("");
   const [estaVisible, setEstaVisible] = useState<boolean>(false);
   const [isLoading, setIsLoading] = React.useState(true);
   //
@@ -62,9 +61,6 @@ const PanelsDisplay: React.FC = () => {
   const estiloGrilla = {
     opacity: estaVisible ? 1 : 0,
     transition: "opacity 0.5s ease-in-out",
-    //display: "block",
-    // O si usas Tailwind:
-    // className={`transition-opacity duration-500 ${estaVisible ? 'opacity-100' : 'opacity-0'}`}
   };
 
   const getPanels = async () => {
@@ -111,7 +107,6 @@ const PanelsDisplay: React.FC = () => {
   //
   const handleDeleteUser = async (panelSelect: string) => {
     //
-    //alert(userSelect);
     if (panelSelect !== "") {
       //
       if (
@@ -119,7 +114,6 @@ const PanelsDisplay: React.FC = () => {
           `¡¡CUIDADO!! ¿Seguro de que quieres eliminar panel <${panelSelect}>?`,
         )
       ) {
-        //setProgress(0);
         setIsLoading(true);
         if (
           textRoleStore !== null &&
@@ -178,28 +172,6 @@ const PanelsDisplay: React.FC = () => {
   };
   //
   //
-  /*
-  useEffect(() => {
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-  }, []);
-  */
-  //
-  //
   useEffect(() => {
     //
     getPanels();
@@ -209,7 +181,20 @@ const PanelsDisplay: React.FC = () => {
   //
   return (
     <div>
-      <p style={{ fontStyle: "italic", fontSize: "18px" }}>
+      <p
+        style={{
+          fontStyle: "italic",
+          fontSize: "18px",
+          textAlign: "center",
+          width: "450px",
+          paddingLeft: "1px",
+          paddingRight: "20px",
+          color: "yellow",
+          backgroundColor: "blue",
+          borderRadius: "9px",
+          boxShadow: "inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff",
+        }}
+      >
         Información de paneles
       </p>
       <div style={estiloGrilla}>
@@ -218,8 +203,17 @@ const PanelsDisplay: React.FC = () => {
           <table>
             <thead>
               <tr className="row-head">
-                <th style={{ width: "85px", marginLeft: "1px" }}> Acciones</th>
                 <th
+                  style={{
+                    width: "85px",
+                    marginLeft: "1px",
+                  }}
+                >
+                  {" "}
+                  Acciones
+                </th>
+                <th
+                  className="fija-head"
                   style={{
                     width: "90px",
                     marginLeft: "5px",
@@ -258,6 +252,7 @@ const PanelsDisplay: React.FC = () => {
                       onClick={() => handleDeleteUser(item.panel)}
                       className="btn-delete-user"
                       style={{
+                        fontSize: "14px",
                         width: "70px",
                         height: "25px",
                         border: "4px",
@@ -266,27 +261,17 @@ const PanelsDisplay: React.FC = () => {
                     >
                       Eliminar
                     </button>
-                    {/*<button
-                      onClick={() => handleUpdateUser(item.usern)}
-                      className="btn-modifi-user"
-                      style={{
-                        width: "50px",
-                        height: "25px",
-                        border: "4px",
-                        color: "blue",
-                      }}
-                    >
-                      Modif
-                    </button>*/}
                   </td>
                   <td style={{ color: "blue" }}>{item.panel}</td>
-                  <td>{item.ptitle}</td>
-                  <td>{item.pwidth}</td>
-                  <td>{item.pheigh}</td>
-                  <td>{item.bcolor}</td>
-                  <td>{item.pfontt}</td>
-                  <td>{item.pcolor}</td>
-                  <td>{item.psizee}</td>
+                  <td style={{ fontSize: "13px" }}>{item.ptitle}</td>
+                  <td style={{ fontSize: "13px" }}>{item.pwidth}</td>
+                  <td style={{ fontSize: "13px" }}>{item.pheigh}</td>
+                  <td style={{ fontSize: "13px" }}>{item.bcolor}</td>
+                  <td style={{ fontSize: "13px" }}>{item.pfontt}</td>
+                  <td style={{ fontSize: "13px" }}>{item.pcolor}</td>
+                  <td style={{ fontSize: "13px", textAlign: "center" }}>
+                    {item.psizee}
+                  </td>
                 </tr>
               ))}
             </tbody>

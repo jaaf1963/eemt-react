@@ -50,7 +50,7 @@ interface projProps {
   project?: string | undefined;
   company?: string | undefined;
   theme?: string | undefined;
-  sigla?: string | undefined;
+  typroj?: string | undefined;
   descrip?: string | undefined;
   observ?: string | undefined;
   advance?: string | undefined;
@@ -75,7 +75,6 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   const [mensajeDesdeCall, setMensajeDesdeCall] = useState<string>("");
   const [existDocums, setExistDocums] = useState<docsEx[]>([]);
   const [renderButton, setRenderButton] = useState<boolean>(true);
-  //const [mensajeDesdePadre, setMensajeDesdePadre] = useState<string>("");
   const [projectsGet, setProjectsGet] = useState<projProps[]>([]);
   const [activarFetch, setActivarFetch] = useState<boolean>(false);
   const [activarHist, setActivarHist] = useState<boolean>(false);
@@ -86,7 +85,6 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   const [selecPrjClie, setSelecPrjClie] = useState<string>("");
   const [selecOptRadi, setSelecOptRadi] = useState<string>("");
   const [selecDocument, setSelecDocument] = useState<string>("");
-  //const [ubihost, setUbihost] = useState<string>("");
   //
   const [advancDoc, setAdvancDoc] = useState<string>("");
   const [authorDoc, setAuthorDoc] = useState<string>("");
@@ -168,8 +166,6 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     }
     //
     if (btnSel !== "" && prjSel !== "") {
-      ////setCodiPrjHijo(projectSel);
-      //setActivarFetch(true);
       if (selPrjCode !== "") {
         setSelecProject(selPrjCode);
       }
@@ -209,16 +205,11 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   const handleSelectProject = (event: React.ChangeEvent<HTMLSelectElement>) => {
     //console.log("Opción seleccionada:", event.target.value);
     const projSel = event.target.value;
-    //console.log(projSel);
     //
     if (projSel !== "") {
       setCodiPrjFetch(projSel);
     }
-    /*
-    split_str.forEach((str, index) => {
-      console.log(`prj: ${index + 1}: ${str}`);
-    });
-    */
+
     const split_str = projSel.split("|");
     selPrjCode = split_str[0].trim();
     selProject = split_str[1].trim();
@@ -245,7 +236,6 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
   const handleSelectDocument = (
     event: React.ChangeEvent<HTMLSelectElement>,
   ) => {
-    //console.log("Opción seleccionada:", event.target.value);
     const documSel = event.target.value;
     //console.log(documSel);
     //
@@ -254,8 +244,6 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
       //
       handleOptRadioChange("reemplazo");
       //
-      //setSelecOptRadi("reemplazo");
-      //console.log("Option radiobutton:", selecOptRadi);
     } else {
       //
       if (documSel.slice(0, 5) === "--- N") {
@@ -270,7 +258,6 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     if (updaDocExist) {
       setExistDocums(updaDocExist);
     }
-    //console.log(updaDocExist);
   };
   //
   //
@@ -281,16 +268,14 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
       authUserStore !== null
       // && projSel !== ""
     ) {
-      //console.log(projSel);
       if (textRoleStore === "admin" || textRoleStore === "edit") {
         const dataProj = {
-          srhtext: "search_prj",
+          srhtext: "gets_projs",
           entity: entyUserStore,
           userna: textUserStore,
-          authen: authUserStore,
-          projct: projSel,
         };
-        const API_URL_BACKEND = `${ubihost}/search_projects_react`;
+        //
+        const API_URL_BACKEND = `${ubihost}/gets_projects_react`;
         //const API_URL_BACKEND = "http://localhost:5055/search_projects_react";
         //
         try {
@@ -320,30 +305,6 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
       }
     }
   };
-  //
-  //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
   //
   //---- Lee Hisory proyect
   //
@@ -397,7 +358,6 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     //
   }, [mensajeDesdeCall]);
   //
-  //      <SearchBarProject enviarProyectoAlPadre={recibirProyectoHijo} />
   //
   return (
     <>
@@ -424,7 +384,9 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
           onChange={handleSelectProject}
           style={{ marginInlineStart: "8px", width: "20px" }}
         >
-          <option value="">--- Select Project ---</option>{" "}
+          <option value="" disabled>
+            --- Select Project ---
+          </option>{" "}
           {/* Opcion por defecto */}
           {projectsGet.map((option) => (
             <option
@@ -556,7 +518,9 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
           onChange={handleSelectDocument}
           style={{ marginInlineStart: "8px", width: "20px" }}
         >
-          <option value="">--- Select Document ---</option>{" "}
+          <option value="" disabled>
+            --- Select Document ---
+          </option>{" "}
           {/* Opcion por defecto */}
           {existDocums.map((option) => (
             <option key={option.id} value={option.name}>

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { entityOptions } from "../types/user.type";
+import LoginImage from "../services/loginImage";
 const ubihost = process.env.REACT_APP_API_URL;
 //const apiKey = process.env.REACT_APP_API_KEY;
 
@@ -13,31 +14,7 @@ interface Props {
 const Login: React.FC<Props> = ({ onRoleChange }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  //const [ubihost, setUbihost] = useState<string>("");
   let navigate: NavigateFunction = useNavigate();
-
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
 
   const initialValues: {
     username: string;
@@ -67,7 +44,6 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
     onRoleChange(false);
 
     const storageDataUser = (item: string, newDat: string) => {
-      //setDato(nuevoDato);
       localStorage.setItem(item, newDat);
     };
 
@@ -85,7 +61,6 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
       entity: entity,
       username: username,
       password: password,
-      //token: tokenusr,
     };
     //
     const API_URL_BACKEND = `${ubihost}/login_user_react`;
@@ -132,28 +107,22 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
     } catch (error) {
       setLoading(false);
       setMessage("error");
-      console.error("Error en el inicio de sesión:", error);
+      //console.error("Error en el inicio de sesión:", error);
       // Aquí puedes mostrar un mensaje de error al usuario
     }
-    //
-    ////////////////////////////////////////////////////////////////
   };
 
   return (
     <div className="col-md-12">
       <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
+        <LoginImage />
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleLogin}
         >
           <Form>
-            <div className="form-group">
+            <div className="">
               <label htmlFor="username">Username</label>
               <Field name="username" type="text" className="form-control" />
               <ErrorMessage
@@ -163,7 +132,7 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
               />
             </div>
 
-            <div className="form-group">
+            <div className="">
               <label htmlFor="password">Password</label>
               <Field name="password" type="password" className="form-control" />
               <ErrorMessage
@@ -173,11 +142,11 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
               />
             </div>
 
-            <div className="form-group">
-              <label htmlFor="entity">Entity</label>
+            <div className="f">
+              <label htmlFor="entity">Entidad</label>
               <Field as="select" name="entity">
                 <option value="">
-                  - - - - - - - Select Entity - - - - - - - -
+                  - - - - - - - Selec. Entidad - - - - - -
                 </option>{" "}
                 {/* Opción por defecto */}
                 {entityOptions.map((option) => (
@@ -192,8 +161,9 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
                 className="alert alert-danger"
               />
             </div>
+            <br></br>
 
-            <div className="form-group">
+            <div className="">
               <button
                 type="submit"
                 className="btn btn-primary btn-block"

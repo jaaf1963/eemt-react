@@ -3,7 +3,6 @@ import React, { useState, useCallback, useEffect } from "react";
 import BoardClient from "./BoardClient";
 import ClientsDisplay from "./DisplayClients";
 
-//type ComponenteActual = 'A' | 'B' | 'C' | null;
 type ComponenteActual = "A" | "B" | null;
 
 const AdminClients: React.FC = () => {
@@ -56,8 +55,6 @@ const AdminClients: React.FC = () => {
       <div>
         {componenteActivo === "A" && <ClientsDisplay />}
         {componenteActivo === "B" && <BoardClient />}
-        {/*componenteActivo === 'C' && <ComponenteC />*/}
-        {/* Alternativamente, puedes usar un Switch o un Objeto de mapeo para más componentes */}
       </div>
     </div>
   );

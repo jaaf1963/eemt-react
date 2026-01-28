@@ -5,16 +5,13 @@ import { NavLink } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 //
+import SetClearStore from "./services/auth.clear.store";
+import * as AuthService from "./services/auth.local.service";
 import Eem from "./components/EEM";
 import Home from "./components/Home";
 import PrjView from "./components/PrjView";
 import PrjEdit from "./components/PrjEdit";
 import PrjFlow from "./components/PrjFlow";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import SetClearStore from "./services/auth.clear.store";
-import * as AuthService from "./services/auth.local.service";
-//
 import AdminSegfin from "./components/AdminSegfin";
 import AdminClients from "./components/AdminClients";
 import AdminProjects from "./components/AdminProjects";
@@ -23,6 +20,8 @@ import AdminPanels from "./components/AdminPanels";
 import AdminUsers from "./components/AdminUsers";
 import BoardProfile from "./components/BoardProfile";
 import BoardAdmin from "./components/BoardAdmin";
+import Login from "./components/Login";
+import Register from "./components/Register";
 import EventBus from "./common/EventBus";
 
 const App: React.FC = () => {
@@ -114,103 +113,99 @@ const App: React.FC = () => {
           {(moderUserRole || adminUserRole || comeUserRole) && (
             <li className="nav-item">
               <NavLink to={"/segfin"} className="nav-link">
-                Seg-Fin
+                Segfin
               </NavLink>
             </li>
           )}
           {(viewUserRole || moderUserRole || adminUserRole) && (
             <li className="nav-item">
               <NavLink to={"/prjview"} className="nav-link">
-                Projects View
+                Docs Ver
               </NavLink>
             </li>
           )}
           {(adminUserRole || moderUserRole) && (
             <li className="nav-item">
               <NavLink to={"/prjedit"} className="nav-link">
-                Project Edit
+                Docs Edit
               </NavLink>
             </li>
           )}
           {(adminUserRole || moderUserRole) && (
             <li className="nav-item">
               <Link to={"/moder"} className="nav-link">
-                Moderator
+                Moderador
               </Link>
             </li>
           )}
           {(adminUserRole || moderUserRole) && (
             <li className="nav-item">
               <NavLink to={"/panels"} className="nav-link">
-                Panels
+                Paneles
               </NavLink>
             </li>
           )}
           {(adminUserRole || moderUserRole) && (
             <li className="nav-item">
               <Link to={"/client"} className="nav-link">
-                Clients
+                Clientes
               </Link>
             </li>
           )}
           {(adminUserRole || moderUserRole) && (
             <li className="nav-item">
               <NavLink to={"/project"} className="nav-link">
-                Projects
+                Proyectos
               </NavLink>
             </li>
           )}
           {(adminUserRole || moderUserRole) && (
             <li className="nav-item">
               <NavLink to={"/prjflow"} className="nav-link">
-                Projects Flow
+                Flujo
               </NavLink>
             </li>
           )}
           {(adminUserRole || moderUserRole) && (
             <li className="nav-item">
               <NavLink to={"/users"} className="nav-link">
-                Users
+                Usuarios
               </NavLink>
             </li>
           )}
         </div>
 
-        {existUserStore ? (
-          <div className="navbar-nav ml-auto">
-            {adminUserRole && (
+        {/* Esto moverá el Login/Registro a la derecha */}
+        <nav className="ms-auto">
+          {existUserStore ? (
+            <div className="navbar-nav ml-auto">
               <li className="nav-item">
-                <NavLink to={"/admin"} className="nav-link">
-                  Admin
+                <NavLink to={"/profile"} className="nav-link">
+                  {textUserStore}
                 </NavLink>
               </li>
-            )}
-            <li className="nav-item">
-              <NavLink to={"/profile"} className="nav-link">
-                {textUserStore}
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <a href="/login" className="nav-link" onClick={logOut}>
-                LogOut
-              </a>
-            </li>
-          </div>
-        ) : (
-          <div className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <NavLink to={"/login"} className="nav-link">
-                Login
-              </NavLink>
-            </li>
+              <li className="nav-item">
+                <a href="/login" className="nav-link" onClick={logOut}>
+                  LogOut
+                </a>
+              </li>
+            </div>
+          ) : (
+            <div className="navbar-nav ml-auto">
+              <li className="nav-item">
+                <NavLink to={"/login"} className="nav-link">
+                  Login
+                </NavLink>
+              </li>
 
-            <li className="nav-item">
-              <NavLink to={"/register"} className="nav-link">
-                Sign Up
-              </NavLink>
-            </li>
-          </div>
-        )}
+              <li className="nav-item">
+                <NavLink to={"/register"} className="nav-link">
+                  Sign Up
+                </NavLink>
+              </li>
+            </div>
+          )}
+        </nav>
       </nav>
 
       <div className="container mt-3">
@@ -226,7 +221,6 @@ const App: React.FC = () => {
           <Route path="/client" element={<AdminClients />} />
           <Route path="/project" element={<AdminProjects />} />
           <Route path="/users" element={<AdminUsers />} />
-          {/*<Route path="/users" element={<BoardUser />} />*/}
           <Route path="/admin" element={<BoardAdmin />} />
           <Route
             path="/login"

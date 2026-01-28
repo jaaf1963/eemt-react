@@ -62,9 +62,6 @@ const UsersDisplay: React.FC = () => {
   const estiloGrilla = {
     opacity: estaVisible ? 1 : 0,
     transition: "opacity 0.5s ease-in-out",
-    //display: "block",
-    // O si usas Tailwind:
-    // className={`transition-opacity duration-500 ${estaVisible ? 'opacity-100' : 'opacity-0'}`}
   };
 
   const getUsers = async () => {
@@ -96,7 +93,6 @@ const UsersDisplay: React.FC = () => {
         //
         setUsersGet(users);
         setEstaVisible(true);
-        //console.log(usersGet);
       }
       //
     } catch (err: any) {
@@ -112,7 +108,6 @@ const UsersDisplay: React.FC = () => {
   //
   const handleDeleteUser = async (userSelect: string) => {
     //
-    //alert(userSelect);
     if (userSelect !== "") {
       if (
         window.confirm(
@@ -120,7 +115,6 @@ const UsersDisplay: React.FC = () => {
         )
       ) {
         //
-        //setProgress(0);
         setIsLoading(true);
         if (
           textRoleStore !== null &&
@@ -179,28 +173,6 @@ const UsersDisplay: React.FC = () => {
   };
   //
   //
-  /*
-  useEffect(() => {
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-  }, []);
-  */
-  //
-  //
   useEffect(() => {
     //
     getUsers();
@@ -210,7 +182,20 @@ const UsersDisplay: React.FC = () => {
   //
   return (
     <div>
-      <p style={{ fontStyle: "italic", fontSize: "18px" }}>
+      <p
+        style={{
+          fontStyle: "italic",
+          fontSize: "18px",
+          textAlign: "center",
+          width: "400px",
+          paddingLeft: "1px",
+          paddingRight: "20px",
+          color: "yellow",
+          backgroundColor: "blue",
+          borderRadius: "9px",
+          boxShadow: "inset 5px 5px 10px #bebebe, inset -5px -5px 10px #ffffff",
+        }}
+      >
         Información de usuarios
       </p>
       <div style={estiloGrilla}>
@@ -249,6 +234,7 @@ const UsersDisplay: React.FC = () => {
                       onClick={() => handleDeleteUser(item.usern)}
                       className="btn-delete-user"
                       style={{
+                        fontSize: "14px",
                         width: "70px",
                         height: "25px",
                         border: "4px",
@@ -257,27 +243,27 @@ const UsersDisplay: React.FC = () => {
                     >
                       Eliminar
                     </button>
-                    {/*<button
-                      onClick={() => handleUpdateUser(item.usern)}
-                      className="btn-modifi-user"
-                      style={{
-                        width: "50px",
-                        height: "25px",
-                        border: "4px",
-                        color: "blue",
-                      }}
-                    >
-                      Modif
-                    </button>*/}
                   </td>
-                  <td>{item.usern}</td>
-                  <td>{item.inses}</td>
-                  <td>{item.dases}</td>
-                  <td style={{ color: "blue" }}>{item.fname}</td>
-                  <td>{item.lname}</td>
-                  <td style={{ color: "brown" }}>{item.email}</td>
-                  <td>{item.typus}</td>
-                  <td>{item.profe}</td>
+                  <td
+                    style={{
+                      fontSize: "13px",
+                      color: "blue",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    {item.usern}
+                  </td>
+                  <td style={{ fontSize: "13px" }}>{item.inses}</td>
+                  <td style={{ fontSize: "13px" }}>{item.dases}</td>
+                  <td style={{ fontSize: "13px", color: "blue" }}>
+                    {item.fname}
+                  </td>
+                  <td style={{ fontSize: "13px" }}>{item.lname}</td>
+                  <td style={{ fontSize: "13px", color: "brown" }}>
+                    {item.email}
+                  </td>
+                  <td style={{ fontSize: "13px" }}>{item.typus}</td>
+                  <td style={{ fontSize: "13px" }}>{item.profe}</td>
                 </tr>
               ))}
             </tbody>

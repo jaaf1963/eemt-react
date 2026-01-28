@@ -348,3 +348,49 @@
 .row-odd {
   background-color: #edf5f1; /* Blanco */
 }
+
+.form-group {
+  background-color: #c5e7ee; /* Blanco */
+}
+
+.form-control {
+  background-color: #e5eff7; /* Blanco */
+}
+
+.fija-head {
+  top: 0;
+  position: "sticky";
+  background-color: "#f2f2f2"; /* Fondo para no ver datos atrás*/
+  z-index: 1; /* Asegura que esté por encima*/
+  padding: "10px";
+  border-bottom: "2px solid #ddd";
+}
+
+.input-relieve {
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: white;
+  /* Sombras para dar efecto 3D */
+  box-shadow:
+    2px 2px 5px rgba(0, 0, 0, 0.2),
+    -1px -1px 3px rgba(255, 255, 255, 0.5);
+  outline: none;
+}
+
+.input-neumo {
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+  background: #e0e0e0;
+  box-shadow:
+    inset 5px 5px 10px #bebebe,
+    inset -5px -5px 10px #ffffff;
+}
+
+.input-3d {
+  border-style: outset;
+  border-width: 2px;
+  border-color: #ccc;
+  padding: 10px;
+}

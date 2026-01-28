@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import GridHistoryDisplay from "./HistoryGridDisplay";
 import ProgressWithLabel from "./InfiniteProgress";
 const ubihost = process.env.REACT_APP_API_URL;
@@ -93,8 +93,6 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
         authUserStore !== null
       ) {
         //
-        //setResponsab("");
-        //setNumiterac("");
         setDataHistory([]);
         //
         if (textRoleStore === "admin" || textRoleStore === "edit") {
@@ -130,8 +128,6 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
               //
               if (docums) {
                 //
-                //setDocsHistory(docums);
-                //
                 handleFetchDocuments(docums);
                 //
               }
@@ -150,30 +146,6 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
         alert("No se advierte usuario...hacer Login");
       }
     };
-  //
-  //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
   //
   //
   const handleFetchDocuments = (files: any) => {
@@ -196,8 +168,6 @@ const HistoryDisplay: React.FC<fetchDocsProps> = ({
       let authiter = files.author;
       let dateiter = files.upddat;
       let numbetsk = files.numtsk;
-      //let obseritr = files.obserx;
-      //let numbedoc = files.numdoc;
       //
       if (docsiter) {
         for (let i: number = 0; i < docsiter.length; i++) {

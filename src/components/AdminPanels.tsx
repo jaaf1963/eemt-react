@@ -3,7 +3,6 @@ import React, { useState, useCallback, useEffect } from "react";
 import BoardPanels from "./BoardPanels";
 import PanelsDisplay from "./DisplayPanels";
 
-//type ComponenteActual = 'A' | 'B' | 'C' | null;
 type ComponenteActual = "A" | "B" | null;
 
 const AdminPanels: React.FC = () => {
@@ -56,8 +55,6 @@ const AdminPanels: React.FC = () => {
       <div>
         {componenteActivo === "A" && <PanelsDisplay />}
         {componenteActivo === "B" && <BoardPanels />}
-        {/*componenteActivo === 'C' && <ComponenteC />*/}
-        {/* Alternativamente, puedes usar un Switch o un Objeto de mapeo para más componentes */}
       </div>
     </div>
   );

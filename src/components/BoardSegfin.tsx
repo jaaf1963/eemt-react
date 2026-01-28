@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 //import DatePicker from "react-datepicker";
@@ -36,17 +36,26 @@ interface segfinProps {
   status?: string | undefined;
   datein?: string | undefined;
 }
-// sfn_id sfn_entity sfn_cup sfn_client sfn_projec sfn_tiproy sfn_etapa sfn_esttec sfn_clpcom
-// sfn_usdcom sfn_uffcom sfn_estcom sfn_clppen sfn_usdpen sfn_uffpen sfn_status sfn_datein
 
 const BoardSegfin: React.FC = () => {
+  const [proyectQ, setProyectQ] = useState<string>("");
+  const [clienteQ, setClienteQ] = useState<string>("");
+  const [tiproyeQ, setTiproyeQ] = useState<string>("");
+  const [anoCom1Q, setAnoCom1Q] = useState<string>(
+    new Date().getFullYear().toString(),
+  );
+  const [anoCom2Q, setAnoCom2Q] = useState<string>(
+    new Date().getFullYear().toString(),
+  );
   const [clientsGet, setClientsGet] = useState<clieProps[]>([]);
   const [segfinsGet, setSegfinsGet] = useState<segfinProps[]>([]);
-  //const [estaVisible, setEstaVisible] = useState<boolean>(false);
+  const [codeprjInp, setCodeprjInp] = useState<string>("");
+  //const [clientInp, setClientInp] = useState<string>("");
+  //const [nameprjInp, setNameprjInp] = useState<string>("");
   const [successful, setSuccessful] = useState<boolean>(false);
   const [showClient, setShowClient] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  //const [ubihost, setHubihost] = useState<string>("");
+  const [selectedValue, setSelectedValue] = useState<string>(""); // Default to empty string
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -84,36 +93,17 @@ const BoardSegfin: React.FC = () => {
     return "";
   });
   //
-  //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
-  //
   // Inici leyendo Proyectos
   //
   useEffect(() => {
     //
     console.log("hola...");
     //search_Companys(searchCompany);
+    setProyectQ("");
+    setClienteQ("");
+    setTiproyeQ("");
+    setAnoCom1Q("");
+    setAnoCom2Q("");
     //
   }, []);
   //
@@ -124,7 +114,11 @@ const BoardSegfin: React.FC = () => {
       entity: entyUserStore,
       userna: textUserStore,
       authen: authUserStore,
-      //client: clientSel,
+      codprj: proyectQ,
+      client: clienteQ,
+      tiproy: tiproyeQ,
+      anoco1: anoCom1Q,
+      anoco2: anoCom2Q,
     };
     const API_URL_BACKEND = `${ubihost}/search_segfin_react`;
     //const API_URL_BACKEND = "http://localhost:5055/search_segfin_react";
@@ -220,7 +214,6 @@ const BoardSegfin: React.FC = () => {
   // se asigna PostData a formValue para igualar las variables
   // al desEstructurar los valores ingresados por el usuario
   const handleRegisterSegfin = async (formValue: PostData) => {
-    //alert("Register...");
     if (
       textRoleStore !== null &&
       entyUserStore !== null &&
@@ -268,7 +261,7 @@ const BoardSegfin: React.FC = () => {
           uffpen: uffpen,
           status: status,
         };
-        //-------------
+        //
         const API_URL_BACKEND = `${ubihost}/insert_segfin_react`;
         //const API_URL_BACKEND = "http://localhost:5055/insert_segfin_react";
         //
@@ -295,7 +288,6 @@ const BoardSegfin: React.FC = () => {
           } else {
             //
             const respMessage = data.msg;
-            //setLoading(false);
             setSuccessful(false);
             setMessage(respMessage);
             console.error("Error al obtener datos:", respMessage);
@@ -311,9 +303,6 @@ const BoardSegfin: React.FC = () => {
     }
   };
   //
-  //* cup, client, project, tiproy, etapa, estado, */}
-  //* clpcom, usdcom, uffcom, estcom, clppen, usdpen, uffpen, status, */}
-  //
   //
   const getClients = async () => {
     const dataClient = {
@@ -321,7 +310,9 @@ const BoardSegfin: React.FC = () => {
       entity: entyUserStore,
       userna: textUserStore,
       authen: authUserStore,
-      //client: clientSel,
+      client: "",
+      propie: "",
+      activi: "",
     };
     const API_URL_BACKEND = `${ubihost}/search_clients_react`;
     //const API_URL_BACKEND = "http://localhost:5055/search_clients_react";
@@ -342,7 +333,6 @@ const BoardSegfin: React.FC = () => {
       if (segfins) {
         //
         setClientsGet(segfins);
-        //setEstaVisible(true);
         console.log(clientsGet);
       }
       //
@@ -355,6 +345,26 @@ const BoardSegfin: React.FC = () => {
     }
   };
   //
+  //
+  const changeProject = (valor: string) => {
+    //
+    const txt = valor.split("|");
+    setCodeprjInp(txt[0]);
+    //
+  };
+  //
+  // Handle the change event
+  const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedValue(event.target.value);
+    //
+    changeProject(event.target.value);
+    //
+    console.log("Selected value:", event.target.value);
+  };
+  //
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setCodeprjInp(e.target.value);
+  };
   //
   useEffect(() => {
     //
@@ -373,7 +383,7 @@ const BoardSegfin: React.FC = () => {
   //
   return (
     <div className="col-md-12">
-      <h4>Seguimiento Financiero</h4>
+      <h4>Entrada de información comercial</h4>
 
       {!successful && (
         <div className="card card-container">
@@ -386,13 +396,56 @@ const BoardSegfin: React.FC = () => {
             <Form>
               {!successful && (
                 <div>
-                  <div className="form-group">
-                    <label htmlFor="client" style={{ height: "15px" }}>
-                      Client name
+                  <div>
+                    <div className="">
+                      <label htmlFor="fruit-select">Proyecto</label>
+                      <select
+                        id="fruit-select"
+                        className="form-control"
+                        value={selectedValue}
+                        onChange={handleSelectChange}
+                      >
+                        {/* Optional: Add a default disabled option */}
+                        <option value="" disabled>
+                          - - - - - - Selec proyecto - - - - - -
+                        </option>
+                        {segfinsGet.map((option) => (
+                          <option
+                            key={option.id}
+                            value={option.cup + "|" + option.client}
+                          >
+                            {option.client} | {option.cup}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <label htmlFor="cup" style={{ height: "15px" }}>
+                      {" "}
+                      C. U. P.{" "}
                     </label>
-                    <Field as="select" name="client">
+                    <Field
+                      name="cup"
+                      type="text"
+                      value={codeprjInp}
+                      onChange={handleChange}
+                      className="form-control"
+                      style={{ height: "25px" }}
+                    />
+                    <ErrorMessage
+                      name="cup"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+
+                  <div className="">
+                    <label htmlFor="client" style={{ height: "15px" }}>
+                      Cliente
+                    </label>
+                    <Field as="select" name="client" className="form-control">
                       <option value="">
-                        - - - - - - Select client - - - - - -
+                        - - - - - - Selec cliente - - - - - -
                       </option>{" "}
                       {/* Opcion por defecto */}
                       {clientsGet.map((option) => (
@@ -411,7 +464,7 @@ const BoardSegfin: React.FC = () => {
                   <div>
                     <label htmlFor="proyec" style={{ height: "15px" }}>
                       {" "}
-                      Project name{" "}
+                      Nombre Proyecto{" "}
                     </label>
                     <Field
                       name="proyec"
@@ -421,24 +474,6 @@ const BoardSegfin: React.FC = () => {
                     />
                     <ErrorMessage
                       name="proyec"
-                      component="div"
-                      className="alert alert-danger"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="cup" style={{ height: "15px" }}>
-                      {" "}
-                      C. U. P.{" "}
-                    </label>
-                    <Field
-                      name="cup"
-                      type="text"
-                      className="form-control"
-                      style={{ height: "25px" }}
-                    />
-                    <ErrorMessage
-                      name="cup"
                       component="div"
                       className="alert alert-danger"
                     />
@@ -447,7 +482,7 @@ const BoardSegfin: React.FC = () => {
                   <div>
                     <label htmlFor="tiproy" style={{ height: "15px" }}>
                       {" "}
-                      Tipo Proyecto: ( Estudio, Ensayo, ...)
+                      Tipo Proyecto: ( Estudio, Ensayo, . . .)
                     </label>
                     <Field
                       name="tiproy"
@@ -465,7 +500,7 @@ const BoardSegfin: React.FC = () => {
                   <div>
                     <label htmlFor="etapa" style={{ height: "15px" }}>
                       {" "}
-                      Etapa: ( EO , PES, ... )
+                      Etapa: ( EO , PES, . . . )
                     </label>
                     <Field
                       name="etapa"
@@ -483,7 +518,7 @@ const BoardSegfin: React.FC = () => {
                   <div>
                     <label htmlFor="estado" style={{ height: "15px" }}>
                       {" "}
-                      Desarrollo: ( en curso, aprobado, ... )
+                      Desarrollo: ( enCurso, aprobado, . . . )
                     </label>
                     <Field
                       name="estado"
@@ -555,8 +590,8 @@ const BoardSegfin: React.FC = () => {
                   <div>
                     <label htmlFor="estcom" style={{ height: "15px" }}>
                       {" "}
-                      Estado Comercial: ( facturado, por cobrar, en desarrollo,
-                      ... )
+                      Estado Comercial: ( facturado, porCobrar, desarrollo, . .
+                      . )
                     </label>
                     <Field
                       name="estcom"
@@ -628,7 +663,7 @@ const BoardSegfin: React.FC = () => {
                   <div>
                     <label htmlFor="status" style={{ height: "15px" }}>
                       {" "}
-                      Status{" "}
+                      Instancia de cobro{" "}
                     </label>
                     <Field
                       name="status"
@@ -643,11 +678,11 @@ const BoardSegfin: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group"></div>
+                  <div className=""></div>
                   <p> </p>
-                  <div className="form-group">
+                  <div className="">
                     <button type="submit" className="btn btn-primary btn-block">
-                      Send Data
+                      Enviar Datos
                     </button>
                   </div>
                 </div>

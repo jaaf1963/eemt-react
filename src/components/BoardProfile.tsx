@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-//import { getCurrentUser } from "../services/auth.local.service";
 
 const BoardProfile: React.FC = () => {
   const [dataId, setDataId] = useState("");
@@ -9,16 +8,6 @@ const BoardProfile: React.FC = () => {
   const [dataToken, setDataToken] = useState("");
   const [dataDatein, setDataDatein] = useState("");
   const [dataRole, setDataRole] = useState("");
-  //const currentUser = getCurrentUser();
-
-  /*
-        storageDataUser("username", data.data.tkn_user);
-        storageDataUser("id", data.data.tkn_id);
-        storageDataUser("entity", data.data.tkn_entity);
-        storageDataUser("module", data.data.tkn_subsyst);
-        storageDataUser("token", data.data.tkn_token);
-        storageDataUser("datein", data.data.tkn_datein);
-*/
 
   useEffect(() => {
     const idStore = localStorage.getItem("id");

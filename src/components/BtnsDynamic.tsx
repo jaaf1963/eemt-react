@@ -32,10 +32,10 @@ function DynamicButton({
           buttstat === "inactive"
             ? "#13ce1fff"
             : buttstat === "active"
-            ? "#65fa02ff"
-            : buttstat === "disabled"
-            ? "#717c7cff"
-            : "active",
+              ? "#65fa02ff"
+              : buttstat === "disabled"
+                ? "#717c7cff"
+                : "active",
         width: buttsize,
         boxShadow: buttshad,
         height: "30px",

@@ -16,7 +16,6 @@ const BoardButtNames: React.FC = () => {
   const [searchNames, setSearchNames] = useState<boolean>(true);
   const [panelTitle, setPanelTitle] = useState<string>("");
   const [successful, setSuccessful] = useState<boolean>(false);
-  //const [ubihost, setHubihost] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -104,30 +103,6 @@ const BoardButtNames: React.FC = () => {
       }
     }
   };
-  //
-  /*
-  useEffect(() => {
-    //
-    let numApp = 1;
-    //let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
   //
   //
   useEffect(() => {
@@ -244,11 +219,6 @@ const BoardButtNames: React.FC = () => {
         }
       }
     }
-    //
-    //
-
-    //
-    //
   };
   //
   //
@@ -287,13 +257,11 @@ const BoardButtNames: React.FC = () => {
                           const panelDeLaOp = foundOption.name;
                           const tituloDeLaOp = foundOption.title;
                           // Puedes usar las variables panelDeLaOpcion y tituloDeLaOpcion
-                          //console.log(panelDeLaOp); // 'B'
                           if (tituloDeLaOp) {
                             setPanelTitle(tituloDeLaOp);
                           }
                           setFieldValue("panel", panelDeLaOp);
                           //
-                          //console.log("Nombre seleccionado:",event.target.value);
                         }
                       }}
                     >

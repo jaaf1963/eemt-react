@@ -24,7 +24,7 @@ const ComboBoxInputs: React.FC<ComboboxProps> = ({
   const filteredOptions = useMemo(() => {
     if (!inputValue) return options;
     return options.filter((option) =>
-      option.label.toLowerCase().includes(inputValue.toLowerCase())
+      option.label.toLowerCase().includes(inputValue.toLowerCase()),
     );
   }, [inputValue, options]);
 
@@ -35,11 +35,9 @@ const ComboBoxInputs: React.FC<ComboboxProps> = ({
   };
 
   const handleOptionClick = (option: OptionPanel) => {
-    //console.log("option.label:", option.label.slice(0, 2));
     if (option.label.slice(0, 2) !== "--") {
       setInputValue(option.label);
       onSelect(option.value);
-      // Close dropdown after selection
       setIsOpen(false);
     }
   };

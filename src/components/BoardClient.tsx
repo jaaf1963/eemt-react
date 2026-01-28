@@ -16,7 +16,6 @@ const BoardClient: React.FC = () => {
   const [activityGet, setActivityGet] = useState<entypeProps[]>([]);
   const [successful, setSuccessful] = useState<boolean>(false);
   const [showClient, setShowClient] = useState<boolean>(false);
-  //const [ubihost, setHubihost] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -88,7 +87,6 @@ const BoardClient: React.FC = () => {
     passconf?: string;
     dataini?: string;
     dataend?: string;
-    //author?: string;
   }
 
   const validationSchema = Yup.object().shape({
@@ -103,9 +101,9 @@ const BoardClient: React.FC = () => {
     dnicom: Yup.string()
       .test(
         "len",
-        "The Owner must be between 3 and 35 characters.",
+        "The Owner must be between 9 and 15 characters.",
         (val: any) =>
-          val && val.toString().length >= 9 && val.toString().length <= 12,
+          val && val.toString().length >= 9 && val.toString().length <= 15,
       )
       .required("This field is required!"),
     owner: Yup.string()
@@ -128,12 +126,6 @@ const BoardClient: React.FC = () => {
     eemail: Yup.string()
       .email("This is not a valid email.")
       .required("This field is required!"),
-    password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
-    passconf: Yup.string()
-      .oneOf([Yup.ref("password")], "Passwords must match")
-      .required("Confirm Password is required"),
   });
   //
   // se asigna PostData a formValue para igualar las variables
@@ -202,7 +194,6 @@ const BoardClient: React.FC = () => {
           } else {
             //
             const respMessage = data.msg;
-            //setLoading(false);
             setSuccessful(false);
             setShowClient(false);
             setMessage(respMessage);
@@ -213,7 +204,6 @@ const BoardClient: React.FC = () => {
           setSuccessful(false);
           setMessage("error");
           console.error("Error en el inicio de sesión:", error);
-          // Mostrar un mensaje de error al usuario
         }
       }
     }
@@ -228,7 +218,6 @@ const BoardClient: React.FC = () => {
       authUserStore !== null
       // && clientSel !== ""
     ) {
-      //console.log(clientSel);
       if (textRoleStore === "admin" || textRoleStore === "edit") {
         const dataClient = {
           srhtext: "search_acty",
@@ -251,10 +240,8 @@ const BoardClient: React.FC = () => {
           if (activityResp.success === "err") {
             throw new Error(`HTTP error! status: ${response.status}`);
           }
-          // Data ActivityGet for map() select
           const activityGets = activityResp.msg;
           setActivityGet(activityGets);
-          //console.log(activityGet);
           //
         } catch (err: any) {
           //setError(err.message);
@@ -270,30 +257,6 @@ const BoardClient: React.FC = () => {
   };
   //
   //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
-  //
-  //
   useEffect(() => {
     //
     getActivitys();
@@ -302,12 +265,9 @@ const BoardClient: React.FC = () => {
   }, [showClient]);
   //
   //
-  //
   return (
     <div className="col-md-12">
-      <h4>Client register</h4>
-
-      {/*showClient && !successful && <ClientsDisplay />*/}
+      <h4>Registro de Clientes</h4>
 
       {!successful && (
         <div className="card card-container">
@@ -320,13 +280,13 @@ const BoardClient: React.FC = () => {
             <Form>
               {!successful && (
                 <div>
-                  <div className="form-group">
+                  <div className="">
                     <label htmlFor="activity" style={{ height: "15px" }}>
-                      Activity
+                      Actividad
                     </label>
-                    <Field as="select" name="activity">
+                    <Field as="select" name="activity" className="form-control">
                       <option value="">
-                        - - - - - - Select Activity - - - - - -
+                        - - - - - - Selec actividad - - - - - -
                       </option>{" "}
                       {/* Opción por defecto */}
                       {/* entypeOptions.map((option) */}
@@ -346,7 +306,7 @@ const BoardClient: React.FC = () => {
                   <div>
                     <label htmlFor="company" style={{ height: "15px" }}>
                       {" "}
-                      Client name{" "}
+                      Nombre cliente{" "}
                     </label>
                     <Field
                       name="company"
@@ -361,10 +321,10 @@ const BoardClient: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="">
                     <label htmlFor="dnicom" style={{ height: "15px" }}>
                       {" "}
-                      DNI client{" "}
+                      R.U.T. cliente{" "}
                     </label>
                     <Field
                       name="dnicom"
@@ -382,10 +342,10 @@ const BoardClient: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="">
                     <label htmlFor="owner" style={{ height: "15px" }}>
                       {" "}
-                      Owner name{" "}
+                      Propietario{" "}
                     </label>
                     <Field
                       name="owner"
@@ -400,10 +360,10 @@ const BoardClient: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="">
                     <label htmlFor="country" style={{ height: "15px" }}>
                       {" "}
-                      Country client{" "}
+                      País cliente{" "}
                     </label>
                     <Field
                       name="country"
@@ -418,10 +378,10 @@ const BoardClient: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="">
                     <label htmlFor="contact" style={{ height: "15px" }}>
                       {" "}
-                      Contact client{" "}
+                      Contacto client{" "}
                     </label>
                     <Field
                       name="contact"
@@ -436,10 +396,10 @@ const BoardClient: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="">
                     <label htmlFor="eemail" style={{ height: "15px" }}>
                       {" "}
-                      Email client{" "}
+                      Email cliente{" "}
                     </label>
                     <Field
                       name="eemail"
@@ -454,62 +414,10 @@ const BoardClient: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group">
-                    <label htmlFor="username" style={{ height: "15px" }}>
-                      {" "}
-                      User client{" "}
-                    </label>
-                    <Field
-                      name="username"
-                      type="text"
-                      disabled
-                      className="form-control"
-                      style={{ height: "25px" }}
-                    />
-                    <ErrorMessage
-                      name="username"
-                      component="div"
-                      className="alert alert-danger"
-                    />
-                  </div>
-
-                  <div className="form-group">
-                    <label htmlFor="password">
-                      Password client:
-                      <Field
-                        name="password"
-                        type="password"
-                        className="form-control"
-                        style={{ height: "25px" }}
-                      />
-                      <ErrorMessage
-                        className="error"
-                        name="password"
-                        component="div"
-                      />
-                    </label>
-                  </div>
-
-                  <div>
-                    <label htmlFor="passconf">
-                      Confirm Password:
-                      <Field
-                        name="passconf"
-                        type="password"
-                        className="form-control"
-                        style={{ height: "25px" }}
-                      />
-                      <ErrorMessage
-                        className="error"
-                        name="passconf"
-                        component="div"
-                      />
-                    </label>
-                  </div>
-
-                  <div className="form-group">
+                  <p></p>
+                  <div className="">
                     <button type="submit" className="btn btn-primary btn-block">
-                      Send Data
+                      Enviar Datos
                     </button>
                   </div>
                 </div>

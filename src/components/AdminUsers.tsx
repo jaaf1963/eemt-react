@@ -3,7 +3,6 @@ import React, { useState, useCallback, useEffect } from "react";
 import BoardUsers from "./BoardUsers";
 import UsersDisplay from "./DisplayUsers";
 
-//type ComponenteActual = 'A' | 'B' | 'C' | null;
 type ComponenteActual = "A" | "B" | null;
 
 const AdminUsers: React.FC = () => {
@@ -50,14 +49,10 @@ const AdminUsers: React.FC = () => {
       >
         New User
       </button>
-      {/*<button onClick={() => mostrarComponente('C')}>Mostrar C</button>*/}
       <hr />
-      {/* Renderizado condicional del componente activo */}
       <div>
         {componenteActivo === "A" && <UsersDisplay />}
         {componenteActivo === "B" && <BoardUsers />}
-        {/*componenteActivo === 'C' && <ComponenteC />*/}
-        {/* Alternativamente, puedes usar un Switch o un Objeto de mapeo para más componentes */}
       </div>
     </div>
   );

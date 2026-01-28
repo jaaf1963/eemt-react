@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import RegisterImage from "../services/registerImage";
 import {
   entityOptions,
   entypeOptions,
   moduleOptions,
 } from "../types/user.type";
 const ubihost = process.env.REACT_APP_API_URL;
-//const apiKey = process.env.REACT_APP_API_KEY;
 
 interface PickProp {
   field: any;
   form: any;
-  // Puedes añadir más propiedades aquí
 }
 
 // Componente de campo de fecha personalizado
@@ -28,14 +27,12 @@ const DatePickerField = ({ field, form, ...props }: PickProp) => {
       onChange={(val) => setFieldValue(field.name, val)}
       inputFormat="yyyy-MM-dd"
       format="yyyy-MM-dd"
-      //style={{ width: "270px", height: "25px" }}
     />
   );
 };
 //
 const Register: React.FC = () => {
   const [successful, setSuccessful] = useState<boolean>(false);
-  //const [ubihost, setUbihost] = useState<string>("");
   const [message, setMessage] = useState<string>("");
 
   const initialValues = {
@@ -148,8 +145,6 @@ const Register: React.FC = () => {
       roless: module?.split("-")[0],
     };
 
-    //-------------
-    //console.log(entend);
     const API_URL_BACKEND = `${ubihost}/register_user_react`;
     //const API_URL_BACKEND ="http://localhost:5055/register_user_react";
     //
@@ -168,7 +163,6 @@ const Register: React.FC = () => {
       }
 
       const data = await response.json();
-      //console.log("Registro exitoso:", data);
       // Aquí puedes manejar la respuesta del servidor (por ejemplo, guardar un token)
       //
       if (data) {
@@ -181,7 +175,6 @@ const Register: React.FC = () => {
       } else {
         //
         const respMessage = data.msg;
-        //setLoading(false);
         setSuccessful(false);
         setMessage(respMessage);
         console.error("Error al obtener datos:", respMessage);
@@ -193,40 +186,13 @@ const Register: React.FC = () => {
       console.error("Error en el inicio de sesión:", error);
       // Aquí puedes mostrar un mensaje de error al usuario
     }
-    //
   };
-  //
-  //
-  /*
-  useEffect(() => {
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-  }, []);
-  */
   //
   //
   return (
     <div className="col-md-12">
       <div className="card card-container">
-        <img
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          alt="profile-img"
-          className="profile-img-card"
-        />
+        <RegisterImage />
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
@@ -235,13 +201,13 @@ const Register: React.FC = () => {
           <Form>
             {!successful && (
               <div>
-                <div className="form-group">
+                <div className="">
                   <label htmlFor="entype" style={{ height: "15px" }}>
-                    Entype
+                    Tipo de Entidad
                   </label>
                   <Field as="select" name="entype">
                     <option value="">
-                      - - - - - - Select Entity type - - - - - -
+                      - - - - - Selec. tipo Entidad - - - - -
                     </option>{" "}
                     {/* Opción por defecto */}
                     {entypeOptions.map((option) => (
@@ -257,13 +223,13 @@ const Register: React.FC = () => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="">
                   <label htmlFor="entity" style={{ height: "15px" }}>
-                    Entity
+                    Entidad
                   </label>
                   <Field as="select" name="entity">
                     <option value="">
-                      - - - - - - - Select Entity - - - - - - - -
+                      - - - - - - - Selec. Entidad - - - - - -
                     </option>{" "}
                     {/* Opción por defecto */}
                     {entityOptions.map((option) => (
@@ -279,13 +245,13 @@ const Register: React.FC = () => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="">
                   <label htmlFor="module" style={{ height: "15px" }}>
-                    Module
+                    Módulo
                   </label>
                   <Field as="select" name="module">
                     <option value="">
-                      - - - - - - - Select Module - - - - - -
+                      - - - - - - - Selec. Módulo - - - - - -
                     </option>{" "}
                     {/* Opción por defecto */}
                     {moduleOptions.map((option) => (
@@ -303,7 +269,7 @@ const Register: React.FC = () => {
 
                 <div>
                   <label htmlFor="entend" style={{ height: "15px" }}>
-                    Date End
+                    Fecha caducidad
                   </label>
                   <Field
                     name="entend"
@@ -317,10 +283,10 @@ const Register: React.FC = () => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="">
                   <label htmlFor="firstname" style={{ height: "15px" }}>
                     {" "}
-                    First name{" "}
+                    Nombres{" "}
                   </label>
                   <Field
                     name="firstname"
@@ -335,10 +301,10 @@ const Register: React.FC = () => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="">
                   <label htmlFor="lastname" style={{ height: "15px" }}>
                     {" "}
-                    Last name{" "}
+                    Apellidos{" "}
                   </label>
                   <Field
                     name="lastname"
@@ -353,7 +319,7 @@ const Register: React.FC = () => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="">
                   <label htmlFor="username" style={{ height: "15px" }}>
                     {" "}
                     Username{" "}
@@ -371,10 +337,10 @@ const Register: React.FC = () => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="">
                   <label htmlFor="eemail" style={{ height: "15px" }}>
                     {" "}
-                    Entity Email{" "}
+                    Email Entidad{" "}
                   </label>
                   <Field
                     name="eemail"
@@ -389,7 +355,7 @@ const Register: React.FC = () => {
                   />
                 </div>
 
-                <div className="form-group">
+                <div className="">
                   <label htmlFor="password">
                     Password:
                     <Field
@@ -422,8 +388,9 @@ const Register: React.FC = () => {
                     />
                   </label>
                 </div>
+                <br></br>
 
-                <div className="form-group">
+                <div className="">
                   <button type="submit" className="btn btn-primary btn-block">
                     Sign Up
                   </button>

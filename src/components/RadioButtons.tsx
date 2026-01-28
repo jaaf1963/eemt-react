@@ -20,7 +20,7 @@ const RadioButton: React.FC<RadioButtonProps> = ({
       <label>
         <input
           type="radio"
-          name="myRadioGroup" // El mismo nombre para agruparlos
+          name="myRadioGroup"
           value={value}
           checked={checked}
           onChange={() => onChange(value)}

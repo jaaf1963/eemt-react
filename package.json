@@ -16,6 +16,7 @@
     "bootstrap": "^5.3.8",
     "dayjs": "^1.11.19",
     "formik": "^2.4.6",
+    "papaparse": "^5.5.3",
     "react": "^19.2.0",
     "react-bootstrap": "^2.10.10",
     "react-datepicker": "^8.8.0",
@@ -55,6 +56,7 @@
     ]
   },
   "devDependencies": {
+    "@types/papaparse": "^5.5.2",
     "baseline-browser-mapping": "^2.9.11"
   }
 }

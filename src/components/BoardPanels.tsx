@@ -23,6 +23,8 @@ const BoardPanels: React.FC = () => {
   const [panelSearch, setPanelSearch] = useState<panelProps[]>([]);
   const [searchPanel, setSearchPanel] = useState<boolean>(true);
   const [panelTitle, setPanelTitle] = useState<string>("");
+  const [successful, setSuccessful] = useState<boolean>(false);
+  const [message, setMessage] = useState<string>("");
   //const [ubihost, setHubihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -61,8 +63,6 @@ const BoardPanels: React.FC = () => {
     return "";
   });
   //
-  const [successful, setSuccessful] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>("");
 
   const searchPanels = async (panelSel: boolean) => {
     //
@@ -118,30 +118,6 @@ const BoardPanels: React.FC = () => {
       }
     }
   };
-  //
-  //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
   //
   //
   useEffect(() => {
@@ -251,7 +227,6 @@ const BoardPanels: React.FC = () => {
             }
 
             const data = await response.json();
-            // Aquí puedes manejar la respuesta del servidor (por ejemplo, guardar un token)
             //
             if (data) {
               //
@@ -263,7 +238,6 @@ const BoardPanels: React.FC = () => {
             } else {
               //
               const respMessage = data.msg;
-              //setLoading(false);
               setSuccessful(false);
               setMessage(respMessage);
               console.error("Error al obtener datos:", respMessage);
@@ -283,28 +257,27 @@ const BoardPanels: React.FC = () => {
   //
   return (
     <div className="col-md-12">
-      <h4>Panels system</h4>
+      <h4>Estructura de Paneles</h4>
       <div className="card card-container">
         <PanelsImage />
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleRegisterPanel}
-          //handleChange
-          //touched
           //{({ handleChange, values, touched, errors }) => (
         >
           {({ setFieldValue }) => (
             <Form>
               {!successful && (
                 <div>
-                  <div className="form-group">
+                  <div className="">
                     <label htmlFor="spanel" style={{ height: "15px" }}>
-                      Panel
+                      Paneles
                     </label>
                     <Field
                       as="select"
                       name="spanel"
+                      className="form-control"
                       onChange={(
                         event: React.ChangeEvent<HTMLSelectElement>,
                       ) => {
@@ -315,25 +288,11 @@ const BoardPanels: React.FC = () => {
                         );
                         if (foundOption) {
                           //const spanelDeLaOp = foundOption.spanel;
-                          /*
-                          const panelDeLaOp = foundOption.panel;
-                          const tituloDeLaOp = foundOption.ptitle;
-                          */
-                          // Puedes usar las variables panelDeLaOpcion y tituloDeLaOpcion
-                          //console.log(panelDeLaOp); // 'B'
-                          /*
-                          if (tituloDeLaOp) {
-                            setPanelTitle(tituloDeLaOp);
-                          }
-                          setFieldValue("panel", panelDeLaOp);
-                          //
-                          //console.log(  "Panel seleccionado:", event.target.value);
-                          */
                         }
                       }}
                     >
                       <option value={panelTitle}>
-                        - - - - - - Select panel - - - - - -
+                        - - - - - - Selec panel - - - - - -
                       </option>
 
                       {/* Opción por defecto */}
@@ -367,7 +326,7 @@ const BoardPanels: React.FC = () => {
                   <div>
                     <label htmlFor="ptitle" style={{ height: "15px" }}>
                       {" "}
-                      Panel title{" "}
+                      Titulo del panel{" "}
                     </label>
                     <Field
                       name="ptitle"
@@ -384,7 +343,7 @@ const BoardPanels: React.FC = () => {
 
                     <label htmlFor="wpanel" style={{ height: "15px" }}>
                       {" "}
-                      Panel width ( 265 , 550 ) pixels
+                      Ancho del Panel ( 265 , 550 ) pixels
                     </label>
                     <Field
                       name="wpanel"
@@ -403,7 +362,7 @@ const BoardPanels: React.FC = () => {
 
                     <label htmlFor="hpanel" style={{ height: "15px" }}>
                       {" "}
-                      Panel height ( 500 , 900 ) pixels
+                      Alto del Panel ( 500 , 900 ) pixels
                     </label>
                     <Field
                       name="hpanel"
@@ -422,7 +381,7 @@ const BoardPanels: React.FC = () => {
 
                     <label htmlFor="bpanel" style={{ height: "15px" }}>
                       {" "}
-                      <span>Panel backGrowndColor</span>
+                      <span>Color fondo del panel</span>
                       <br></br>
                       <span>( hsla(60, 41%, 93%, 1.00) )</span>
                     </label>
@@ -441,7 +400,7 @@ const BoardPanels: React.FC = () => {
 
                     <label htmlFor="fpanel" style={{ height: "15px" }}>
                       {" "}
-                      Panel Font style ( Normal )
+                      Tipo de Letra panel ( Normal )
                     </label>
                     <Field
                       name="fpanel"
@@ -458,7 +417,7 @@ const BoardPanels: React.FC = () => {
 
                     <label htmlFor="zpanel" style={{ height: "15px" }}>
                       {" "}
-                      Panel Font size ( 6 , 16 ) pixels
+                      Tamaño letra del Panel ( 6 , 16 ) pixels
                     </label>
                     <Field
                       name="zpanel"
@@ -477,7 +436,7 @@ const BoardPanels: React.FC = () => {
 
                     <label htmlFor="cpanel" style={{ height: "15px" }}>
                       {" "}
-                      <span>Panel Font color</span>
+                      <span>Color letra del Panel</span>
                       <br></br>
                       <span>( hsla(184, 73%, 53%, 1.00) )</span>
                     </label>
@@ -495,7 +454,8 @@ const BoardPanels: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="">
+                    <p></p>
                     <button type="submit" className="btn btn-primary btn-block">
                       Send Data
                     </button>

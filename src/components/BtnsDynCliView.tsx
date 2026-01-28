@@ -61,7 +61,6 @@ interface ComponenteProps {
 
 const ClientButtView: React.FC<ComponenteProps> = () => {
   const [mensajeDesdeCall, setMensajeDesdeCall] = useState<string>("");
-  //const [existDocums, setExistDocums] = useState<docsEx[]>([]);
   const [renderButton, setRenderButton] = useState<boolean>(true);
   const [projectsGet, setProjectsGet] = useState<projProps[]>([]);
   const [activarFetch, setActivarFetch] = useState<boolean>(false);
@@ -71,7 +70,6 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
   const [selecProject, setSelecProject] = useState<string>("");
   const [selecPrjCode, setSelecPrjCode] = useState<string>("");
   const [selecPrjClie, setSelecPrjClie] = useState<string>("");
-  //const [ubihost, setUbihost] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -185,7 +183,6 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
   const handleDocumentExist = (updaDocExist: docsEx[]) => {
     // Actualiza el estado del padre con la nueva lista
     if (updaDocExist) {
-      //setExistDocums(updaDocExist);
       console.log(" ");
     }
   };
@@ -204,13 +201,12 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
         textRoleStore === "view"
       ) {
         const dataProj = {
-          srhtext: "search_prj",
+          srhtext: "gets_projs",
           entity: entyUserStore,
           userna: textUserStore,
-          authen: authUserStore,
-          projct: projSel,
         };
-        const API_URL_BACKEND = `${ubihost}/search_projects_react`;
+
+        const API_URL_BACKEND = `${ubihost}/gets_projects_react`;
         //const API_URL_BACKEND = "http://localhost:5055/search_projects_react";
         //
         try {
@@ -240,30 +236,6 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
       }
     }
   };
-  //
-  //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setUbihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
   //
   //---- Lee Hisory proyect
   //
@@ -341,7 +313,9 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
           onChange={handleSelectProject}
           style={{ marginInlineStart: "8px", width: "20px" }}
         >
-          <option value="">--- Select Project ---</option>{" "}
+          <option value="" disabled>
+            --- Select Project ---
+          </option>{" "}
           {/* Opcion por defecto */}
           {projectsGet.map((option) => (
             <option

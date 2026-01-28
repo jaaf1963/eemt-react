@@ -1,48 +1,63 @@
 import React, { useState, useEffect } from "react";
-//import { Formik, Field, Form, ErrorMessage } from "formik";
-//import * as Yup from "yup";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ProjectImage from "../services/projectImage";
+import dayjs from "dayjs";
 const ubihost = process.env.REACT_APP_API_URL;
 //const apiKey = process.env.REACT_APP_API_KEY;
 
-interface clieProps {
+interface segfinProps {
   id?: number | undefined;
   cup: string;
   client?: string | undefined;
-  codeprj: string | undefined;
   proyec?: string | undefined;
   tiproy?: string | undefined;
-  activity?: string | undefined;
-  dnicom?: string | undefined;
-  owner?: string | undefined;
-  contact?: string | undefined;
-  email?: string | undefined;
-  country?: string | undefined;
-  usercpny?: string | undefined;
-  dateing?: string | undefined;
-  status?: string | undefined;
-  avance?: string | undefined;
+  etapa?: string | undefined;
+  instan?: string | undefined;
+  clpcom?: string | undefined;
+  usdcom?: string | undefined;
+  uffcom?: string | undefined;
+  ingcom?: string | undefined;
+  clppen?: string | undefined;
+  usdpen?: string | undefined;
+  uffpen?: string | undefined;
+  pendie?: string | undefined;
+  datein?: string | undefined;
+  datemv?: string | undefined;
+  anofin: string | undefined;
+  mesfin: string | undefined;
+}
+
+interface projProps {
+  id?: number | undefined;
+  codeprj: string;
+  projec?: string | undefined;
+  client?: string | undefined;
+  theme?: string | undefined;
+  typroj?: string | undefined;
+  descrip?: string | undefined;
+  observ?: string | undefined;
+  advance: string;
+  dateini?: string | undefined;
+  datefin?: string | undefined;
+  quedan?: string | undefined;
 }
 
 const BoardProject: React.FC = () => {
-  const [clientsGet, setClientsGet] = useState<clieProps[]>([]);
-  //const [estaVisible, setEstaVisible] = useState<boolean>(false);
-  //const [successful, setSuccessful] = useState<boolean>(false);
+  const [projectsGet, setProjectsGet] = useState<projProps[]>([]);
   const [showClient, setShowClient] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  //const [ubihost, setHubihost] = useState<string>("");
   //
-  const [projecInp, setProjecInp] = useState<string>("");
+  const [codeprjInp, setCodeprjInp] = useState<string>("");
   const [clientInp, setClientInp] = useState<string>("");
+  const [nameprjInp, setNameprjInp] = useState<string>("");
   const [themeInp, setThemeInp] = useState<string>("");
-  const [siglaInp, setSiglaInp] = useState<string>("");
-  //const [descripInp, setDescripInp] = useState<string>("");
-  //const [observInp, setObservInp] = useState<string>("");
+  const [typrojInp, setTyprojInp] = useState<string>("");
   const [avanceInp, setAvanceInp] = useState<string>("");
-  //const [dateini, setDateini] = useState<string>("");
-  //const [datefin, setDatefin] = useState<string>("");
+  const [descripInp, setDescripInp] = useState<string>("");
+  const [observInp, setObservInp] = useState<string>("");
+  const [dateinInp, setDateinInp] = useState<string>("");
+  const [datefiInp, setDatefiInp] = useState<string>("");
   const [selecDateIni, setSelecDateIni] = useState<Date | null>(null);
   const [selecDateEnd, setSelecDateEnd] = useState<Date | null>(null);
   //
@@ -83,73 +98,42 @@ const BoardProject: React.FC = () => {
   });
   //
   //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
-  //
-  // Inici leyendo Proyectos
-  //
-  useEffect(() => {
-    //
-    console.log("hola...");
-    //search_Companys(searchCompany);
-    //
-  }, []);
-  //
-  //
-  const getClients = async () => {
-    const dataClient = {
-      srhtext: "search_segfin",
+  // Lectura para Selects
+  const gets_Projects = async () => {
+    const dataSegfin = {
+      srhtext: "gets_projs",
       entity: entyUserStore,
       userna: textUserStore,
       authen: authUserStore,
-      //client: clientSel,
+      //proct: clientSel,
     };
-    const API_URL_BACKEND = `${ubihost}/search_segfin_react`;
+    //
+    const API_URL_BACKEND = `${ubihost}/gets_projects_react`;
     //const API_URL_BACKEND = "http://localhost:5055/search_segfin_react";
     //
     try {
       const response = await fetch(API_URL_BACKEND, {
         method: "POST",
-        body: JSON.stringify(dataClient),
+        body: JSON.stringify(dataSegfin),
         headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
       });
-      const clientsResp = await response.json();
+      const projsResp = await response.json();
       //
-      if (clientsResp.success === "err") {
+      if (projsResp.success === "err") {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      // Data ClientsGet for map() select
-      const clients = clientsResp.msg;
-      if (clientsGet) {
+      // Data segfinsGet for map() select
+      const projs = projsResp.msg;
+      if (projs) {
         //
-        setClientsGet(clients);
-        //setEstaVisible(true);
-        console.log(clientsGet);
+        setProjectsGet(projs);
+        //
+        console.log(projs);
       }
       //
     } catch (err: any) {
       //setError(err.message);
-      alert("Error al leer lista de clientes. " + message);
+      alert("Error al leer lista de proyectos.");
       //
     } finally {
       //setLoading(false);
@@ -159,46 +143,33 @@ const BoardProject: React.FC = () => {
   //
   useEffect(() => {
     //
-    getClients();
+    gets_Projects();
     //
   }, []);
   //
   //
-  /*
-  const initialValues = {
-    client: "",
-    project: "",
-    codeprj: "",
-    theme: "",
-    sigla: "",
-    descrip: "",
-    observ: "...",
-    dateini: new Date().toString(),
-    datefin: new Date().toString(),
-    avance: "",
-  };
-  */
   interface PostData {
     instance?: string;
     entity?: string;
     userna?: string;
+    codeprj: string;
     client?: string;
     project: string;
-    codeprj: string;
     theme: string;
-    sigla: string;
+    typroj: string;
     descrip: string;
     observ: string;
-    dateini: string;
-    datefin: string;
-    enttok?: string;
-    avance: string;
+    avance?: string;
+    dateini?: string;
+    datefin?: string;
+    accion: string;
   }
 
   // se asigna PostData a formValue para igualar las variables
   // al desEstructurar los valores ingresados por el usuario
   //   const handleClick = () => {
   //  const handleRegisterProject = async (formValue: PostData) => {
+
   const handleRegisterProject = async () => {
     //alert("Register...");
     if (
@@ -210,21 +181,36 @@ const BoardProject: React.FC = () => {
       //
       if (textRoleStore === "admin" || textRoleStore === "edit") {
         //
+        let fecIni = "";
+        const datein = selecDateIni;
+        if (datein !== null) {
+          fecIni = dayjs(datein).format("YYYY/MM/DD");
+          fecIni = fecIni.toString();
+        }
+        //
+        let fecFin = "";
+        const datefi = selecDateEnd;
+        if (datefi !== null) {
+          fecFin = dayjs(datefi).format("YYYY/MM/DD");
+          fecFin = fecFin.toString();
+        }
+        //
         if (clientInp.trim() !== "") {
           const postData: PostData = {
             instance: "project",
             entity: entyUserStore,
             userna: textUserStore,
-            project: projecInp,
-            codeprj: "UPDATE",
+            project: nameprjInp,
+            codeprj: codeprjInp,
             client: clientInp,
             theme: themeInp,
-            sigla: siglaInp,
-            descrip: "",
-            observ: "",
+            typroj: typrojInp,
+            descrip: descripInp,
+            observ: observInp,
             avance: avanceInp,
-            dateini: "",
-            datefin: "",
+            dateini: fecIni,
+            datefin: fecFin,
+            accion: "UPDATE",
           };
           //
           const API_URL_BACKEND = `${ubihost}/insert_project_react`;
@@ -236,35 +222,28 @@ const BoardProject: React.FC = () => {
               body: JSON.stringify(postData),
               headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
             });
-
+            //
             if (!response.ok) {
               // Manejar errores del servidor
               throw new Error(`Error del servidor: ${response.status}`);
             }
-
+            //
             const data = await response.json();
-            // Aquí puedes manejar la respuesta del servidor (por ejemplo, guardar un token)
             //
             if (data) {
               //
-              // Handle the successful response for REGISTER
               setMessage("");
-              //setSuccessful(true);
               //
             } else {
               //
               const respMessage = data.msg;
-              //setLoading(false);
-              //setSuccessful(false);
               setMessage(respMessage);
-              console.error("Error al obtener datos:", respMessage);
+              console.error("Error al obtener datos:", message);
             }
             //
           } catch (error) {
-            //setSuccessful(false);
             setMessage("error");
             console.error("Error en el inicio de sesión:", error);
-            // Aquí puedes mostrar un mensaje de error al usuario
           }
         } else {
           alert("Debe seleccionar un Cliente para actualizar.");
@@ -276,105 +255,151 @@ const BoardProject: React.FC = () => {
   //
   useEffect(() => {
     //
-    //getActivitys();
     setShowClient(true);
     //
   }, [showClient]);
   //
   //
-  //const handleSegfinClients = async (clients: object) => {
-  //
-  //  alert(clients);
-  //
-  //};
-  //
-  const handleChangeClient = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setClientInp(event.target.value);
+  const changeProject = (valor: string) => {
+    //
+    const txt = valor.split("|");
+    setCodeprjInp(txt[0]);
+    setClientInp(txt[1]);
+    setNameprjInp(txt[2]);
+    setTyprojInp(txt[3]);
+    setThemeInp(txt[4]);
+    setAvanceInp(txt[5]);
+    setDescripInp(txt[6]);
+    setObservInp(txt[7]);
+    setDateinInp(txt[8]);
+    setDatefiInp(txt[9]);
+    //
   };
   //
   const handleChangeProjec = (event: React.ChangeEvent<HTMLDataElement>) => {
-    setProjecInp(event.target.value);
+    if (event.target.value) {
+      changeProject(event.target.value);
+    }
   };
   //
   const handleChangeTheme = (event: React.ChangeEvent<HTMLDataElement>) => {
     setThemeInp(event.target.value);
   };
   //
-  const handleChangeSigla = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSiglaInp(event.target.value);
+  const handleChangeTyproj = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTyprojInp(event.target.value);
   };
   //
   const handleChangeAvance = (event: React.ChangeEvent<HTMLDataElement>) => {
     setAvanceInp(event.target.value);
   };
   //
-  // Función para manejar el cambio de la 'Observacion'
-  /*
-  const handleChangeDescrip = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    if (e.target.value) {
-      //setDescrProj(e.target.value);
-      descriPrj = e.target.value;
-      setDescrProj(descriPrj);
-    }
+  const handleChangeDescrip = (event: React.ChangeEvent<HTMLDataElement>) => {
+    setDescripInp(event.target.value);
   };
-  */
   //
-  //  onChange={(avance) => setAvance(avance)}
+  const handleChangeObserv = (event: React.ChangeEvent<HTMLDataElement>) => {
+    setObservInp(event.target.value);
+  };
   //
-  // {!successful && (
   //
   return (
     <>
-      <h4>Project entry</h4>
+      <h4>Planificación de Proyectos</h4>
       <div className="card card-container">
         <ProjectImage />
         <div>
-          <div className="form-group">
-            <label htmlFor="client" style={{ height: "15px" }}>
-              Client name
-            </label>
+          <div>
+            <label htmlFor="codeprjInp" style={{ height: "15px" }}></label>
             <select
               id="flavor-select"
-              value={clientInp}
-              onChange={handleChangeClient}
+              className="form-control"
+              value={codeprjInp}
+              onChange={handleChangeProjec}
             >
-              {clientsGet.map((option) => (
+              <option value="">- - - - - - Selec proyecto - - - - - -</option>{" "}
+              {projectsGet.map((option) => (
                 <option
                   key={option.id}
                   value={
-                    option.cup +
+                    option.codeprj +
                     "|" +
                     option.client +
                     "|" +
-                    option.proyec +
+                    option.projec +
                     "|" +
-                    option.tiproy
+                    option.typroj +
+                    "|" +
+                    option.theme +
+                    "|" +
+                    option.advance +
+                    "|" +
+                    option.descrip +
+                    "|" +
+                    option.observ +
+                    "|" +
+                    option.dateini +
+                    "|" +
+                    option.datefin
                   }
                 >
-                  {option.client} | {option.cup}
+                  {option.codeprj} | {option.client}
                 </option>
               ))}
             </select>
           </div>
 
           <div>
-            <label htmlFor="project" style={{ height: "15px" }}>
+            <label htmlFor="codeprj" style={{ height: "15px" }}>
               {" "}
-              Project name{" "}
+              Código proyecto{" "}
             </label>
             <input
-              name="project"
+              name="codeprj"
               type="text"
-              value={siglaInp}
+              value={codeprjInp}
               className="form-control"
-              onChange={handleChangeProjec}
-              style={{ height: "25px" }}
+              style={{
+                height: "25px",
+                color: "tomato",
+                fontStyle: "italic",
+                fontWeight: "bold",
+              }}
             />
           </div>
+
+          <div>
+            <label htmlFor="client" style={{ height: "15px" }}>
+              {" "}
+              Clente{" "}
+            </label>
+            <input
+              name="client"
+              type="text"
+              value={clientInp}
+              className="form-control"
+              style={{ height: "25px", color: "blue", fontStyle: "italic" }}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="nameprj" style={{ height: "15px" }}>
+              {" "}
+              Nombre proyecto{" "}
+            </label>
+            <input
+              name="nameprj"
+              type="text"
+              value={nameprjInp}
+              className="form-control"
+              style={{ height: "25px", color: "blue", fontStyle: "italic" }}
+            />
+          </div>
+
           <div>
             <label htmlFor="theme" style={{ height: "15px" }}>
               {" "}
-              Project theme ( glosa... )
+              Tema proyecto ( glosa... )
             </label>
             <input
               name="theme"
@@ -382,28 +407,28 @@ const BoardProject: React.FC = () => {
               value={themeInp}
               className="form-control"
               onChange={handleChangeTheme}
-              style={{ height: "25px" }}
+              style={{ height: "25px", color: "blue", fontStyle: "italic" }}
             />
           </div>
           <div>
-            <label htmlFor="sigla" style={{ height: "15px" }}>
+            <label htmlFor="typroj" style={{ height: "15px" }}>
               {" "}
-              Project Type ( Estudio, Ensayo, ... )
+              Tipo proyecto ( Estudio, Ensayo, ... )
             </label>
             <input
-              name="sigla"
+              name="typroj"
               type="text"
-              value={siglaInp}
+              value={typrojInp}
               className="form-control"
-              onChange={handleChangeSigla}
-              style={{ height: "25px" }}
+              onChange={handleChangeTyproj}
+              style={{ height: "25px", color: "blue", fontStyle: "italic" }}
             />
           </div>
 
           <div>
             <label htmlFor="avance" style={{ height: "15px" }}>
               {" "}
-              Project advance ( 0, 10, 20, ... )
+              Avance Proyecto ( 0, 10, 20, ... )
             </label>
             <input
               name="avance"
@@ -411,13 +436,13 @@ const BoardProject: React.FC = () => {
               value={avanceInp}
               className="form-control"
               onChange={handleChangeAvance}
-              style={{ height: "25px" }}
+              style={{ height: "25px", color: "blue" }}
             />
           </div>
 
           <div>
             <label className="label-date-project">
-              Init project
+              Inicio Proyecto / {dateinInp}
               <DatePicker
                 className="picker-date-project"
                 selected={selecDateIni}
@@ -429,7 +454,7 @@ const BoardProject: React.FC = () => {
               />
             </label>{" "}
             <label className="label-date-project">
-              Final project
+              Entrega Proyecto / {datefiInp}
               <DatePicker
                 className="picker-date-project"
                 selected={selecDateEnd}
@@ -440,37 +465,41 @@ const BoardProject: React.FC = () => {
                 placeholderText="Fecha limite"
               />
             </label>
-            <div className="form-group">
+            <div>
               <label htmlFor="descrip" style={{ height: "15px" }}>
                 {" "}
-                Project description{" "}
+                Descripción Proyecto{" "}
               </label>
               <textarea
                 name="descrip"
+                value={descripInp}
+                onChange={handleChangeDescrip}
                 className="form-control"
-                style={{ height: "25px" }}
+                style={{ height: "25px", color: "blue" }}
               />
             </div>
             <div>
               <label htmlFor="observ" style={{ height: "15px", color: "red" }}>
                 {" "}
-                Project observation{" "}
+                Observación Proyecto{" "}
               </label>
               <textarea
                 name="observ"
+                value={observInp}
+                onChange={handleChangeObserv}
                 className="form-control"
-                style={{ height: "25px" }}
+                style={{ height: "25px", color: "brown" }}
               />
             </div>
             <div className="form-group"></div>
             <p> </p>
-            <div className="form-group">
+            <div className="">
               <button
                 type="submit"
                 className="btn btn-primary btn-block"
                 onClick={handleRegisterProject}
               >
-                Send Data
+                Enviar Datos
               </button>
             </div>
           </div>

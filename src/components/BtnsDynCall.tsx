@@ -168,29 +168,6 @@ function BtnsDynCall(pnl: pnlProp) {
     }
   };
   //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
-  //
   // Inicia leyendo botones
   // Este 'hayClick' debe estar aqui... no mover
   let hayClick = false;
@@ -200,9 +177,7 @@ function BtnsDynCall(pnl: pnlProp) {
     fetchButtonsPanel();
     //
   }, []);
-
   //
-  //--------------------------------------------------------------------------
   //
   // Filtra tabla de 'Botones' sgun 'Panel' con 'state' = "filters.panel"
   //

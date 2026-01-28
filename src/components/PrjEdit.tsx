@@ -9,7 +9,6 @@ const PrjEdit: React.FC = () => {
     const data = "hola";
     if (data) {
       setContent(data);
-      //setDisplay((prev) => !prev);
       setDisplay(true);
     } else {
       const _content = "";
@@ -18,7 +17,7 @@ const PrjEdit: React.FC = () => {
     //
   }, [content]);
   //
-  // <header className="jumbotron"></header>
+  //
   return (
     <>
       {display ? (

@@ -293,30 +293,6 @@ const BoardUsers: React.FC = () => {
   };
   //
   //
-  /*
-  useEffect(() => {
-    //
-    let numApp = process.env.REACT_APP_NUM;
-    if (Number(numApp) === 1) {
-      // api web
-      const ubiho = process.env.REACT_APP_API_URL;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    } else {
-      // local
-      const ubiho = process.env.REACT_APP_LOC;
-      //
-      if (ubiho) {
-        setHubihost(ubiho);
-      }
-    }
-    //
-  }, []);
-  */
-  //
-  //
   useEffect(() => {
     //
     getProfesions();
@@ -329,7 +305,7 @@ const BoardUsers: React.FC = () => {
   //
   return (
     <div className="col-md-12">
-      <h4>Users register</h4>
+      <h4>Registro de Usuarios</h4>
 
       {/*showUser && !successful && <UsersDisplay />*/}
 
@@ -344,13 +320,13 @@ const BoardUsers: React.FC = () => {
             <Form>
               {!successful && (
                 <div>
-                  <div className="form-group">
+                  <div className="">
                     <label htmlFor="profes" style={{ height: "15px" }}>
-                      Profession
+                      Profesión
                     </label>
-                    <Field as="select" name="profes">
+                    <Field as="select" name="profes" className="form-control">
                       <option value="">
-                        - - - - - - Select Profession - - - - - -
+                        - - - - - - Selec profesión - - - - - -
                       </option>{" "}
                       {/* Opción por defecto */}
                       {/* entypeOptions.map((option) */}
@@ -370,13 +346,13 @@ const BoardUsers: React.FC = () => {
                   <div>
                     <label htmlFor="fname" style={{ height: "15px" }}>
                       {" "}
-                      first name{" "}
+                      Nombres{" "}
                     </label>
                     <Field
                       name="fname"
                       type="text"
-                      className="form-control"
                       style={{ height: "25px" }}
+                      className="form-control"
                     />
                     <ErrorMessage
                       name="fname"
@@ -388,7 +364,7 @@ const BoardUsers: React.FC = () => {
                   <div>
                     <label htmlFor="lname" style={{ height: "15px" }}>
                       {" "}
-                      last name{" "}
+                      Apellidos{" "}
                     </label>
                     <Field
                       name="lname"
@@ -403,10 +379,10 @@ const BoardUsers: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div className="">
                     <label htmlFor="dnicom" style={{ height: "15px" }}>
                       {" "}
-                      DNI client{" "}
+                      R.U.T. cliente{" "}
                     </label>
                     <Field
                       name="dnicom"
@@ -424,10 +400,10 @@ const BoardUsers: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div>
                     <label htmlFor="contact" style={{ height: "15px" }}>
                       {" "}
-                      Contact user{" "}
+                      Contacto ususrio{" "}
                     </label>
                     <Field
                       name="contact"
@@ -442,10 +418,10 @@ const BoardUsers: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div>
                     <label htmlFor="eemail" style={{ height: "15px" }}>
                       {" "}
-                      Email user{" "}
+                      Email usuario{" "}
                     </label>
                     <Field
                       name="eemail"
@@ -460,7 +436,7 @@ const BoardUsers: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div>
                     <label htmlFor="usern" style={{ height: "15px" }}>
                       {" "}
                       Username{" "}
@@ -478,7 +454,7 @@ const BoardUsers: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div>
                     <label htmlFor="roles" style={{ height: "15px" }}>
                       {" "}
                       roles{" <view, edit, admin>"}
@@ -496,9 +472,9 @@ const BoardUsers: React.FC = () => {
                     />
                   </div>
 
-                  <div className="form-group">
+                  <div>
                     <label htmlFor="password">
-                      Password user:
+                      Password usuario:
                       <Field
                         name="password"
                         type="password"
@@ -515,7 +491,7 @@ const BoardUsers: React.FC = () => {
 
                   <div>
                     <label htmlFor="passconf">
-                      Confirm Password:
+                      Confirme Password:
                       <Field
                         name="passconf"
                         type="password"
@@ -530,7 +506,8 @@ const BoardUsers: React.FC = () => {
                     </label>
                   </div>
 
-                  <div className="form-group">
+                  <div>
+                    <p></p>
                     <button type="submit" className="btn btn-primary btn-block">
                       Send Data
                     </button>
