@@ -6,17 +6,56 @@ import UserImage from "../services/usersImage";
 const ubihost = process.env.REACT_APP_API_URL;
 //const apiKey = process.env.REACT_APP_API_KEY;
 
+const modulos = [
+  { label: "Admin", value: "admin" },
+  { label: "Comercial", value: "comercial" },
+  { label: "Tecnico", value: "tecnico" },
+  { label: "Ninguno", value: "ninguno" },
+];
+
+const roles = [
+  { label: "Edit", value: "edit" },
+  { label: "View", value: "view" },
+  { label: "Nada", value: "nada" },
+];
+
 interface entypeProps {
   id: number | undefined;
   name?: string | undefined;
   descrip?: string | undefined;
 }
 
+interface userProps {
+  id?: number | undefined;
+  entype: string | undefined;
+  profe?: string | undefined;
+  fname: string | undefined;
+  lname: string | undefined;
+  email: string | undefined;
+  dnius: string | undefined;
+  conta: string | undefined;
+  usern: string;
+  module?: string | undefined;
+  roles: string | undefined;
+  inses?: string | undefined;
+  dases?: string | undefined;
+  statu?: string | undefined;
+}
+
 const BoardUsers: React.FC = () => {
   const [profesionGet, setProfesionGet] = useState<entypeProps[]>([]);
+  const [usersGet, setUsersGet] = useState<userProps[]>([]);
   const [successful, setSuccessful] = useState<boolean>(false);
   const [showUser, setShowUser] = useState<boolean>(false);
-  //const [ubihost, setHubihost] = useState<string>("");
+  const [usernaInp, setUsernaInp] = useState<string>("");
+  const [profesInp, setProfesInp] = useState<string>("");
+  const [fnamesInp, setFnamesInp] = useState<string>("");
+  const [lnamesInp, setLnamesInp] = useState<string>("");
+  const [dnicomInp, setDnicomInp] = useState<string>("");
+  const [eemailInp, setEemailInp] = useState<string>("");
+  const [moduleInp, setModuleInp] = useState<string>("");
+  const [rolessInp, setRolessInp] = useState<string>("");
+  const [contacInp, setContacInp] = useState<string>("");
   const [message, setMessage] = useState<string>("");
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
@@ -60,15 +99,14 @@ const BoardUsers: React.FC = () => {
     profes: "",
     fname: "",
     lname: "",
-    dnicom: "",
+    dnius: "",
     usern: "",
+    module: "",
     roles: "",
     eemail: "",
+    conta: "",
     password: "",
     passconf: "",
-    contact: "",
-    //insession: "",
-    //dasession: "",
     //datain: new Date().toString(),
   };
 
@@ -78,11 +116,12 @@ const BoardUsers: React.FC = () => {
     profes: string;
     fname: string;
     lname: string;
-    dnicom: string;
+    dnius: string;
     usern: string;
+    module: string;
     roles: string;
     eemail?: string;
-    contact?: string;
+    conta?: string;
     password?: string;
     passconf?: string;
     dataini?: string;
@@ -91,72 +130,11 @@ const BoardUsers: React.FC = () => {
     //author?: string;
   }
 
+  /*
   const validationSchema = Yup.object().shape({
-    profes: Yup.string()
-      .test(
-        "len",
-        "The profession must be between 3 and 35 characters.",
-        (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 35,
-      )
-      .required("This field is required!"),
-
-    fname: Yup.string()
-      .test(
-        "len",
-        "The first-name must be between 3 and 35 characters.",
-        (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 35,
-      )
-      .required("This field is required!"),
-    lname: Yup.string()
-      .test(
-        "len",
-        "The last-name must be between 3 and 35 characters.",
-        (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 35,
-      )
-      .required("This field is required!"),
-    dnicom: Yup.string()
-      .test(
-        "len",
-        "The Owner must be between 8 and 12 characters.",
-        (val: any) =>
-          val && val.toString().length >= 8 && val.toString().length <= 12,
-      )
-      .required("This field is required!"),
-    usern: Yup.string()
-      .test(
-        "len",
-        "The Country must be between 3 and 25 characters.",
-        (val: any) =>
-          val && val.toString().length >= 3 && val.toString().length <= 25,
-      )
-      .required("This field is required!"),
-    eemail: Yup.string()
-      .email("This is not a valid email.")
-      .required("This field is required!"),
-    contact: Yup.string().test(
-      "len",
-      "The Contact must be between 6 and 12 characters.",
-      (val: any) =>
-        val && val.toString().length >= 6 && val.toString().length <= 12,
-    ),
-    roles: Yup.string()
-      .test(
-        "len",
-        "The Role must be between 4 and 18 characters.",
-        (val: any) =>
-          val && val.toString().length >= 4 && val.toString().length <= 12,
-      )
-      .required("This field is required!"),
-    password: Yup.string()
-      .min(6, "Password must be at least 6 characters")
-      .required("Password is required"),
-    passconf: Yup.string()
-      .oneOf([Yup.ref("password")], "Passwords must match")
-      .required("Confirm Password is required"),
+    // Validacion de esquemas
   });
+  */
   //
   // se asigna PostData a formValue para igualar las variables
   // al desEstructurar los valores ingresados por el usuario
@@ -170,32 +148,20 @@ const BoardUsers: React.FC = () => {
       //
       if (textRoleStore === "admin" || textRoleStore === "edit") {
         //
-        const {
-          //entity,
-          profes,
-          fname,
-          lname,
-          dnicom,
-          eemail,
-          usern,
-          roles,
-          password,
-          contact,
-        } = formValue;
-
         const postData: PostData = {
           instance: "user_insert",
           entity: entyUserStore,
-          profes: profes,
-          fname: fname,
-          lname: lname,
-          dnicom: dnicom,
-          eemail: eemail,
-          usern: usern,
-          roles: roles,
-          contact: contact,
+          profes: profesInp,
+          fname: fnamesInp,
+          lname: lnamesInp,
+          dnius: dnicomInp,
+          eemail: eemailInp,
+          usern: usernaInp,
+          module: moduleInp,
+          roles: rolessInp,
+          conta: contacInp,
           username: textUserStore,
-          password: password,
+          //password: password,
         };
         //
         const API_URL_BACKEND = `${ubihost}/insert_users_react`;
@@ -240,7 +206,47 @@ const BoardUsers: React.FC = () => {
         }
       }
     }
+  };
+  //
+  //
+  const getUsers = async () => {
+    const dataClient = {
+      usrtext: "search_usr",
+      entity: entyUserStore,
+      userna: textUserStore,
+      authen: authUserStore,
+      //client: clientSel,
+    };
     //
+    const API_URL_BACKEND = `${ubihost}/search_users_react`;
+    //const API_URL_BACKEND = "http://localhost:5055/search_users_react";
+    //
+    try {
+      const response = await fetch(API_URL_BACKEND, {
+        method: "POST",
+        body: JSON.stringify(dataClient),
+        headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
+      });
+      const usersResp = await response.json();
+      //
+      if (usersResp.success === "err") {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      // Data ClientsGet for map() select
+      const users = usersResp.msg;
+      if (users) {
+        //
+        setUsersGet(users);
+        //setEstaVisible(true);
+      }
+      //
+    } catch (err: any) {
+      //setError(err.message);
+      alert("Error al leer lista de usuarios.");
+      //
+    } finally {
+      //setLoading(false);
+    }
   };
   //
   //
@@ -295,10 +301,91 @@ const BoardUsers: React.FC = () => {
   //
   useEffect(() => {
     //
+    getUsers();
+    //
+  }, []);
+  //
+  //
+  useEffect(() => {
+    //
     getProfesions();
     setShowUser(true);
     //
   }, [showUser]);
+  //
+  //
+  //
+  const changeUsers = (valor: string) => {
+    //
+    const txt = valor.split("|");
+    console.log(txt);
+    console.log(txt[0]);
+    setUsernaInp(txt[0]);
+    setProfesInp(txt[1]);
+    setFnamesInp(txt[2]);
+    setLnamesInp(txt[3]);
+    setDnicomInp(txt[4]);
+    setEemailInp(txt[5]);
+    setContacInp(txt[6]);
+    setModuleInp(txt[7]);
+    setRolessInp(txt[8]);
+    //
+  };
+  //
+  //
+  const handleChangeUsern = (event: React.ChangeEvent<HTMLDataElement>) => {
+    if (event.target.value) {
+      changeUsers(event.target.value);
+    }
+  };
+  //
+  const handleChangeProfes = (event: React.ChangeEvent<HTMLDataElement>) => {
+    if (event.target.value) {
+      setProfesInp(event.target.value);
+    }
+  };
+  //
+  const handleChangeFname = (event: React.ChangeEvent<HTMLDataElement>) => {
+    if (event.target.value) {
+      setFnamesInp(event.target.value);
+    }
+  };
+  //
+  const handleChangeLname = (event: React.ChangeEvent<HTMLDataElement>) => {
+    if (event.target.value) {
+      setLnamesInp(event.target.value);
+    }
+  };
+  //
+  const handleChangeDnius = (event: React.ChangeEvent<HTMLDataElement>) => {
+    if (event.target.value) {
+      setDnicomInp(event.target.value);
+    }
+  };
+  //
+  const handleChangeContact = (event: React.ChangeEvent<HTMLDataElement>) => {
+    if (event.target.value) {
+      setContacInp(event.target.value);
+    }
+  };
+  //
+  const handleChangeEmail = (event: React.ChangeEvent<HTMLDataElement>) => {
+    if (event.target.value) {
+      setEemailInp(event.target.value);
+    }
+  };
+  //
+  const handleChangeModule = (event: React.ChangeEvent<HTMLDataElement>) => {
+    if (event.target.value) {
+      setModuleInp(event.target.value);
+    }
+  };
+  //
+  const handleChangeRoless = (event: React.ChangeEvent<HTMLDataElement>) => {
+    if (event.target.value) {
+      setRolessInp(event.target.value);
+    }
+  };
   //
   // true true : muestra info
   // true false : muestra ingresar info
@@ -314,32 +401,109 @@ const BoardUsers: React.FC = () => {
           <UserImage />
           <Formik
             initialValues={initialValues}
-            validationSchema={validationSchema}
+            //validationSchema={validationSchema}
             onSubmit={handleRegisterUser}
           >
             <Form>
               {!successful && (
                 <div>
                   <div className="">
-                    <label htmlFor="profes" style={{ height: "15px" }}>
-                      Profesión
+                    <label
+                      htmlFor="usern"
+                      style={{ height: "15px", color: "tomato" }}
+                    >
+                      Selec. Username
                     </label>
-                    <Field as="select" name="profes" className="form-control">
+
+                    <select
+                      name="usern"
+                      className="form-control"
+                      value={usernaInp}
+                      onChange={handleChangeUsern}
+                    >
                       <option value="">
-                        - - - - - - Selec profesión - - - - - -
+                        - - - - - - Selec usuario - - - - - -
                       </option>{" "}
                       {/* Opción por defecto */}
+                      {/* entypeOptions.map((option) */}
+                      {usersGet.map((option) => (
+                        <option
+                          key={option.usern}
+                          value={
+                            option.usern +
+                            "|" +
+                            option.profe +
+                            "|" +
+                            option.fname +
+                            "|" +
+                            option.lname +
+                            "|" +
+                            option.dnius +
+                            "|" +
+                            option.email +
+                            "|" +
+                            option.conta +
+                            "|" +
+                            option.module +
+                            "|" +
+                            option.roles
+                          }
+                        >
+                          {option.usern}
+                        </option>
+                      ))}
+                    </select>
+                    <ErrorMessage
+                      name="usern"
+                      component="div"
+                      className="alert alert-danger"
+                    />
+                  </div>
+
+                  <div className="">
+                    <label htmlFor="profes" style={{ height: "15px" }}>
+                      Selec. Profesión
+                    </label>
+                    <select
+                      name="profes"
+                      className=""
+                      value={profesInp}
+                      onChange={handleChangeProfes}
+                      style={{
+                        width: "20px",
+                        height: "25px",
+                        backgroundColor: "#f2f6f9",
+                        fontStyle: "normal",
+                        border: "0px solid #ccc",
+                        borderRadius: "4px",
+                        marginLeft: "20px",
+                      }}
+                    >
+                      <option value=""></option> {/* Opción por defecto */}
                       {/* entypeOptions.map((option) */}
                       {profesionGet.map((option) => (
                         <option key={option.name} value={option.name}>
                           {option.descrip}
                         </option>
                       ))}
-                    </Field>
+                    </select>
                     <ErrorMessage
                       name="profes"
                       component="div"
                       className="alert alert-danger"
+                    />
+                    <input
+                      name="profesinp"
+                      type="text"
+                      value={profesInp}
+                      onChange={handleChangeProfes}
+                      className="form-control"
+                      style={{
+                        height: "25px",
+                        color: "blue",
+                        fontStyle: "italic",
+                        fontWeight: "normal",
+                      }}
                     />
                   </div>
 
@@ -351,7 +515,9 @@ const BoardUsers: React.FC = () => {
                     <Field
                       name="fname"
                       type="text"
-                      style={{ height: "25px" }}
+                      value={fnamesInp}
+                      onChange={handleChangeFname}
+                      style={{ height: "25px", color: "blue" }}
                       className="form-control"
                     />
                     <ErrorMessage
@@ -369,8 +535,10 @@ const BoardUsers: React.FC = () => {
                     <Field
                       name="lname"
                       type="text"
+                      value={lnamesInp}
+                      onChange={handleChangeLname}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{ height: "25px", color: "blue" }}
                     />
                     <ErrorMessage
                       name="lname"
@@ -382,16 +550,18 @@ const BoardUsers: React.FC = () => {
                   <div className="">
                     <label htmlFor="dnicom" style={{ height: "15px" }}>
                       {" "}
-                      R.U.T. cliente{" "}
+                      DNI usuario{" "}
                     </label>
                     <Field
                       name="dnicom"
                       type="text"
+                      value={dnicomInp}
+                      onChange={handleChangeDnius}
                       //format="###-###-###-#"
                       placeholder="xxx-xxx-xxx-x"
                       className="form-control"
                       //onChange={handleChange}
-                      style={{ height: "25px" }}
+                      style={{ height: "25px", color: "blue" }}
                     />
                     <ErrorMessage
                       name="dnicom"
@@ -403,13 +573,15 @@ const BoardUsers: React.FC = () => {
                   <div>
                     <label htmlFor="contact" style={{ height: "15px" }}>
                       {" "}
-                      Contacto ususrio{" "}
+                      Contacto usuario{" "}
                     </label>
                     <Field
                       name="contact"
                       type="text"
+                      value={contacInp}
+                      onChange={handleChangeContact}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{ height: "25px", color: "blue" }}
                     />
                     <ErrorMessage
                       name="contact"
@@ -426,8 +598,10 @@ const BoardUsers: React.FC = () => {
                     <Field
                       name="eemail"
                       type="email"
+                      value={eemailInp}
+                      onChange={handleChangeEmail}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{ height: "25px", color: "blue" }}
                     />
                     <ErrorMessage
                       name="eemail"
@@ -437,38 +611,102 @@ const BoardUsers: React.FC = () => {
                   </div>
 
                   <div>
-                    <label htmlFor="usern" style={{ height: "15px" }}>
+                    <label
+                      htmlFor="module"
+                      style={{ height: "15px", color: "brown" }}
+                    >
                       {" "}
-                      Username{" "}
+                      Modulos
                     </label>
-                    <Field
-                      name="usern"
-                      type="text"
-                      className="form-control"
-                      style={{ height: "25px" }}
-                    />
+                    <select
+                      name="module"
+                      className=""
+                      value={moduleInp}
+                      onChange={handleChangeModule}
+                      style={{
+                        width: "20px",
+                        height: "25px",
+                        backgroundColor: "#f2f6f9",
+                        fontStyle: "normal",
+                        border: "0px solid #ccc",
+                        borderRadius: "4px",
+                        marginLeft: "20px",
+                      }}
+                    >
+                      <option value=""></option> {/* Opción por defecto */}
+                      {/* entypeOptions.map((option) */}
+                      {modulos.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
                     <ErrorMessage
-                      name="usern"
+                      name="module"
                       component="div"
                       className="alert alert-danger"
+                    />
+                    <input
+                      name="moduleinp"
+                      type="text"
+                      value={moduleInp}
+                      className="form-control"
+                      style={{
+                        height: "25px",
+                        color: "blue",
+                        fontStyle: "italic",
+                        fontWeight: "normal",
+                      }}
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="roles" style={{ height: "15px" }}>
+                    <label
+                      htmlFor="roless"
+                      style={{ height: "15px", color: "brown" }}
+                    >
                       {" "}
-                      roles{" <view, edit, admin>"}
+                      Roles{" "}
                     </label>
-                    <Field
+                    <select
                       name="roles"
-                      type="text"
-                      className="form-control"
-                      style={{ height: "25px" }}
-                    />
+                      className=""
+                      value={rolessInp}
+                      onChange={handleChangeRoless}
+                      style={{
+                        width: "20px",
+                        height: "25px",
+                        backgroundColor: "#f2f6f9",
+                        fontStyle: "normal",
+                        border: "0px solid #ccc",
+                        borderRadius: "4px",
+                        marginLeft: "20px",
+                      }}
+                    >
+                      <option value=""></option> {/* Opción por defecto */}
+                      {/* entypeOptions.map((option) */}
+                      {roles.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
                     <ErrorMessage
-                      name="roles"
+                      name="roless"
                       component="div"
                       className="alert alert-danger"
+                    />
+                    <input
+                      name="rolessinp"
+                      type="text"
+                      value={rolessInp}
+                      className="form-control"
+                      style={{
+                        height: "25px",
+                        color: "blue",
+                        fontStyle: "italic",
+                        fontWeight: "normal",
+                      }}
                     />
                   </div>
 
@@ -480,6 +718,7 @@ const BoardUsers: React.FC = () => {
                         type="password"
                         className="form-control"
                         style={{ height: "25px" }}
+                        disabled
                       />
                       <ErrorMessage
                         className="error"
@@ -497,6 +736,7 @@ const BoardUsers: React.FC = () => {
                         type="password"
                         className="form-control"
                         style={{ height: "25px" }}
+                        disabled
                       />
                       <ErrorMessage
                         className="error"

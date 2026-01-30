@@ -37,15 +37,15 @@ let selPrjClie: string = "";
 interface projProps {
   id?: number | undefined;
   codeprj?: string | undefined;
-  project?: string | undefined;
-  company?: string | undefined;
+  projec?: string | undefined;
+  client?: string | undefined;
   theme?: string | undefined;
-  sigla?: string | undefined;
+  typroj?: string | undefined;
   descrip?: string | undefined;
   observ?: string | undefined;
   advance?: string | undefined;
   dateini?: string | undefined;
-  dateend?: string | undefined;
+  datefin?: string | undefined;
 }
 
 interface docsEx {
@@ -183,7 +183,7 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
   const handleDocumentExist = (updaDocExist: docsEx[]) => {
     // Actualiza el estado del padre con la nueva lista
     if (updaDocExist) {
-      console.log(" ");
+      console.log("");
     }
   };
   //
@@ -201,12 +201,17 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
         textRoleStore === "view"
       ) {
         const dataProj = {
-          srhtext: "gets_projs",
+          srhtext: "search_prj",
           entity: entyUserStore,
           userna: textUserStore,
+          codprj: "",
+          client: "",
+          tiproy: "",
+          anoco1: "0",
+          anoco2: "9999",
         };
-
-        const API_URL_BACKEND = `${ubihost}/gets_projects_react`;
+        //
+        const API_URL_BACKEND = `${ubihost}/search_projects_react`;
         //const API_URL_BACKEND = "http://localhost:5055/search_projects_react";
         //
         try {
@@ -295,13 +300,13 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
         Edit{" "}
       </span>
       <div>
-        <label className="input-label-proj" htmlFor="project">
+        <label className="input-label-proj" htmlFor="projec">
           Project{" "}
         </label>
         <input
           type="text"
-          id="project"
-          name="project"
+          id="projec"
+          name="projec"
           value={selecProject}
           onChange={handleChange}
           required
@@ -321,10 +326,10 @@ const ClientButtView: React.FC<ComponenteProps> = () => {
             <option
               key={option.id}
               value={
-                option.codeprj + " | " + option.project + " | " + option.company
+                option.codeprj + " | " + option.projec + " | " + option.client
               }
             >
-              {option.codeprj} {option.project} {option.company}
+              {option.codeprj} {option.projec} {option.client}
             </option>
           ))}
         </select>

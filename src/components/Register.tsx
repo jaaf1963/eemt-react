@@ -142,7 +142,7 @@ const Register: React.FC = () => {
       //passconf: passconf,
       entini: entini,
       entend: entend,
-      roless: module?.split("-")[0],
+      roless: module, // .split("-")[0],
     };
 
     const API_URL_BACKEND = `${ubihost}/register_user_react`;

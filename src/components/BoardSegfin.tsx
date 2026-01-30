@@ -7,14 +7,33 @@ import SegfinImage from "../services/segfinImage";
 const ubihost = process.env.REACT_APP_API_URL;
 //const apiKey = process.env.REACT_APP_API_KEY;
 
+/*
+interface projProps {
+  id?: number | undefined;
+  codeprj?: string;
+  client?: string | undefined;
+  projec?: string | undefined;
+  theme?: string | undefined;
+  typroj?: string | undefined;
+  descrip?: string | undefined;
+  observ?: string | undefined;
+  advance?: string | undefined;
+  dateini?: string | undefined;
+  datefin?: string | undefined;
+}
+*/
+
 interface clieProps {
   id?: number | undefined;
-  cup?: string | undefined;
   client?: string | undefined;
-  codeprj: string | undefined;
-  proyec?: string | undefined;
-  tiproy?: string | undefined;
-  datein?: string | undefined;
+  owner?: string | undefined;
+  dnicom?: string | undefined;
+  contact: string | undefined;
+  email?: string | undefined;
+  usercpny?: string | undefined;
+  activity?: string | undefined;
+  country?: string | undefined;
+  dateing?: string | undefined;
 }
 
 interface segfinProps {
@@ -29,15 +48,16 @@ interface segfinProps {
   clpcom?: string | undefined;
   usdcom?: string | undefined;
   uffcom?: string | undefined;
-  estcom?: string | undefined;
+  ingcom?: string | undefined;
   clppen?: string | undefined;
   usdpen?: string | undefined;
   uffpen?: string | undefined;
-  status?: string | undefined;
+  pendie?: string | undefined;
   datein?: string | undefined;
 }
 
 const BoardSegfin: React.FC = () => {
+  /*
   const [proyectQ, setProyectQ] = useState<string>("");
   const [clienteQ, setClienteQ] = useState<string>("");
   const [tiproyeQ, setTiproyeQ] = useState<string>("");
@@ -47,15 +67,29 @@ const BoardSegfin: React.FC = () => {
   const [anoCom2Q, setAnoCom2Q] = useState<string>(
     new Date().getFullYear().toString(),
   );
+  */
+  //
   const [clientsGet, setClientsGet] = useState<clieProps[]>([]);
   const [segfinsGet, setSegfinsGet] = useState<segfinProps[]>([]);
+  //const [codeprjNew, setCodeprjNew] = useState<string>("");
   const [codeprjInp, setCodeprjInp] = useState<string>("");
-  //const [clientInp, setClientInp] = useState<string>("");
-  //const [nameprjInp, setNameprjInp] = useState<string>("");
+  const [clientInp, setClientInp] = useState<string>("");
+  const [nameprjInp, setNameprjInp] = useState<string>("");
+  const [typrojInp, setTyprojInp] = useState<string>("");
+  const [etapaaInp, setEtapaaInp] = useState<string>("");
+  const [clpcomInp, setClpcomInp] = useState<string>("");
+  const [usdcomInp, setUsdcomInp] = useState<string>("");
+  const [uffcomInp, setUffcomInp] = useState<string>("");
+  const [estcomInp, setEstcomInp] = useState<string>("");
+  const [clppenInp, setClppenInp] = useState<string>("");
+  const [usdpenInp, setUsdpenInp] = useState<string>("");
+  const [uffpenInp, setUffpenInp] = useState<string>("");
+  const [estpenInp, setEstpenInp] = useState<string>("");
+  const [descriInp, setDescriInp] = useState<string>("");
   const [successful, setSuccessful] = useState<boolean>(false);
   const [showClient, setShowClient] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
-  const [selectedValue, setSelectedValue] = useState<string>(""); // Default to empty string
+  //const [selectedValue, setSelectedValue] = useState<string>(""); // Default to empty string
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -93,54 +127,43 @@ const BoardSegfin: React.FC = () => {
     return "";
   });
   //
-  // Inici leyendo Proyectos
+  // Inicia leyendo Proyectos
   //
-  useEffect(() => {
-    //
-    console.log("hola...");
-    //search_Companys(searchCompany);
-    setProyectQ("");
-    setClienteQ("");
-    setTiproyeQ("");
-    setAnoCom1Q("");
-    setAnoCom2Q("");
-    //
-  }, []);
-  //
-  //
-  const getSegfins = async () => {
-    const dataClient = {
+  const getSegfin_projects = async () => {
+    const dataProject = {
       srhtext: "search_segfin",
       entity: entyUserStore,
       userna: textUserStore,
       authen: authUserStore,
-      codprj: proyectQ,
-      client: clienteQ,
-      tiproy: tiproyeQ,
-      anoco1: anoCom1Q,
-      anoco2: anoCom2Q,
+      codprj: "",
+      client: "",
+      tiproy: "",
+      anoco1: "0",
+      anoco2: "9999",
     };
+    //
     const API_URL_BACKEND = `${ubihost}/search_segfin_react`;
-    //const API_URL_BACKEND = "http://localhost:5055/search_segfin_react";
+    //const API_URL_BACKEND = `${ubihost}/gets_projects_react`;
+    //const API_URL_BACKEND = "http://localhost:5055/search_segfin_projects_react";
     //
     try {
       const response = await fetch(API_URL_BACKEND, {
         method: "POST",
-        body: JSON.stringify(dataClient),
+        body: JSON.stringify(dataProject),
         headers: { Authorization: `Bearer ${authUserStore}` }, // JWT
       });
       const segfinResp = await response.json();
+      console.log(segfinResp);
       //
       if (segfinResp.success === "err") {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       // Data ClientsGet for map() select
-      const segfins = segfinResp.msg;
-      if (segfins) {
+      const segfinData = segfinResp.msg;
+      if (segfinData) {
         //
-        setSegfinsGet(segfins);
-        //setEstaVisible(true);
-        console.log(segfinsGet);
+        setSegfinsGet(segfinData);
+        //console.log(segfinsGet);
       }
       //
     } catch (err: any) {
@@ -148,6 +171,7 @@ const BoardSegfin: React.FC = () => {
       alert("Error al leer lista de SegFin.");
       //
     } finally {
+      setDescriInp("");
       //setLoading(false);
     }
   };
@@ -155,7 +179,7 @@ const BoardSegfin: React.FC = () => {
   //
   useEffect(() => {
     //
-    getSegfins();
+    getSegfin_projects();
     //
   }, []);
   //
@@ -174,11 +198,12 @@ const BoardSegfin: React.FC = () => {
     clppen: "",
     usdpen: "",
     uffpen: "",
-    status: "",
+    pendie: "",
+    descri: "",
   };
 
   interface PostData {
-    instance?: string;
+    srhtext?: string;
     entity?: string;
     userna?: string;
     cup?: string;
@@ -194,7 +219,8 @@ const BoardSegfin: React.FC = () => {
     clppen?: string;
     usdpen?: string;
     uffpen?: string;
-    status?: string;
+    pendie?: string;
+    descri?: string;
   }
 
   const validationSchema = Yup.object().shape({
@@ -214,6 +240,10 @@ const BoardSegfin: React.FC = () => {
   // se asigna PostData a formValue para igualar las variables
   // al desEstructurar los valores ingresados por el usuario
   const handleRegisterSegfin = async (formValue: PostData) => {
+    if (!codeprjInp || !nameprjInp || !clientInp || !typrojInp || !etapaaInp) {
+      alert("Debe digitar toda la Identificación del Proyecto.");
+      return null;
+    }
     if (
       textRoleStore !== null &&
       entyUserStore !== null &&
@@ -223,6 +253,7 @@ const BoardSegfin: React.FC = () => {
       //
       if (textRoleStore === "admin" || textRoleStore === "edit") {
         //
+        /*
         const {
           //entity,
           //userna,
@@ -239,27 +270,31 @@ const BoardSegfin: React.FC = () => {
           clppen,
           usdpen,
           uffpen,
-          status,
+          pendie,
         } = formValue;
+         */
+
+        console.log(formValue);
 
         const postData: PostData = {
-          instance: "segfin",
+          srhtext: "insert_segfin",
           entity: entyUserStore,
           userna: textUserStore,
-          proyec: proyec,
-          client: client,
-          cup: cup,
-          tiproy: tiproy,
-          etapa: etapa,
-          estado: estado,
-          clpcom: clpcom,
-          usdcom: usdcom,
-          uffcom: uffcom,
-          estcom: estcom,
-          clppen: clppen,
-          usdpen: usdpen,
-          uffpen: uffpen,
-          status: status,
+          cup: codeprjInp,
+          client: clientInp,
+          proyec: nameprjInp,
+          tiproy: typrojInp,
+          etapa: etapaaInp,
+          estado: estcomInp,
+          clpcom: clpcomInp,
+          usdcom: usdcomInp,
+          uffcom: uffcomInp,
+          estcom: estcomInp,
+          clppen: clpcomInp,
+          usdpen: usdcomInp,
+          uffpen: uffcomInp,
+          pendie: estpenInp,
+          descri: descriInp,
         };
         //
         const API_URL_BACKEND = `${ubihost}/insert_segfin_react`;
@@ -329,11 +364,11 @@ const BoardSegfin: React.FC = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       // Data ClientsGet for map() select
-      const segfins = clientsResp.msg;
-      if (segfins) {
+      const cliens = clientsResp.msg;
+      if (cliens) {
         //
-        setClientsGet(segfins);
-        console.log(clientsGet);
+        setClientsGet(cliens);
+        //console.log(cliens);
       }
       //
     } catch (err: any) {
@@ -350,21 +385,128 @@ const BoardSegfin: React.FC = () => {
     //
     const txt = valor.split("|");
     setCodeprjInp(txt[0]);
-    //
+    setClientInp(txt[1]);
+    setNameprjInp(txt[2]);
+    setTyprojInp(txt[3]);
+    //setThemeInp(txt[4]);
+    setEtapaaInp(txt[4]);
+    setClpcomInp(txt[5]);
+    setUsdcomInp(txt[6]);
+    setUffcomInp(txt[7]);
+    setEstcomInp(txt[8]);
+    setClppenInp(txt[9]);
+    setUsdpenInp(txt[10]);
+    setUffpenInp(txt[11]);
+    setEstpenInp(txt[12]);
   };
   //
-  // Handle the change event
+  // Handle the change event para lista del Project
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelectedValue(event.target.value);
-    //
-    changeProject(event.target.value);
-    //
-    console.log("Selected value:", event.target.value);
+    if (event.target.value) {
+      // Obtiene la lista de datos del Project
+      changeProject(event.target.value);
+    }
   };
   //
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChangeCup = (e: ChangeEvent<HTMLInputElement>) => {
     setCodeprjInp(e.target.value);
   };
+  // Solo el Cliente
+  const handleChangeCli = (e: ChangeEvent<HTMLSelectElement>) => {
+    setClientInp(e.target.value);
+  };
+  //
+  const handleChangeNanPrj = (e: ChangeEvent<HTMLInputElement>) => {
+    setNameprjInp(e.target.value);
+  };
+  //
+  const handleChangeTypPrj = (e: ChangeEvent<HTMLInputElement>) => {
+    setTyprojInp(e.target.value);
+  };
+  //
+  const handleChangeEtaPrj = (e: ChangeEvent<HTMLInputElement>) => {
+    setEtapaaInp(e.target.value);
+  };
+  //
+  const handleChangeClpCom = (e: ChangeEvent<HTMLInputElement>) => {
+    setClpcomInp(e.target.value);
+  };
+  //
+  const handleChangeUsdCom = (e: ChangeEvent<HTMLInputElement>) => {
+    setUsdcomInp(e.target.value);
+  };
+  //
+  const handleChangeUffCom = (e: ChangeEvent<HTMLInputElement>) => {
+    setUffcomInp(e.target.value);
+  };
+  //
+  const handleChangeEstCom = (e: ChangeEvent<HTMLInputElement>) => {
+    setEstcomInp(e.target.value);
+  };
+  //
+  const handleChangeClpPen = (e: ChangeEvent<HTMLInputElement>) => {
+    setClppenInp(e.target.value);
+  };
+  //
+  const handleChangeUsdPen = (e: ChangeEvent<HTMLInputElement>) => {
+    setUsdpenInp(e.target.value);
+  };
+  //
+  const handleChangeUffPen = (e: ChangeEvent<HTMLInputElement>) => {
+    setUffpenInp(e.target.value);
+  };
+  //
+  const handleChangeEstPen = (e: ChangeEvent<HTMLInputElement>) => {
+    setEstpenInp(e.target.value);
+  };
+  //
+  // NUEVO PROYECTO
+  //
+  const handleNuevoProjCode = () => {
+    console.log(codeprjInp);
+    if (segfinsGet.length) {
+      // 1. Extraer (map) y 2. Ordenar descendentemente (sort)
+      const codigosLeidos = segfinsGet.map((item) => item.cup);
+      // Ordenar de mayor a menor (Z a A)
+      const codigosOrdenados = [...codigosLeidos].sort((a, b) =>
+        (b || "").localeCompare(a || ""),
+      );
+      //
+      // 2. Rescatar el primer elemento (el mayor)
+      const mayorElemento = codigosOrdenados[0];
+      //
+      if (mayorElemento) {
+        //
+        let num = mayorElemento.split("-")[1];
+        if (num) {
+          let n = 1 + Number(num);
+          let s = "0000" + n.toString();
+          num = "EEMT-" + s.slice(-4);
+          //
+          //setCodeprjNew(num);
+          setCodeprjInp(num);
+        }
+        //
+        //setCodeprjNew(mayorElemento);
+        //setCodeprjInp(mayorElemento);
+        //
+        setClientInp("");
+        setNameprjInp("");
+        setTyprojInp("");
+        //setThemeInp("");
+        setEtapaaInp("");
+        setClpcomInp("0");
+        setUsdcomInp("0");
+        setUffcomInp("0");
+        setEstcomInp("");
+        setClppenInp("0");
+        setUsdpenInp("0");
+        setUffpenInp("0");
+        setEstpenInp("");
+      }
+    }
+  };
+  //
   //
   useEffect(() => {
     //
@@ -398,39 +540,90 @@ const BoardSegfin: React.FC = () => {
                 <div>
                   <div>
                     <div className="">
-                      <label htmlFor="fruit-select">Proyecto</label>
+                      <label htmlFor="cup-select">Seleccione C.U.P.</label>
                       <select
-                        id="fruit-select"
-                        className="form-control"
-                        value={selectedValue}
+                        id="cup-select"
+                        className=""
+                        value={codeprjInp}
                         onChange={handleSelectChange}
+                        style={{
+                          width: "20px",
+                          height: "25px",
+                          backgroundColor: "#f2f6f9",
+                          fontStyle: "normal",
+                          border: "0px solid #ccc",
+                          borderRadius: "4px",
+                          marginLeft: "20px",
+                        }}
                       >
                         {/* Optional: Add a default disabled option */}
-                        <option value="" disabled>
-                          - - - - - - Selec proyecto - - - - - -
-                        </option>
+                        <option value=""> </option> {/* Opcion por defecto */}
                         {segfinsGet.map((option) => (
                           <option
                             key={option.id}
-                            value={option.cup + "|" + option.client}
+                            value={
+                              option.cup +
+                              "|" +
+                              option.client +
+                              "|" +
+                              option.proyec +
+                              "|" +
+                              option.tiproy +
+                              "|" +
+                              option.etapa +
+                              "|" +
+                              option.clpcom +
+                              "|" +
+                              option.usdcom +
+                              "|" +
+                              option.uffcom +
+                              "|" +
+                              option.ingcom +
+                              "|" +
+                              option.clppen +
+                              "|" +
+                              option.usdpen +
+                              "|" +
+                              option.uffpen +
+                              "|" +
+                              option.pendie
+                            }
                           >
-                            {option.client} | {option.cup}
+                            {option.cup}
                           </option>
                         ))}
                       </select>
+
+                      <label></label>
+                      <input
+                        onClick={handleNuevoProjCode}
+                        className="btn-modifi-user"
+                        type="button"
+                        value="Nuevo"
+                        style={{
+                          width: "80px",
+                          height: "25px",
+                          border: "4px",
+                          color: "blue",
+                          backgroundColor: "#edcacf",
+                          marginLeft: "29px",
+                          borderRadius: "4px",
+                        }}
+                      />
                     </div>
 
-                    <label htmlFor="cup" style={{ height: "15px" }}>
-                      {" "}
-                      C. U. P.{" "}
-                    </label>
                     <Field
                       name="cup"
                       type="text"
                       value={codeprjInp}
-                      onChange={handleChange}
+                      onChange={handleChangeCup}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{
+                        height: "25px",
+                        color: "tomato",
+                        fontStyle: "italic",
+                        fontWeight: "bold",
+                      }}
                     />
                     <ErrorMessage
                       name="cup"
@@ -439,23 +632,48 @@ const BoardSegfin: React.FC = () => {
                     />
                   </div>
 
-                  <div className="">
-                    <label htmlFor="client" style={{ height: "15px" }}>
-                      Cliente
-                    </label>
-                    <Field as="select" name="client" className="form-control">
-                      <option value="">
-                        - - - - - - Selec cliente - - - - - -
-                      </option>{" "}
-                      {/* Opcion por defecto */}
-                      {clientsGet.map((option) => (
-                        <option key={option.id} value={option.client}>
-                          {option.client}
-                        </option>
-                      ))}
-                    </Field>
+                  <div>
+                    <div className="">
+                      <label htmlFor="cup-select">Seleccione Cliente</label>
+                      <select
+                        id="cli-select"
+                        className=""
+                        value={codeprjInp}
+                        onChange={handleChangeCli}
+                        style={{
+                          width: "20px",
+                          height: "25px",
+                          backgroundColor: "#f2f6f9",
+                          fontStyle: "normal",
+                          border: "0px solid #ccc",
+                          borderRadius: "4px",
+                          marginLeft: "20px",
+                        }}
+                      >
+                        {/* Optional: Add a default disabled option */}
+                        <option value=""> </option> {/* Opcion por defecto */}
+                        {clientsGet.map((option) => (
+                          <option key={option.id} value={option.client}>
+                            {option.client}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <Field
+                      name="clien"
+                      type="text"
+                      value={clientInp}
+                      onChange={handleChangeCli}
+                      className="form-control"
+                      style={{
+                        height: "25px",
+                        color: "brown",
+                        fontStyle: "italic",
+                      }}
+                    />
                     <ErrorMessage
-                      name="client"
+                      name="clien"
                       component="div"
                       className="alert alert-danger"
                     />
@@ -469,8 +687,14 @@ const BoardSegfin: React.FC = () => {
                     <Field
                       name="proyec"
                       type="text"
+                      value={nameprjInp}
+                      onChange={handleChangeNanPrj}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{
+                        height: "25px",
+                        color: "blue",
+                        fontStyle: "italic",
+                      }}
                     />
                     <ErrorMessage
                       name="proyec"
@@ -487,8 +711,14 @@ const BoardSegfin: React.FC = () => {
                     <Field
                       name="tiproy"
                       type="text"
+                      value={typrojInp}
+                      onChange={handleChangeTypPrj}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{
+                        height: "25px",
+                        color: "blue",
+                        fontStyle: "italic",
+                      }}
                     />
                     <ErrorMessage
                       name="tiproy"
@@ -505,29 +735,17 @@ const BoardSegfin: React.FC = () => {
                     <Field
                       name="etapa"
                       type="text"
+                      value={etapaaInp}
+                      onChange={handleChangeEtaPrj}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{
+                        height: "25px",
+                        color: "blue",
+                        fontStyle: "italic",
+                      }}
                     />
                     <ErrorMessage
                       name="etapa"
-                      component="div"
-                      className="alert alert-danger"
-                    />
-                  </div>
-
-                  <div>
-                    <label htmlFor="estado" style={{ height: "15px" }}>
-                      {" "}
-                      Desarrollo: ( enCurso, aprobado, . . . )
-                    </label>
-                    <Field
-                      name="estado"
-                      type="text"
-                      className="form-control"
-                      style={{ height: "25px" }}
-                    />
-                    <ErrorMessage
-                      name="estado"
                       component="div"
                       className="alert alert-danger"
                     />
@@ -541,8 +759,14 @@ const BoardSegfin: React.FC = () => {
                     <Field
                       name="clpcom"
                       type="text"
+                      value={clpcomInp}
+                      onChange={handleChangeClpCom}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{
+                        height: "25px",
+                        color: "blue",
+                        fontStyle: "italic",
+                      }}
                     />
                     <ErrorMessage
                       name="clpcom"
@@ -559,8 +783,14 @@ const BoardSegfin: React.FC = () => {
                     <Field
                       name="usdcom"
                       type="text"
+                      value={usdcomInp}
+                      onChange={handleChangeUsdCom}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{
+                        height: "25px",
+                        color: "blue",
+                        fontStyle: "italic",
+                      }}
                     />
                     <ErrorMessage
                       name="usdcom"
@@ -577,8 +807,14 @@ const BoardSegfin: React.FC = () => {
                     <Field
                       name="uffcom"
                       type="text"
+                      value={uffcomInp}
+                      onChange={handleChangeUffCom}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{
+                        height: "25px",
+                        color: "blue",
+                        fontStyle: "italic",
+                      }}
                     />
                     <ErrorMessage
                       name="uffcom"
@@ -596,8 +832,14 @@ const BoardSegfin: React.FC = () => {
                     <Field
                       name="estcom"
                       type="text"
+                      value={estcomInp}
+                      onChange={handleChangeEstCom}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{
+                        height: "25px",
+                        color: "blue",
+                        fontStyle: "italic",
+                      }}
                     />
                     <ErrorMessage
                       name="estcom"
@@ -614,8 +856,14 @@ const BoardSegfin: React.FC = () => {
                     <Field
                       name="clppen"
                       type="text"
+                      value={clppenInp}
+                      onChange={handleChangeClpPen}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{
+                        height: "25px",
+                        color: "tomato",
+                        fontStyle: "italic",
+                      }}
                     />
                     <ErrorMessage
                       name="clppen"
@@ -632,8 +880,14 @@ const BoardSegfin: React.FC = () => {
                     <Field
                       name="usdpen"
                       type="text"
+                      value={usdpenInp}
+                      onChange={handleChangeUsdPen}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{
+                        height: "25px",
+                        color: "tomato",
+                        fontStyle: "italic",
+                      }}
                     />
                     <ErrorMessage
                       name="usdpen"
@@ -650,8 +904,14 @@ const BoardSegfin: React.FC = () => {
                     <Field
                       name="uffpen"
                       type="text"
+                      value={uffpenInp}
+                      onChange={handleChangeUffPen}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{
+                        height: "25px",
+                        color: "tomato",
+                        fontStyle: "italic",
+                      }}
                     />
                     <ErrorMessage
                       name="uffpen"
@@ -668,8 +928,14 @@ const BoardSegfin: React.FC = () => {
                     <Field
                       name="status"
                       type="text"
+                      value={estpenInp}
+                      onChange={handleChangeEstPen}
                       className="form-control"
-                      style={{ height: "25px" }}
+                      style={{
+                        height: "25px",
+                        color: "brown",
+                        fontStyle: "italic",
+                      }}
                     />
                     <ErrorMessage
                       name="status"

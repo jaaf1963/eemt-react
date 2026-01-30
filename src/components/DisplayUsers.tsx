@@ -6,14 +6,17 @@ const ubihost = process.env.REACT_APP_API_URL;
 interface userProps {
   id?: number | undefined;
   entype: string | undefined;
-  usern: string;
+  profe?: string | undefined;
   fname: string | undefined;
   lname: string | undefined;
   email: string | undefined;
-  profe?: string | undefined;
+  dnius: string | undefined;
+  conta: string | undefined;
+  usern: string;
+  module?: string | undefined;
+  roles: string | undefined;
   inses?: string | undefined;
-  dases?: string | undefined;
-  typus?: string | undefined;
+  dases: string | undefined;
   statu?: string | undefined;
 }
 
@@ -219,7 +222,10 @@ const UsersDisplay: React.FC = () => {
                 <th style={{ width: "160px", marginLeft: "5px" }}>Nombres</th>
                 <th style={{ width: "190px", marginLeft: "5px" }}>Apellidos</th>
                 <th style={{ width: "220px", marginLeft: "5px" }}>E-mail</th>
-                <th style={{ width: "135px", marginLeft: "5px" }}>TipoUser</th>
+                <th style={{ width: "135px", marginLeft: "5px" }}>Módulo</th>
+                <th style={{ width: "135px", marginLeft: "5px" }}>Role</th>
+                <th style={{ width: "135px", marginLeft: "5px" }}>contacto</th>
+                <th style={{ width: "135px", marginLeft: "5px" }}>dni/rut</th>
                 <th style={{ width: "120px", marginLeft: "5px" }}>Profesión</th>
               </tr>
             </thead>
@@ -262,7 +268,10 @@ const UsersDisplay: React.FC = () => {
                   <td style={{ fontSize: "13px", color: "brown" }}>
                     {item.email}
                   </td>
-                  <td style={{ fontSize: "13px" }}>{item.typus}</td>
+                  <td style={{ fontSize: "13px" }}>{item.module}</td>
+                  <td style={{ fontSize: "13px" }}>{item.roles}</td>
+                  <td style={{ fontSize: "13px" }}>{item.conta}</td>
+                  <td style={{ fontSize: "13px" }}>{item.dnius}</td>
                   <td style={{ fontSize: "13px" }}>{item.profe}</td>
                 </tr>
               ))}

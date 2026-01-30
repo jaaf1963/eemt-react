@@ -200,7 +200,7 @@ const ProjectsDisplay: React.FC = () => {
   //
   const getTextColor = (texto: string): string => {
     switch (texto) {
-      case "aprobado":
+      case "adjudicado":
         return "tomato";
       case "urgente":
         return "red";

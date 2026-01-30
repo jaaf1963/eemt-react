@@ -257,7 +257,11 @@ const FetchDataView: React.FC<fetchDocsProps> = ({
       setDataTasks([]);
       setDataIters([]);
       //
-      if (textRoleStore === "admin" || textRoleStore === "edit") {
+      if (
+        textRoleStore === "admin" ||
+        textRoleStore === "edit" ||
+        textRoleStore === "view"
+      ) {
         //
         const dataButton = {
           buttext: "display_documents",

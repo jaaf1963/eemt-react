@@ -34,6 +34,7 @@ const App: React.FC = () => {
   const [moderUserRole, setModerUserRole] = useState<boolean>(false);
   const [viewUserRole, setViewUserRole] = useState<boolean>(false);
   const [comeUserRole, setComeUserRole] = useState<boolean>(false);
+  const [tecnUserRole, setTecnUserRole] = useState<boolean>(false);
   //
   const [textRoleStore, setTextRoleStore] = useState(() => {
     const roleStore = localStorage.getItem("role");
@@ -53,9 +54,19 @@ const App: React.FC = () => {
     return "";
   });
   //
+  //
+  const [modUserStore, setModUserStore] = useState(() => {
+    const userModule = localStorage.getItem("module");
+    if (userModule) {
+      return userModule;
+    }
+    return "";
+  });
+  //
   if (changeUserRole) {
     setTextRoleStore("");
     setTextUserStore("");
+    setModUserStore("");
   }
   //
   //
@@ -66,14 +77,16 @@ const App: React.FC = () => {
     //console.log("textRoleStore:", textRoleStore);
     if (textRoleStore) {
       const adm: boolean = textRoleStore === "admin";
-      const viw: boolean = textRoleStore === "view";
       const mod: boolean = textRoleStore === "edit";
-      const com: boolean = textRoleStore === "come";
+      const com: boolean = modUserStore === "comercial";
+      const tec: boolean = modUserStore === "tecnico";
+      const viw: boolean = textRoleStore === "view";
       //
       setAdminUserRole(adm);
       setModerUserRole(mod);
       setViewUserRole(viw);
       setComeUserRole(com);
+      setTecnUserRole(tec);
       //setShowAdminBoard(adminUserRole);
       //setAdminUserRole(true);
       setExistUserStore(viw);
@@ -110,63 +123,63 @@ const App: React.FC = () => {
               Home
             </NavLink>
           </li>
-          {(moderUserRole || adminUserRole || comeUserRole) && (
+          {(adminUserRole || comeUserRole) && (
             <li className="nav-item">
               <NavLink to={"/segfin"} className="nav-link">
                 Segfin
               </NavLink>
             </li>
           )}
-          {(viewUserRole || moderUserRole || adminUserRole) && (
+          {(viewUserRole || adminUserRole || comeUserRole) && (
             <li className="nav-item">
               <NavLink to={"/prjview"} className="nav-link">
                 Docs Ver
               </NavLink>
             </li>
           )}
-          {(adminUserRole || moderUserRole) && (
+          {(adminUserRole || tecnUserRole) && (
             <li className="nav-item">
               <NavLink to={"/prjedit"} className="nav-link">
                 Docs Edit
               </NavLink>
             </li>
           )}
-          {(adminUserRole || moderUserRole) && (
+          {(adminUserRole || comeUserRole) && (
             <li className="nav-item">
               <Link to={"/moder"} className="nav-link">
                 Moderador
               </Link>
             </li>
           )}
-          {(adminUserRole || moderUserRole) && (
+          {(adminUserRole || comeUserRole) && (
             <li className="nav-item">
               <NavLink to={"/panels"} className="nav-link">
                 Paneles
               </NavLink>
             </li>
           )}
-          {(adminUserRole || moderUserRole) && (
+          {(adminUserRole || comeUserRole) && (
             <li className="nav-item">
               <Link to={"/client"} className="nav-link">
                 Clientes
               </Link>
             </li>
           )}
-          {(adminUserRole || moderUserRole) && (
+          {(adminUserRole || tecnUserRole) && (
             <li className="nav-item">
               <NavLink to={"/project"} className="nav-link">
                 Proyectos
               </NavLink>
             </li>
           )}
-          {(adminUserRole || moderUserRole) && (
+          {(adminUserRole || tecnUserRole || comeUserRole) && (
             <li className="nav-item">
               <NavLink to={"/prjflow"} className="nav-link">
                 Flujo
               </NavLink>
             </li>
           )}
-          {(adminUserRole || moderUserRole) && (
+          {(adminUserRole || comeUserRole) && (
             <li className="nav-item">
               <NavLink to={"/users"} className="nav-link">
                 Usuarios

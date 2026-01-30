@@ -87,9 +87,9 @@ const Login: React.FC<Props> = ({ onRoleChange }) => {
         storageDataUser("id", data.data.tkn_id);
         storageDataUser("entity", data.data.tkn_entity);
         storageDataUser("username", data.data.tkn_user);
-        storageDataUser("module", data.data.tkn_subsyst);
         storageDataUser("token", data.data.tkn_token);
         storageDataUser("role", data.role);
+        storageDataUser("module", data.modl);
         storageDataUser("datein", data.data.tkn_datein);
         onRoleChange(true); // Dispara el efecto en el componente padre
         //

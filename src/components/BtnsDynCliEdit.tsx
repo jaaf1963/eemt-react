@@ -47,15 +47,15 @@ let selPrjClie: string = "";
 interface projProps {
   id?: number | undefined;
   codeprj?: string | undefined;
-  project?: string | undefined;
-  company?: string | undefined;
+  projec?: string | undefined;
+  client?: string | undefined;
   theme?: string | undefined;
   typroj?: string | undefined;
   descrip?: string | undefined;
   observ?: string | undefined;
   advance?: string | undefined;
   dateini?: string | undefined;
-  dateend?: string | undefined;
+  datefin?: string | undefined;
 }
 
 interface docsEx {
@@ -270,12 +270,18 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
     ) {
       if (textRoleStore === "admin" || textRoleStore === "edit") {
         const dataProj = {
-          srhtext: "gets_projs",
+          srhtext: "search_prj",
           entity: entyUserStore,
           userna: textUserStore,
+          codprj: "",
+          client: "",
+          tiproy: "",
+          anoco1: "0",
+          anoco2: "9999",
         };
         //
-        const API_URL_BACKEND = `${ubihost}/gets_projects_react`;
+        const API_URL_BACKEND = `${ubihost}/search_projects_react`;
+        //const API_URL_BACKEND = `${ubihost}/gets_projects_react`;
         //const API_URL_BACKEND = "http://localhost:5055/search_projects_react";
         //
         try {
@@ -366,13 +372,13 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
         Edit{" "}
       </span>
       <div>
-        <label className="input-label-proj" htmlFor="project">
+        <label className="input-label-proj" htmlFor="projec">
           Project{" "}
         </label>
         <input
           type="text"
-          id="project"
-          name="project"
+          id="projec"
+          name="projec"
           value={selecProject}
           onChange={handleChange}
           required
@@ -392,10 +398,10 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
             <option
               key={option.id}
               value={
-                option.codeprj + " | " + option.project + " | " + option.company
+                option.codeprj + " | " + option.projec + " | " + option.client
               }
             >
-              {option.codeprj} {option.project} {option.company}
+              {option.codeprj} {option.projec} {option.client}
             </option>
           ))}
         </select>
@@ -414,7 +420,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
         />
       </div>
       <div>
-        <label className="input-label-upload" htmlFor="observ">
+        <label className="input-label-upload">
           Descripción de la tarea {""}
         </label>
         <input
@@ -428,7 +434,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
         <span style={{ fontSize: "small", color: "gray" }}> 100 cars.</span>
       </div>
       <div>
-        <label className="input-label-upload" htmlFor="observ">
+        <label className="input-label-upload">
           Observación / Estado de la tarea{" "}
         </label>
         <textarea
@@ -443,9 +449,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
         <span style={{ fontSize: "small", color: "gray" }}> 500 cars.</span>
       </div>
       <div>
-        <label className="input-label-upload" htmlFor="author">
-          Autor del documento{""}
-        </label>
+        <label className="input-label-upload">Autor del documento{""}</label>
         <input
           type="text"
           id="authortext"
@@ -458,9 +462,7 @@ const ClientButtEdit: React.FC<ComponenteProps> = () => {
         <span style={{ fontSize: "small", color: "gray" }}> 30 cars.</span>
       </div>
       <div>
-        <label className="input-label-upload" htmlFor="advan">
-          Avance del proyecto{""}
-        </label>
+        <label className="input-label-upload">Avance del proyecto{""}</label>
         <input
           type="number"
           id="advantext"

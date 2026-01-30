@@ -137,9 +137,6 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
         //
         // Creamos un FormData para enviar los archivos
         const formData = new FormData();
-        selectedFiles.forEach((f) => {
-          formData.append("files", f.file);
-        });
         //
         let fecIniDocs: string = " ";
         if (dateindocs !== null) {
@@ -159,13 +156,18 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
               advancdocs = "0";
             }
             //
+            if (authordocs === null || authordocs === "") authordocs = "x";
+            if (observdocs === null || observdocs === "") observdocs = "x";
+            if (taskssdocs === null || taskssdocs === "") taskssdocs = "x";
+            //
             if (typedocums === "reemplazo") {
-              if (authordocs === null) authordocs = "aut";
-              if (observdocs === null) observdocs = "obs";
-              if (taskssdocs === null) taskssdocs = "tsk";
+              if (authordocs === null || authordocs === "") authordocs = "aut";
+              if (observdocs === null || observdocs === "") observdocs = "obs";
+              if (taskssdocs === null || taskssdocs === "") taskssdocs = "tsk";
             }
             //
             formData.append("entity", entyUserStore);
+            formData.append("userna", textUserStore);
             formData.append("codprj", codSelEdit);
             formData.append("projct", prjSelEdit);
             formData.append("cliprj", cliSelEdit);
@@ -177,8 +179,11 @@ const UploadFilesEdit: React.FC<btnSelProps> = ({
             formData.append("advdoc", advancdocs);
             formData.append("inidoc", fecIniDocs);
             formData.append("enddoc", fecEndDocs);
-            formData.append("userna", textUserStore);
             formData.append("docums", existsdocs);
+            //
+            selectedFiles.forEach((f) => {
+              formData.append("files", f.file);
+            });
             //
             const API_URL_BACKEND = `${ubihost}/insert_documents_react`;
             //const API_URL_BACKEND ="http://localhost:5055/insert_documents_react";
